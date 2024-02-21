@@ -24,7 +24,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
           ) : (
             <ToolTip content={el?.title}>{el?.icon}</ToolTip>
           )}
-          {showSideNav && <p className="p-medium-16">{el?.title}</p>}
+          {showSideNav && <p className="p-medium-18">{el?.title}</p>}
         </motion.div>
       ))}
     </div>
