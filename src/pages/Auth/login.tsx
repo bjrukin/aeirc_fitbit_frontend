@@ -7,7 +7,6 @@ import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/login/loginAction";
 import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 interface initValProps {
   email: string;
