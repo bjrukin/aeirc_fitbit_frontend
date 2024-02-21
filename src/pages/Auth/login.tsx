@@ -7,6 +7,7 @@ import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/login/loginAction";
 import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface initValProps {
   email: string;
@@ -18,15 +19,15 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     email: Yup.string()
-      .email("Please enter a valid email address")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+      .email("*Please enter a valid email address")
+      .required("*Email is required"),
+    password: Yup.string().required("*Password is required"),
   });
   const initVal: initValProps = {
     email: "",
     password: "",
   };
-  const handleSubmit = (values: initValProps) => {
+  const handleSubmit = async (values: initValProps) => {
     dispatch(loginUser(values));
   };
   return (
@@ -67,7 +68,12 @@ const Login = () => {
         <div>
           <p className="text-center mt-4">
             Don't Have an Account?{" "}
-            <span className="text-secondary-500 cursor-pointer" onClick={()=>navigate("/register")}>Register</span>
+            <span
+              className="text-secondary-500 cursor-pointer"
+              onClick={() => navigate("/register")}
+            >
+              Register
+            </span>
           </p>
         </div>
       </div>

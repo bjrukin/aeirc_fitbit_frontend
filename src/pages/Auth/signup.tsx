@@ -11,26 +11,31 @@ import { useNavigate } from "react-router-dom";
 interface initValProps {
   email: string;
   password: string;
-  name: string;
-  phone?: string;
+  password2: string;
+  // name: string;
+  // phone?: string;
 }
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
-    name: Yup.string()
+    email: Yup.string()
       .email("Please enter a valid email address")
-      .required("Email is required"),
-    email: Yup.string().required("Name is required"),
-    password: Yup.string().required("Password is required"),
+      .required("*Email is required"),
+    password: Yup.string().required("*Password is required"),
+    password2: Yup.string()
+      .oneOf([Yup.ref("password")], "*Passwords must match")
+      .required("*Confirm Password is required"),
   });
   const initVal: initValProps = {
-    name: "",
+    // name: "",
     email: "",
     password: "",
-    phone: "",
+    password2: "",
+    // phone: "",
   };
   const handleSubmit = (values: initValProps) => {
+    console.log("The values", values);
     dispatch(registerUser(values));
   };
   return (
@@ -44,18 +49,19 @@ const SignUp = () => {
           validationSchema={FORM_VALIDATION}
           onSubmit={handleSubmit}
         >
-          {() => (
+          {({}) => (
             <Form>
               <div className="mt-4 ">
-                <Input
+                {/* <Input
                   label={"Full Name"}
                   name={"name"}
                   placeholder="Enter Your Full Name"
-                />
+                /> */}
+
                 <Input
-                  label={"Email"}
                   name={"email"}
-                  placeholder="Enter Your Email Address"
+                  label={"Email"}
+                  placeholder="Enter your email address"
                 />
 
                 <PasswordInputField
@@ -63,12 +69,18 @@ const SignUp = () => {
                   label={"Password"}
                   name="password"
                 />
-                <Input
+                <PasswordInputField
+                  placeholder={"Enter Password"}
+                  label={"Confirm Password"}
+                  name="password2"
+                />
+                {/* <Input
                   name={"phone"}
                   label={"Mobile Number"}
                   placeholder="Enter Your Mobile Number"
-                />
+                /> */}
                 <Button
+                  type={"submit"}
                   className="mt-2"
                   text={"Register"}
                   variant={"default"}

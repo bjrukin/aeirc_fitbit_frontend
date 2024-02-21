@@ -1,37 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import useFetch from "../../../hooks/useFetch";
+import Service from "../../../setup/Service";
+import { toastAlert } from "../../../lib/toastAlert";
 
-// export const registerUser: any = createAsyncThunk(
-//   "auth/register",
-//   async (val) => {
-//     try {
-//       const response = await Service.post("", val);
-//       const data = response?.data;
-//       return data;
-//     } catch (error) {
-//       console.log("The error is", error);
-//       return "Error while signing in";
-//     }
-//   }
-// );
-
-export const registerUser = createAsyncThunk(
+export const registerUser: any = createAsyncThunk(
   "auth/register",
-  async (val: any) => {
+  async (val) => {
     try {
-      const { isLoading, data, error } = useFetch("", "POST", val);
-      if (isLoading) {
-        console.log("Loading...");
-      } else if (error) {
-        console.log("Error:", error);
-        throw error;
-      } else {
-        console.log("Data:", data);
-        return data;
-      }
-    } catch (error) {
+      const response = await Service.post("/auth/register", val);
+      console.log("The res is", response);
+      const data = response?.data;
+      toastAlert("success", "User Successfully Registered.");
+      return data;
+    } catch (error: any) {
+      toastAlert(
+        "error",
+        error?.response?.data?.message ?? "Something went wrong."
+      );
       console.log("The error is", error);
-      throw error;
+      return "Error while signing in";
     }
   }
 );

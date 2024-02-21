@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../baseUrl";
+import { BASE_URL } from "../lib/baseUrl";
 
 const Service = axios.create({
   baseURL: BASE_URL,
@@ -7,6 +7,7 @@ const Service = axios.create({
     "Content-Type": "application/json",
   },
 });
+console.log("service is", BASE_URL);
 
 Service.interceptors.request.use(
   (config: any) => {
