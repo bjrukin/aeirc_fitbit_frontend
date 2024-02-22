@@ -12,8 +12,7 @@ import { useAppSelector } from "./redux/hooks";
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
   const token = JSON.parse(unParsedToken);
-  console.log("token", token);
-  console.log("path", location.pathname);
+  console.log("The token is", token);
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector(
     (state: any) => state.rootReducer.login
@@ -26,23 +25,33 @@ function App() {
   }, [navigate, location.pathname]);
 
   useEffect(() => {
+    if (!token) {
+      return navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
     if ((isAuthenticated || token) && location.pathname == "/login") {
       return navigate("/dashboard");
-    } else if (!token) {
-      return navigate("/login");
+    } else if (token === null) {
+      return navigate(location.pathname);
+      //   return navigate(location.pathname);
     }
-    return navigate(location.pathname);
-  }, [token, isAuthenticated, navigate, location.pathname]);
+  }, [token, location.pathname, navigate]);
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/dashboard" element={<Report />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route path="*" element={<Error />} />
+        {token && (
+          <>
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Report />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+            <Route path="*" element={<Error />} />
+          </>
+        )}
       </Routes>
     </>
   );

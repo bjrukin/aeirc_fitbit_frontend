@@ -21,6 +21,7 @@ const Login = () => {
       .email("*Please enter a valid email address")
       .required("*Email is required"),
     password: Yup.string().required("*Password is required"),
+    // password: Yup.string().min(8,"Password must be 8 characters long").required("*Password is required"),
   });
   const initVal: initValProps = {
     email: "",

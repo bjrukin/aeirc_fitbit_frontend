@@ -6,17 +6,21 @@ export const loginUser: any = createAsyncThunk(
   "auth/login",
   async (val: any) => {
     try {
-      const response = await Service.post("/user/login", val);
+      const response = await Service.post("/auth/login", val);
       const data = response?.data;
-      window.localStorage.setItem("accessToken", JSON.stringify(data?.token));
-      // window.localStorage.setItem("accessToken", "token");
-      toastAlert("success", "User Successfully logged in.");
+      console.log("The  login data is", data);
+      window.localStorage.setItem(
+        "accessToken",
+        JSON.stringify(data?.data?.access)
+      );
+      // navigate("/dashboard");
+      toastAlert("success", "User Successfully logg ed in.");
       return data;
     } catch (error: any) {
       console.log("The error is", error);
       toastAlert(
         "error",
-        error?.response?.data?.message ?? "Something went wrong."
+        error?.response?.data?.detail ?? "Something went wrong."
       );
       return "Error while logging in";
     }

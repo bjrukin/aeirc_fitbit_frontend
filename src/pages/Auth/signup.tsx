@@ -22,6 +22,7 @@ const SignUp = () => {
       .email("Please enter a valid email address")
       .required("*Email is required"),
     password: Yup.string().required("*Password is required"),
+      // password: Yup.string().min(8,"Password must be 8 characters long").required("*Password is required"),
     password2: Yup.string()
       .oneOf([Yup.ref("password")], "*Passwords must match")
       .required("*Confirm Password is required"),
@@ -35,7 +36,7 @@ const SignUp = () => {
   };
   const handleSubmit = async (values: initValProps) => {
     try {
-      const response = await Service.post("/user/signup", values);
+      const response = await Service.post("/auth/register", values);
       console.log("The response is", response);
       toastAlert("success", "User Successfully Registered.");
       navigate("/login");
