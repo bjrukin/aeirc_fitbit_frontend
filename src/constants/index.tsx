@@ -8,31 +8,31 @@ export const navItems = [
   {
     id: 1,
     title: "Dashboard",
-    path: "/",
+    path: "/dashboard",
     icon: <FaHome size={26} />,
   },
   {
     id: 2,
     title: "Profile",
-    path: "/",
+    path: "/profile",
     icon: <IoPersonSharp size={26} />,
   },
   {
     id: 3,
     title: "Health",
-    path: "/",
+    path: "/health",
     icon: <FaHeart size={26} />,
   },
   {
     id: 4,
     title: "Setting",
-    path: "/",
+    path: "/setting",
     icon: <IoMdSettings size={26} />,
   },
   {
     id: 5,
     title: "Message",
-    path: "/",
+    path: "/message",
     icon: <IoMdMailUnread size={26} />,
   },
 ];

@@ -6,10 +6,10 @@ export const loginUser: any = createAsyncThunk(
   "auth/login",
   async (val: any) => {
     try {
-      const response = await Service.post("/auth/login", val);
+      const response = await Service.post("/user/login", val);
       const data = response?.data;
-      console.log("The data ", data);
-      window.localStorage.setItem("accessToken", data?.access);
+      window.localStorage.setItem("accessToken", JSON.stringify(data?.token));
+      // window.localStorage.setItem("accessToken", "token");
       toastAlert("success", "User Successfully logged in.");
       return data;
     } catch (error: any) {

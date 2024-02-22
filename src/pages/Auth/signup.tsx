@@ -3,10 +3,10 @@ import Input from "../../components/shared/Input";
 import PasswordInputField from "../../components/shared/PasswordInputField";
 import AuthLayout from "../../components/ui/AuthLayout";
 import * as Yup from "yup";
-import { useAppDispatch } from "../../redux/hooks";
-import { registerUser } from "../../redux/slice/register/registerAction";
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import Service from "../../setup/Service";
+import { toastAlert } from "../../lib/toastAlert";
 
 interface initValProps {
   email: string;
@@ -17,7 +17,6 @@ interface initValProps {
 }
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     email: Yup.string()
       .email("Please enter a valid email address")
@@ -34,9 +33,19 @@ const SignUp = () => {
     password2: "",
     // phone: "",
   };
-  const handleSubmit = (values: initValProps) => {
-    console.log("The values", values);
-    dispatch(registerUser(values));
+  const handleSubmit = async (values: initValProps) => {
+    try {
+      const response = await Service.post("/user/signup", values);
+      console.log("The response is", response);
+      toastAlert("success", "User Successfully Registered.");
+      navigate("/login");
+    } catch (error: any) {
+      toastAlert(
+        "error",
+        error?.response?.data?.message ?? "Something went wrong."
+      );
+      console.log("The err is", error);
+    }
   };
   return (
     <AuthLayout>
@@ -49,45 +58,48 @@ const SignUp = () => {
           validationSchema={FORM_VALIDATION}
           onSubmit={handleSubmit}
         >
-          {({}) => (
-            <Form>
-              <div className="mt-4 ">
-                {/* <Input
+          {({ isValid, isSubmitting }) => {
+            return (
+              <Form>
+                <div className="mt-4 ">
+                  {/* <Input
                   label={"Full Name"}
                   name={"name"}
                   placeholder="Enter Your Full Name"
                 /> */}
 
-                <Input
-                  name={"email"}
-                  label={"Email"}
-                  placeholder="Enter your email address"
-                />
+                  <Input
+                    name={"email"}
+                    label={"Email"}
+                    placeholder="Enter your email address"
+                  />
 
-                <PasswordInputField
-                  placeholder={"Enter Password"}
-                  label={"Password"}
-                  name="password"
-                />
-                <PasswordInputField
-                  placeholder={"Enter Password"}
-                  label={"Confirm Password"}
-                  name="password2"
-                />
-                {/* <Input
+                  <PasswordInputField
+                    placeholder={"Enter Password"}
+                    label={"Password"}
+                    name="password"
+                  />
+                  <PasswordInputField
+                    placeholder={"Enter Password"}
+                    label={"Confirm Password"}
+                    name="password2"
+                  />
+                  {/* <Input
                   name={"phone"}
                   label={"Mobile Number"}
                   placeholder="Enter Your Mobile Number"
                 /> */}
-                <Button
-                  type={"submit"}
-                  className="mt-2"
-                  text={"Register"}
-                  variant={"default"}
-                />
-              </div>
-            </Form>
-          )}
+                  <Button
+                    disabled={!isValid}
+                    type={"submit"}
+                    className="mt-2"
+                    text={isSubmitting ? "Submitting..." : "Register"}
+                    variant={"default"}
+                  />
+                </div>
+              </Form>
+            );
+          }}
         </Formik>
         <div>
           <p className="text-center mt-4">

@@ -1,6 +1,13 @@
-import { IoChevronDown } from "react-icons/io5";
+import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { MobileNav } from "./mobileNav";
+import { useState } from "react";
+import { useAppDispatch } from "../../../redux/hooks";
+import { logout } from "../../../redux/slice/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className=" flex justify-between items-center px-4 lg:px-0 lg:justify-end h-[60px] w-full py-2 shadow-xl">
       <div className="lg:hidden cursor-pointer">
@@ -14,7 +21,28 @@ const Header = () => {
           <p className="p-semibold-14">Sumit Ghimire</p>
           <p className="p-medium-12 text-grey-500">23 years old</p>
         </div>
-        <IoChevronDown size={22} className="cursor-pointer" />
+        <div className="relative">
+          <div onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? (
+              <IoChevronUp size={22} className="cursor-pointer" />
+            ) : (
+              <IoChevronDown size={22} className="cursor-pointer" />
+            )}
+          </div>
+          {isOpen && (
+            <div className="border-[1px] border-black absolute top-9 right-0 p-2 px-4 rounded cursor-pointer">
+              <p
+                className="text-black"
+                onClick={() => {
+                  dispatch(logout());
+                  navigate("/login");
+                }}
+              >
+                Logout
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

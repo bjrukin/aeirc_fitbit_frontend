@@ -7,12 +7,12 @@ const Service = axios.create({
     "Content-Type": "application/json",
   },
 });
-console.log("service is", BASE_URL);
 
 Service.interceptors.request.use(
   (config: any) => {
     const token: any = window.localStorage.getItem("accessToken");
-    if (token) {
+    console.log("token is", token);
+    if (token && token != undefined) {
       config.headers.authorization = `Bearer ${JSON.parse(token)}`;
     }
     return config;

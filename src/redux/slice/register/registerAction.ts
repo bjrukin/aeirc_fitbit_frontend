@@ -6,7 +6,8 @@ export const registerUser: any = createAsyncThunk(
   "auth/register",
   async (val) => {
     try {
-      const response = await Service.post("/auth/register", val);
+      // const response = await Service.post("/auth/register", val);
+      const response = await Service.post("/user/signup", val);
       console.log("The res is", response);
       const data = response?.data;
       toastAlert("success", "User Successfully Registered.");

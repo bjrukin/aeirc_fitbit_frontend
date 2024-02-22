@@ -13,7 +13,10 @@ export const MobileNav = () => {
 
   return (
     <>
-      <button onClick={toggleSidebar} aria-label="toggle sidebar">
+      <button
+        onClick={toggleSidebar}
+        className="border-[1px] border-black p-1  rounded"
+      >
         <RxHamburgerMenu size={28} />
       </button>
       <AnimatePresence mode="wait" initial={false}>
@@ -28,13 +31,11 @@ export const MobileNav = () => {
               {...framerSidebarPanel}
               className="fixed top-0 bottom-0 left-0 z-50 w-full h-screen max-w-xs bg-secondary-500  text-white"
               ref={ref}
-              aria-label="Sidebar"
             >
               <div className="flex items-center justify-end p-5 pb-10  ">
                 <button
                   onClick={toggleSidebar}
                   className="border-[1px] p-2 rounded"
-                  aria-label="close sidebar"
                 >
                   <RxCross2 size={30} />
                 </button>
@@ -76,7 +77,7 @@ const framerSidebarBackground = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0, transition: { delay: 0.2 } },
-  transition: { duration: 0.4 },
+  transition: { duration: 0.5 },
 };
 
 const framerSidebarPanel = {

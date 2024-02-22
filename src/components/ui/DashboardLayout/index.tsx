@@ -52,7 +52,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
       >
         <Header />
-        <div className="ml-4 mt-4"> {children}</div>
+        <div className="mx-4 mt-4"> {children}</div>
       </div>
     </div>
   );
