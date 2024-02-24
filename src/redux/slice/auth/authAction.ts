@@ -8,13 +8,11 @@ export const loginUser: any = createAsyncThunk(
     try {
       const response = await Service.post("/auth/login", val);
       const data = response?.data;
-      console.log("The  login data is", data);
       window.localStorage.setItem(
         "accessToken",
         JSON.stringify(data?.data?.access)
       );
-      // navigate("/dashboard");
-      toastAlert("success", "User Successfully logg ed in.");
+      // toastAlert("success", "User Successfully logged in.");
       return data;
     } catch (error: any) {
       console.log("The error is", error);

@@ -33,7 +33,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  text?: string;
+  text?: any;
   type?: string | any;
   asChild?: boolean;
 }

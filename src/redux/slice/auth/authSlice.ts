@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { loginUser } from "./loginAction";
+import { loginUser } from "./authAction";
 
 const accessToken = localStorage.getItem("accessToken")
   ? localStorage.getItem("accessToken")
@@ -13,8 +13,8 @@ const initialState = {
   success: false,
   isAuthenticated: false,
 };
-const loginSlice = createSlice({
-  name: "login",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -33,8 +33,8 @@ const loginSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.success = false;
-        state.userInfo = action?.payload;
-        state.accessToken = action.payload.accessToken;
+        state.userInfo = action?.payload.userInfo;
+        state.accessToken = action?.payload?.data.access;
         state.error = "";
         state.isAuthenticated = true;
       }
@@ -46,5 +46,5 @@ const loginSlice = createSlice({
     });
   },
 });
-export const { logout } = loginSlice.actions;
-export default loginSlice.reducer;
+export const { logout } = authSlice.actions;
+export default authSlice.reducer;

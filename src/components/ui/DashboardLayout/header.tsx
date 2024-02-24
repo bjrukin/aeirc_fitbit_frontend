@@ -2,7 +2,7 @@ import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import { MobileNav } from "./mobileNav";
 import { useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
-import { logout } from "../../../redux/slice/login/loginSlice";
+import { logout } from "../../../redux/slice/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
