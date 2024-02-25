@@ -3,39 +3,63 @@ import { Button } from "../../components/shared/Button";
 import PasswordInputField from "../../components/shared/PasswordInputField";
 import AuthLayout from "../../components/ui/AuthLayout";
 import * as Yup from "yup";
-import { loginUser } from "../../redux/slice/auth/authAction";
 import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { FaCircleChevronLeft } from "react-icons/fa6";
+import Service from "../../setup/Service";
+import { toastAlert } from "../../lib/toastAlert";
+import { useState } from "react";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface initValProps {
-  password: string;
-  password1: string;
-  password2: string;
+  current_password: string;
+  new_password: string;
+  confirm_pass: string;
 }
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
-    email: Yup.string()
-      .email("*Please enter a valid email address")
-      .required("*Email is required"),
-    password: Yup.string().required("*Password is required"),
-    password1: Yup.string()
+    current_password: Yup.string().required("*Password is required"),
+    new_password: Yup.string()
       .min(8, "Password must be 8 characters long")
       .required("*Password is required"),
-    password2: Yup.string()
-      .oneOf([Yup.ref("password1")], "*Password must match")
+    confirm_pass: Yup.string()
+      .oneOf([Yup.ref("new_password")], "*Password must match")
       .required("*Confirm Password is required"),
   });
   const initVal: initValProps = {
-    password: "",
-    password1: "",
-    password2: "",
+    current_password: "",
+    new_password: "",
+    confirm_pass: "",
   };
   const handleSubmit = async (values: initValProps) => {
-    dispatch(loginUser(values));
+    // const [isPasswordReset, setIsPasswordReset] = useLocalStorage({
+    //   key: "isPasswordReset",
+    //   defaultValue: false,
+    // });
+
+    console.log("The values are", values);
+    const payload = {
+      current_password: values?.current_password,
+      new_password: values?.new_password,
+    };
+    try {
+      const res = await Service.post("/auth/password/change", payload);
+      console.log("The res is", res);
+      window.localStorage.setItem("isPasswordReset", JSON.stringify(true));
+      toastAlert("success", "Password Successfully changed");
+      navigate("/login");
+    } catch (err: any) {
+      console.log("Error while resetting password", err);
+      toastAlert(
+        "error",
+        err?.response?.data?.message
+          ? err?.response?.data?.message
+          : "Error while resetting password"
+      );
+    }
   };
   return (
     <AuthLayout>
@@ -61,17 +85,17 @@ const ResetPassword = () => {
                 <PasswordInputField
                   placeholder={"Enter Current Password"}
                   label={"Current Password"}
-                  name="password"
+                  name="current_password"
                 />
                 <PasswordInputField
                   placeholder={"Enter New Password"}
                   label={"Password"}
-                  name="password1"
+                  name="new_password"
                 />
                 <PasswordInputField
                   placeholder={"Confirm New  Password"}
                   label={"Confirm Password"}
-                  name="password2"
+                  name="confirm_pass"
                 />
                 <Button
                   type={"submit"}

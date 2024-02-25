@@ -7,7 +7,6 @@ import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/auth/authAction";
 import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/shared/Loader";
 
 interface initValProps {
   email: string;
@@ -15,6 +14,18 @@ interface initValProps {
 }
 
 const Login = () => {
+  const isPasswordResetString: string | null =
+    window.localStorage.getItem("isPasswordReset");
+
+  let isPasswordReset: any;
+
+  if (isPasswordResetString !== null) {
+    isPasswordReset = JSON.parse(isPasswordResetString);
+    console.log("isPasswordreset", isPasswordReset);
+  } else {
+    console.error("Value for 'isPasswordReset' is null");
+  }
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
@@ -31,7 +42,11 @@ const Login = () => {
   const handleSubmit = async (values: initValProps) => {
     try {
       await dispatch(loginUser(values));
-      navigate("/reset-password");
+      if (isPasswordReset) {
+        navigate("/dashboard");
+      } else {
+        navigate("/reset-password");
+      }
     } catch (err: any) {}
   };
   return (
