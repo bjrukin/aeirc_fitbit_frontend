@@ -7,6 +7,7 @@ import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/auth/authAction";
 import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface initValProps {
   email: string;
@@ -14,6 +15,7 @@ interface initValProps {
 }
 
 const Login = () => {
+  const [firstReset, setFIrstReset] = useState(true);
   const isPasswordResetString: string | null =
     window.localStorage.getItem("isPasswordReset");
 
@@ -42,7 +44,7 @@ const Login = () => {
   const handleSubmit = async (values: initValProps) => {
     try {
       await dispatch(loginUser(values));
-      if (isPasswordReset) {
+      if (isPasswordReset && firstReset) {
         navigate("/dashboard");
       } else {
         navigate("/reset-password");
