@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import Service from "../../setup/Service";
 import { toastAlert } from "../../lib/toastAlert";
 import { FaCircleChevronLeft } from "react-icons/fa6";
+import axios from "axios";
 
 interface initValProps {
   email: string;
-  password: string;
-  password2: string;
+  // password: string;
+  // password2: string;
   // name: string;
   // phone?: string;
 }
@@ -22,20 +23,22 @@ const ForgetPassword = () => {
     email: Yup.string()
       .email("Please enter a valid email address")
       .required("*Email is required"),
-    password: Yup.string().required("*Password is required"),
-    // password: Yup.string().min(8,"Password must be 8 characters long").required("*Password is required"),
-    password2: Yup.string()
-      .oneOf([Yup.ref("password")], "*Passwords must match")
-      .required("*Confirm Password is required"),
+    // password: Yup.string().required("*Password is required"),
+    // // password: Yup.string().min(8,"Password must be 8 characters long").required("*Password is required"),
+    // password2: Yup.string()
+    //   .oneOf([Yup.ref("password")], "*Passwords must match")
+    //   .required("*Confirm Password is required"),
   });
   const initVal: initValProps = {
     email: "",
-    password: "",
-    password2: "",
+    // password: "",
+    // password2: "",
   };
   const handleSubmit = async (values: initValProps) => {
+    console.log("values are", values);
+    console.log("sumit");
     try {
-      const response = await Service.post("/auth/register", values);
+      const response = await axios.post("/auth/password/reset", values);
       console.log("The response is", response);
       toastAlert("success", "User Successfully Registered.");
       navigate("/login");
@@ -81,7 +84,7 @@ const ForgetPassword = () => {
                     placeholder="Enter your email address"
                   />
 
-                  <PasswordInputField
+                  {/* <PasswordInputField
                     placeholder={"Enter Password"}
                     label={"Password"}
                     name="password"
@@ -90,17 +93,12 @@ const ForgetPassword = () => {
                     placeholder={"Enter Password"}
                     label={"Confirm Password"}
                     name="password2"
-                  />
-                  {/* <Input
-                  name={"phone"}
-                  label={"Mobile Number"}
-                  placeholder="Enter Your Mobile Number"
-                /> */}
+                  /> */}
                   <Button
                     disabled={!isValid}
                     type={"submit"}
                     className="mt-2"
-                    text={isSubmitting ? "Submitting..." : "Register"}
+                    text={"Next"}
                     variant={"default"}
                   />
                 </div>

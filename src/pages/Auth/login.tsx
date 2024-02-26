@@ -5,9 +5,8 @@ import AuthLayout from "../../components/ui/AuthLayout";
 import * as Yup from "yup";
 import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/auth/authAction";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 interface initValProps {
   email: string;
@@ -15,7 +14,6 @@ interface initValProps {
 }
 
 const Login = () => {
-  const [firstReset, setFIrstReset] = useState(true);
   const isPasswordResetString: string | null =
     window.localStorage.getItem("isPasswordReset");
 
@@ -43,8 +41,8 @@ const Login = () => {
   };
   const handleSubmit = async (values: initValProps) => {
     try {
-      await dispatch(loginUser(values));
-      if (isPasswordReset && firstReset) {
+      const res = await dispatch(loginUser(values));
+      if (isPasswordReset || res?.payload?.data?.last_login) {
         navigate("/dashboard");
       } else {
         navigate("/reset-password");

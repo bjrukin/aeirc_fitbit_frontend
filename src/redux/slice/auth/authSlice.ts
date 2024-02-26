@@ -7,6 +7,7 @@ const accessToken = localStorage.getItem("accessToken")
 
 const initialState = {
   isLoading: false,
+  lastlogin: "",
   userInfo: {},
   accessToken: accessToken,
   error: "",
@@ -31,12 +32,14 @@ const authSlice = createSlice({
     builder.addCase(
       loginUser.fulfilled,
       (state, action: PayloadAction<any>) => {
+        console.log("the action", action);
         state.isLoading = false;
         state.success = false;
         state.userInfo = action?.payload.userInfo;
         state.accessToken = action?.payload?.data.access;
         state.error = "";
         state.isAuthenticated = true;
+        state.lastlogin = action?.payload?.data.last_login;
       }
     );
     builder.addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
