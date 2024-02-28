@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import React, { useState } from "react";
+import { useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useClickAway } from "react-use";
 import { RxHamburgerMenu } from "react-icons/rx";
