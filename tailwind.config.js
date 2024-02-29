@@ -47,8 +47,7 @@ export default {
           950: "#000000",
         },
         tertiary: {
-          100: "#0E3316",
-          200: "#93CF7E",
+          100: "#656565",
         },
         black: "#000000",
         white: "#FFFFFF",

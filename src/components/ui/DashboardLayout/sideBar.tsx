@@ -94,42 +94,38 @@ interface SideBarProps {
 // export default SideBar;
 
 const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
-  const buttonClassName =
-    "h-12 w-full bg-grey-300 text-tertiary-100 text-lg font-semibold text-center py-[18px] hover:bg-[none]";
-  const menuOptionClassName =
-    "h-full py-4 w-full rounded  flex space-x-3 cursor-pointer";
+  // const buttonClassName =
+  //   "h-12 w-full bg-grey-300 text-tertiary-100 text-lg font-semibold text-center py-[18px] hover:bg-[none]";
 
-  const [value, setValue] = useState(300);
-  const totalValue = 400;
-
-  // Calculate percentage
-  const percentage = (value / totalValue) * 100;
+  // const [value, setValue] = useState(300);
+  // const totalValue = 400;
+  // const percentage = (value / totalValue) * 100;
   return (
     <>
-      <div className="py-4 pl-6 ">
-        <div className="pr-6">
+      <div className="text-[white] max-h-screen">
+        {/* <div className="pr-6">
           <Button text={"Create New Session"} className={buttonClassName} />
           <Separator className="mt-4" />
-        </div>
-        <div className="pr-0">
-          <p className="text-black mt-4 mb-8 text-lg font-medium">
-            Menu Options
-          </p>
+        </div> */}
+        <div className="pr-6">
           <div className="flex flex-col w-full">
             {navItems.map(({ path, title, icon }) => (
               <NavLink
                 to={path}
                 style={({ isActive }) => ({
-                  color: isActive ? "#3E6DF9" : "#000",
-                  borderRightWidth: isActive ? "3px" : "0",
-                  borderRightColor: isActive ? "#3E6DF9" : "transparent",
+                  color: "white",
+                  background: isActive ? "#576494" : "",
+                  borderRadius: "8px",
                   transition: "border-right 1s ease-in-out",
+                  marginBottom: "12px",
                 })}
               >
                 <motion.div
-                  className={menuOptionClassName}
-                  whileHover={{ color: "#3E6DF9" }}
-                  transition={{ duration: 0.4 }}
+                  className={
+                    " py-4 px-6 w-full rounded  flex space-x-3 cursor-pointer hover:bg-[#576494] duration-800 ease-in-out "
+                  }
+                  // whileHover={{ background: "#576494" }}
+                  // transition={{ duration: 0.4 }}
                 >
                   {showSideNav ? (
                     <p>{icon}</p>
@@ -144,7 +140,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
         </div>
       </div>
 
-      <div className="px-6">
+      {/* <div className="px-6">
         <div className="mt-[87px]">
           <p className="text-black text-lg mb-1">Basic Insights</p>
           <Card className="bg-[#FFFFFF] border-none ">
@@ -153,9 +149,6 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                 Daily Calorie Burn
               </CardDescription>
             </CardHeader>
-            {/* <CardContent>
-              <p>Card Content</p>
-            </CardContent> */}
             <CardFooter>
               <div>
                 <input
@@ -190,7 +183,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
           </div>
           <MdOutlineLogout size={26} color="red" className="cursor-pointer" />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

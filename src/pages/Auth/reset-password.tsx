@@ -1,14 +1,12 @@
 import { Button } from "../../components/shared/Button";
-import Input from "../../components/shared/Input";
 import PasswordInputField from "../../components/shared/PasswordInputField";
 import AuthLayout from "../../components/ui/AuthLayout";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import { useLocation, useNavigate } from "react-router-dom";
-import Service from "../../setup/Service";
+import { useNavigate } from "react-router-dom";
 import { toastAlert } from "../../lib/toastAlert";
 import { FaCircleChevronLeft } from "react-icons/fa6";
-import axios from "axios";
+import { useEffect } from "react";
 
 interface initValProps {
   email: string;
@@ -18,8 +16,10 @@ interface initValProps {
   // phone?: string;
 }
 const ResetPassword = () => {
-  const location = useLocation();
-  console.log("Location is", location);
+  useEffect(() => {
+    const urlParams = new URLSearchParams();
+    console.log("param", urlParams);
+  }, []);
   const navigate = useNavigate();
   const FORM_VALIDATION = Yup.object().shape({
     password: Yup.string().required("*Password is required"),
@@ -34,11 +34,11 @@ const ResetPassword = () => {
     // password2: "",
   };
   const handleSubmit = async (values: initValProps) => {
-  console.log("The values are",values)
+    console.log("The values are", values);
     try {
-    //   const response = await Service.post("/auth/password/reset", values);
-    //   console.log("The response of reset is is", response);
-    //   toastAlert("success", "User Successfully Registered.");
+      //   const response = await Service.post("/auth/password/reset", values);
+      //   console.log("The response of reset is is", response);
+      //   toastAlert("success", "User Successfully Registered.");
       navigate("/login");
     } catch (error: any) {
       toastAlert(
@@ -66,7 +66,7 @@ const ResetPassword = () => {
           validationSchema={FORM_VALIDATION}
           onSubmit={handleSubmit}
         >
-          {({ isValid, isSubmitting }) => {
+          {({ isValid }) => {
             return (
               <Form>
                 <div className="mt-4 ">

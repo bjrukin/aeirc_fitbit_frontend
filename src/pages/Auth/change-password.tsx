@@ -3,13 +3,10 @@ import { Button } from "../../components/shared/Button";
 import PasswordInputField from "../../components/shared/PasswordInputField";
 import AuthLayout from "../../components/ui/AuthLayout";
 import * as Yup from "yup";
-import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import Service from "../../setup/Service";
 import { toastAlert } from "../../lib/toastAlert";
-import { useState } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface initValProps {
   current_password: string;
@@ -19,7 +16,6 @@ interface initValProps {
 
 const ChangePassword = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     current_password: Yup.string().required("*Password is required"),
     new_password: Yup.string()
