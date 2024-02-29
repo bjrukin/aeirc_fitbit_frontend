@@ -9,7 +9,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className=" flex justify-between items-center px-4 lg:px-0 lg:justify-end h-[60px] w-full py-2 shadow-xl">
+    <div className=" flex justify-between items-center px-4 lg:px-0 lg:justify-end h-[60px] w-full py-2 ">
       <div className="lg:hidden cursor-pointer">
         <MobileNav />
       </div>

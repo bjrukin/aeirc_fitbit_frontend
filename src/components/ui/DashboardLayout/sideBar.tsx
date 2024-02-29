@@ -99,7 +99,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
   const menuOptionClassName =
     "h-full py-4 w-full rounded  flex space-x-3 cursor-pointer";
 
-  const [value, setValue] = useState(100);
+  const [value, setValue] = useState(300);
   const totalValue = 400;
 
   // Calculate percentage
@@ -150,7 +150,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
           <Card className="bg-[#FFFFFF] border-none ">
             <CardHeader>
               <CardDescription className="text-lg">
-                Daily Caorie Burn
+                Daily Calorie Burn
               </CardDescription>
             </CardHeader>
             {/* <CardContent>
@@ -166,8 +166,8 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                   className="custom-slider"
                   style={{
                     width: "300px",
-                    height: "14px",
-                    borderRadius: "14px",
+                    height: "10px",
+                    borderRadius: "10px",
                     background: `linear-gradient(to right, ${"#93CF7E"} ${percentage}%, gray ${percentage}%)`,
                     appearance: "none",
                   }}

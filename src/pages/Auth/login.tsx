@@ -7,6 +7,7 @@ import Input from "../../components/shared/Input";
 import { loginUser } from "../../redux/slice/auth/authAction";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { toastAlert } from "../../lib/toastAlert";
 
 interface initValProps {
   email: string;
@@ -42,10 +43,12 @@ const Login = () => {
   const handleSubmit = async (values: initValProps) => {
     try {
       const res = await dispatch(loginUser(values));
+      console.log("res", res);
       if (isPasswordReset || res?.payload?.data?.last_login) {
+        toastAlert("success", "User Successfully logged in.");
         navigate("/dashboard");
       } else {
-        navigate("/reset-password");
+        navigate("/change-password");
       }
     } catch (err: any) {}
   };

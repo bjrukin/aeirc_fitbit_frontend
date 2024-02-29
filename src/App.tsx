@@ -10,6 +10,7 @@ import Report from "./pages/Report";
 import { useAppSelector } from "./redux/hooks";
 import ForgetPassword from "./pages/Auth/forget-password";
 import ResetPassword from "./pages/Auth/reset-password";
+import ChangePassword from "./pages/Auth/change-password";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
@@ -48,7 +49,8 @@ function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        {token && (
+        <Route path="/change-password" element={<ChangePassword />} />
+        {token && ( 
           <>
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Report />} />

@@ -40,7 +40,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <p className="p-bold-24">FitPulse</p>
             </div>
             <div className="bg-black rounded p-2 cursor-pointer">
-              <CgArrowLeft color="white" size={24}/>
+              <CgArrowLeft color="white" size={24} />
             </div>
           </div>
           {/* <motion.div
@@ -61,19 +61,18 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           </div>
         </div>
       </motion.div>
-      {/* <motion.div
-        initial={{ marginLeft: showSideNav ? "180px" : "80px" }}
-        animate={{ marginLeft: showSideNav ? "180px" : "80px" }}
+      <motion.div
+        initial={{ marginLeft: showSideNav ? "388px" : "80px" }}
+        animate={{ marginLeft: showSideNav ? "388px" : "80px" }}
         transition={{ duration: 0.5 }}
         // className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
-        className={`w-full bg-[white]  rounded-[40px] h-screen`}
+        className={`w-full bg-[#eeeeee]  rounded-[40px] h-screen`}
       >
         <Header />
-        <div className="mt-4 px-4 bg-[#eeeeee] h-screen">
-          dasdddddddddddd
+        <div className="mt-4 px-4 bg-[white] h-screen">
           {children}
         </div>
-      </motion.div> */}
+      </motion.div>
     </div>
   );
 };
