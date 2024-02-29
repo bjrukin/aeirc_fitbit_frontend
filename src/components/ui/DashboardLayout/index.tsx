@@ -74,8 +74,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         // className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
         className={`w-full bg-[#F3F3F3]`}
       >
-        <Header />
-        <div className="p-4">{children}</div>
+        <div className="fixed z-10  w-full  pr-[388px] ">
+          <Header />
+        </div>
+        <div className="p-4 -z-2 mt-[72px]">{children}</div>
       </motion.div>
     </div>
   );

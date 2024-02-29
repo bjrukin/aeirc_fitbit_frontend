@@ -100,7 +100,7 @@ const Table: React.FC<IProps> = ({
       ) : (
         // <Loader/>
         <>
-          <div className="w-full">
+          <div className="-z-2 w-full">
             <div className="mt-5 rounded-xl border border-border-color-dark overflow-x-hidden relative sm:rounded-lg w-full">
               <table
                 {...getTableProps()}
