@@ -106,7 +106,7 @@ const Table: React.FC<IProps> = ({
                 {...getTableProps()}
                 className="w-full text-left text-text-black"
               >
-                <thead className="text-base font-bold ">
+                <thead className="font-bold text-center">
                   {headerGroups.map((headerGroup: any, i: number) => (
                     <tr {...headerGroup.getHeaderGroupProps()} key={i}>
                       {headerGroup.headers.map((column: any, idx: number) => (
@@ -114,11 +114,12 @@ const Table: React.FC<IProps> = ({
                           {...column.getHeaderProps()}
                           key={idx}
                           scope="col"
-                          className="border border-b-2 border-tertiary-200 "
+                          className={`border-[2px] ${idx === headerGroup.headers.length - 1 ? '' : 'border-r-tertiary-700'} rounded bg-tertiary-600`}
+                          // className="border-[2px] border-r-tertiary-700 rounded   bg-tertiary-600 "
                         >
                           {/* {column.render('Header')} */}
-                          <div className="flex items-center">
-                            <span className="font-bold text-left px-2 py-1  rounded-lg">
+                          <div className="flex items-center justify-center">
+                            <span className="font-bold  px-2 py-4 flex  text-xl  rounded-lg">
                               {column.render("Header")}
                             </span>
                             <span className="ml-2"></span>

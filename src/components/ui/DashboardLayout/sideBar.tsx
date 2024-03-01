@@ -113,8 +113,8 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               <NavLink
                 to={path}
                 style={({ isActive }) => ({
-                  color: "white",
-                  background: isActive ? "#576494" : "",
+                  color: isActive ? "black" : "white",
+                  background: isActive ? "white" : "",
                   borderRadius: "8px",
                   transition: "border-right 1s ease-in-out",
                   marginBottom: "12px",
@@ -122,10 +122,10 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               >
                 <motion.div
                   className={
-                    " py-4 px-6 w-full rounded  flex space-x-3 cursor-pointer hover:bg-[#576494] duration-800 ease-in-out "
+                    " py-4 px-6 w-full rounded  flex space-x-3 cursor-pointer "
                   }
-                  // whileHover={{ background: "#576494" }}
-                  // transition={{ duration: 0.4 }}
+                  whileHover={{ background: "white", color: "black" }}
+                  transition={{ duration: 0.5 }}
                 >
                   {showSideNav ? (
                     <p>{icon}</p>

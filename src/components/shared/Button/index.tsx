@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../lib/utilis";
+import { Divide } from "lucide-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -13,7 +14,7 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "w-fit h-10 bg-transparent hover:bg-none text-text border border-text text-lg hover:bg-text/90 hover:text-white rounded-lg",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -36,11 +37,12 @@ export interface ButtonProps
   text?: any;
   type?: string | any;
   asChild?: boolean;
+  icon?: any;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, type, text, variant, size, asChild = false, ...props },
+    { className, type, icon, text, variant, size, asChild = false, ...props },
     ref
   ) => {
     return (
@@ -50,7 +52,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {text}
+        {icon ? (
+          <div className="flex items-center">
+            <span> {text}</span>
+            <span className="ml-2"> {icon}</span>
+          </div>
+        ) : (
+          text
+        )}
       </button>
     );
   }

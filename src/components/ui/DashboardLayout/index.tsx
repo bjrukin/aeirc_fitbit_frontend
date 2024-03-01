@@ -1,5 +1,4 @@
 import React from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { motion } from "framer-motion";
 import SideBar from "./sideBar";
 import { cn } from "../../../lib/utilis";
@@ -37,7 +36,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           <div className=" flex items-center justify-between  px-8">
             <div className="flex space-x-3 items-center py-6 ">
               <img src={Logo} alt="" className="h-[35px] w-[35px]" />
-              <p className="p-bold-24">FitPulse</p>
+              <p className="p-bold-24">Healthfit Nepal</p>
             </div>
             <motion.div
               className={`bg-black rounded p-2 cursor-pointer`}
@@ -77,7 +76,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <div className="fixed z-10  w-full  pr-[388px] ">
           <Header />
         </div>
-        <div className="p-4 -z-2 mt-[72px]">{children}</div>
+
+        <div className="p-4 -z-2 mt-[72px]">
+          {children}
+        </div>
       </motion.div>
     </div>
   );

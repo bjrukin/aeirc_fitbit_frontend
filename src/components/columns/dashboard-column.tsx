@@ -1,6 +1,6 @@
 export const PatientColumn = [
   {
-    Header: "Instituion Name",
+    Header: "Id",
     accessor: "",
     Cell: ({ row }: { row: any }) => {
       return (
@@ -9,16 +9,31 @@ export const PatientColumn = [
     },
   },
   {
-    Header: "Mature Date",
+    Header: "Name",
     accessor: "mature_at",
   },
   {
-    Header: "Deposit Amount",
-    accessor: "deposit_amount",
+    Header: "Address",
+    accessor: "",
   },
   {
-    Header: "Rate %",
+    Header: "Phone Number",
     interest_rate: "10.130",
-    accessor: "interest_rate",
+    accessor: "",
+  },
+  {
+    Header: "Email Address",
+    interest_rate: "10.130",
+    accessor: "",
+  },
+  {
+    Header: "Status",
+    interest_rate: "10.130",
+    accessor: "",
+  },
+  {
+    Header: "Actions",
+    interest_rate: "10.130",
+    accessor: "",
   },
 ];

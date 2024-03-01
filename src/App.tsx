@@ -6,11 +6,11 @@ import Error from "./error";
 import PrivateRoute from "./components/shared/PrivateRoute";
 import { useEffect } from "react";
 import Profile from "./pages/Profile";
-import Report from "./pages/Report";
 import { useAppSelector } from "./redux/hooks";
 import ForgetPassword from "./pages/Auth/forget-password";
 import ResetPassword from "./pages/Auth/reset-password";
 import ChangePassword from "./pages/Auth/change-password";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
@@ -53,7 +53,7 @@ function App() {
         {token && ( 
           <>
             <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Report />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
             <Route path="*" element={<Error />} />
