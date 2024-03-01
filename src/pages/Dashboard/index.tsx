@@ -14,9 +14,21 @@ import { Button } from "../../components/shared/Button";
 import { IoFilterOutline } from "react-icons/io5";
 import { PatientColumn } from "../../components/columns/dashboard-column";
 import Table from "../../components/ui/table";
+import { GoPlus } from "react-icons/go";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog";
+import Modal from "../../components/shared/Modal";
+import HospitalForm from "../../components/forms/hospital-from";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showHospitalModal, setShowHospitalModal] = useState(false);
+  console.log("modal", showHospitalModal);
+  const [showUsersModal, setShowUsersModal] = useState(false);
   const cardData = [
     {
       title: "Hospital Count",
@@ -44,25 +56,45 @@ const Dashboard = () => {
     },
   ];
 
+  const handleShowHospitalModal = () => {
+    setShowHospitalModal(!showHospitalModal);
+  };
+
   return (
     <DashboardLayout>
+      {showHospitalModal && (
+        <Modal>
+          <HospitalForm />
+        </Modal>
+      )}
       {isLoading ? (
         <DashboardSkeleton />
       ) : (
         <div className="text-black">
+          <div className="flex  items-center justify-between  mb-7">
+            <p className="text-2xl font-semibold">Super Admin Dashboard</p>
+            <Button
+              onClick={handleShowHospitalModal}
+              icon={<GoPlus size={22} />}
+              className="w-fit p-6 bg-primary-500"
+              text="Create New Item"
+            />
+          </div>
           <div className="flex  space-x-8 mt-6">
             {cardData.map((data, index) => (
               <Card key={index} className="bg-white w-1/4 border-none ">
                 <CardHeader>
                   <CardTitle className=" flex  items-center  space-x-2">
-                    <div className="bg-tertiary-200 h-10 w-10 rounded-full">
+                    <div className="bg-secondary-200 h-10 w-10 rounded-full">
                       <img
                         src={data?.image}
                         alt="icon"
                         className={`${data?.className} `}
                       />
                     </div>
-                    <span className="text-black  text-lg font-semibold">{data.title}</span>
+                    <span className="text-black  text-xl font-semibold">
+                      {data.title}
+                    </span>
                   </CardTitle>
                 </CardHeader>
                 <CardFooter>

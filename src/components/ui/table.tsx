@@ -123,7 +123,7 @@ const Table: React.FC<IProps> = ({
                               {column.render("Header")}
                             </span>
                             <span className="ml-2"></span>
-                          </div>
+                          </div>  
                         </th>
                       ))}
                     </tr>
