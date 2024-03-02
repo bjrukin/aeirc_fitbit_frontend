@@ -113,6 +113,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         title={"Additional Details"}
         formFields={AdditionalDetailField}
         formValidation={FORM_VALIDATION}
+        onCrossClick={onClick}
         onClick={() => setCurrentStep(currentStep - 1)}
         initialValues={initVal}
         onSubmit={handleSubmit}

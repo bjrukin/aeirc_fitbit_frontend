@@ -21,6 +21,7 @@ interface DynamicFormProps {
   onSubmit: (values: any) => void;
   submitButtonText: string;
   title: string;
+  onCrossClick: any;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -31,12 +32,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   initialValues,
   onSubmit,
   submitButtonText,
+  onCrossClick,
 }) => {
   return (
     <div className="bg-white flex-1 rounded-lg p-6  h-full">
       <div className="flex items-center justify-between">
         <p className="p-semibold-20">{title}</p>
-        <RxCross2 size={22} className="cursor-pointer" onClick={onClick} />
+        <RxCross2 size={22} className="cursor-pointer" onClick={onCrossClick} />
       </div>
 
       <Formik

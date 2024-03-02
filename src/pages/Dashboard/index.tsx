@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [showUsersModal, setShowUsersModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>([]);
   const cardData = [
     {
@@ -52,6 +52,7 @@ const Dashboard = () => {
 
   const handleShowHospitalModal = () => {
     setShowHospitalModal(!showHospitalModal);
+    setCurrentStep(0);
   };
 
   return (

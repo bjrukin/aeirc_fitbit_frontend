@@ -130,6 +130,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         formFields={HospitalFormField}
         formValidation={FORM_VALIDATION}
         onClick={onClick}
+        onCrossClick={onClick}
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Hospital"
