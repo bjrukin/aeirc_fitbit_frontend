@@ -1,6 +1,7 @@
 import React from "react";
 import { ErrorMessage, FieldHookConfig, useField } from "formik";
 import { cn } from "../../../lib/utilis";
+import { BiErrorCircle } from "react-icons/bi";
 interface IProps {
   label?: string | number;
   placeholder?: string;
@@ -51,15 +52,7 @@ const Input = ({
         autoComplete="off"
         {...field}
       />
-      <div className="relative">
-        {/* {meta.touched && meta.error && (
-          <BiErrorCircle
-            size={17}
-            color="#fff"
-            className="absolute top-2 mx-2"
-          />
-        )} */}
-
+      <div className="relative ">
         <ErrorMessage
           component="div"
           name={field.name}

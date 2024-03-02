@@ -1,23 +1,41 @@
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Input from "../shared/Input";
 import { Button } from "../shared/Button";
+import { RxCross2 } from "react-icons/rx";
+import { DefaultSelect } from "../shared/Select";
+import Select from "react-select";
+import { customStyles } from "../shared/CustomStyle";
 interface initValProps {
+  name: string;
+  contact: number | null;
   email: string;
-  password: string;
+  province: string;
+  district: string;
+  ward: string;
 }
 
-const HospitalForm = () => {
+interface HospitalFormProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement | SVGElement>;
+}
+const HospitalForm: React.FC<HospitalFormProps> = ({ onClick }) => {
   const FORM_VALIDATION = Yup.object().shape({
+    name: Yup.string().required("*Name is required"),
+    contact: Yup.number().required("*Contact is required"),
     email: Yup.string()
       .email("*Please enter a valid email address")
       .required("*Email is required"),
-    password: Yup.string().required("*Password is required"),
-    // password: Yup.string().min(8,"Password must be 8 characters long").required("*Password is required"),
+    province: Yup.string().required("*Province is required"),
+    district: Yup.string().required("*District is required"),
+    ward: Yup.string().required("*Ward is required"),
   });
   const initVal: initValProps = {
+    name: "",
+    contact: null,
     email: "",
-    password: "",
+    province: "",
+    district: "",
+    ward: "",
   };
 
   const handleSubmit = async (values: initValProps) => {
@@ -34,16 +52,21 @@ const HospitalForm = () => {
         </p>
       </div>
       <div className="bg-white flex-1 rounded-lg p-6 h-full">
-        <p className="p-semibold-20">Enter Hospital Details</p>
+        <div className="flex items-center justify-between">
+          <p className="p-semibold-20">Enter Hospital Details</p>
+          <RxCross2 size={22} className="cursor-pointer" onClick={onClick} />
+        </div>
+
         <Formik
           initialValues={initVal}
+          l
           validationSchema={FORM_VALIDATION}
           onSubmit={handleSubmit}
         >
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col justify-between">
               <div className="mt-4 ">
-                <div className="flex items-center  w-full space-x-5">
+                <div className="flex   w-full space-x-5">
                   <div className="w-full">
                     <Input
                       name={"name"}
@@ -56,7 +79,7 @@ const HospitalForm = () => {
                   <div className="w-full">
                     <Input
                       type="string"
-                      name={"email"}
+                      name={"contact"}
                       label={"Contact Number"}
                       placeholder="+977 | Enter The Name Of Hospital"
                       labelClassName="font-bold text-lg"
@@ -64,10 +87,10 @@ const HospitalForm = () => {
                     />
                   </div>
                 </div>
-                <div className="flex items-center  w-full space-x-5 mt-10">
+                <div className="flex   w-full space-x-5 mt-10 ">
                   <div className="w-full">
                     <Input
-                      name={"name"}
+                      name={"email"}
                       labelClassName="font-bold text-lg"
                       label={"Email Address"}
                       required
@@ -75,30 +98,73 @@ const HospitalForm = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <Input
-                      type="string"
-                      name={"email"}
-                      label={"Hospital Province"}
+                    <Field
+                      name="province"
+                      className=""
+                      options={[
+                        { label: "aaa", value: "asdasd" },
+                        { label: "aaa", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "Aaa", value: "asdasd" },
+                      ]}
+                      component={DefaultSelect}
+                      isMulti={false}
                       placeholder="Select Hospital Province"
-                      labelClassName="font-bold text-lg"
-                      required={true}
+                      label="Hospital Province"
+                      // defaultValue={EditItemsData?.modifiers?.map(
+                      //   (item: any) => {
+                      //     return {
+                      //       label: item.name,
+                      //       value: item.id,
+                      //     };
+                      //   }
+                      // )}
                     />
                   </div>
                 </div>
-                <div className="flex items-center  w-full space-x-5 mt-10">
-                  <div className="w-full">
-                    <Input
-                      name={"name"}
-                      labelClassName="font-bold text-lg"
-                      label={"Hospital District"}
-                      required
+                <div className="flex   w-full space-x-5 mt-10 ">
+                  <div className="w-full ">
+                    <Field
+                      name="district"
+                      className=""
+                      options={[
+                        { label: "aaa", value: "asdasd" },
+                        { label: "aaa", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "asas", value: "asdasd" },
+                        { label: "Aaa", value: "asdasd" },
+                      ]}
+                      component={DefaultSelect}
+                      isMulti={false}
                       placeholder="Select Hospital District"
+                      label="Hospital District"
+                      // defaultValue={EditItemsData?.modifiers?.map(
+                      //   (item: any) => {
+                      //     return {
+                      //       label: item.name,
+                      //       value: item.id,
+                      //     };
+                      //   }
+                      // )}
                     />
                   </div>
                   <div className="w-full">
                     <Input
                       type="string"
-                      name={"email"}
+                      name={"ward"}
                       label={"Hospital Ward"}
                       placeholder="Enter Hospital Ward"
                       labelClassName="font-bold text-lg"
@@ -108,11 +174,17 @@ const HospitalForm = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center  mb-6 ">
-                <button>asd</button>
+                <Button
+                  variant={"secondary"}
+                  type={"click"}
+                  className="w-fit"
+                  text={"Back"}
+                  onClick={onClick}
+                />
                 <Button
                   disabled={!isValid}
                   type={"submit"}
-                  className="mt-5 w-fit "
+                  className="w-fit "
                   text={isSubmitting ? "..." : "Create Hospital"}
                   variant={"outline"}
                 />

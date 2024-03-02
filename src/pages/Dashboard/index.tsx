@@ -63,8 +63,8 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
       {showHospitalModal && (
-        <Modal>
-          <HospitalForm />
+        <Modal isOpen={showHospitalModal}>
+          <HospitalForm onClick={handleShowHospitalModal} />
         </Modal>
       )}
       {isLoading ? (
