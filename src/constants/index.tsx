@@ -74,3 +74,8 @@ export const navItems = [
   //   icon: <FaCircle size={26} />,
   // },
 ];
+
+export const HospitalFormStep = [
+  { id: 1, title: "Hospital Details", subtitle: "Step 1" },
+  { id: 2, title: "Additional Details", subtitle: "Step 2" },
+];

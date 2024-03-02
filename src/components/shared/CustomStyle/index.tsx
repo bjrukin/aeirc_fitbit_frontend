@@ -1,7 +1,6 @@
 const mainColor = "#3E6DF9";
 export const customStyles = {
   control: (provided: any, state: any) => {
-    console.log("state is", state);
     return {
       ...provided,
       border: `1px solid ${

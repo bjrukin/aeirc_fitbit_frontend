@@ -3,8 +3,6 @@ import { Hospital, Person, Sethescope, Watch } from "../../assets/images";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -15,20 +13,16 @@ import { IoFilterOutline } from "react-icons/io5";
 import { PatientColumn } from "../../components/columns/dashboard-column";
 import Table from "../../components/ui/table";
 import { GoPlus } from "react-icons/go";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "../../components/ui/dialog";
 import Modal from "../../components/shared/Modal";
-import HospitalForm from "../../components/forms/hospital-from";
+import HospitalForm from "../../components/forms/Hospital/hospital-form";
+import AdditionalDetailForm from "../../components/forms/Hospital/additional-detail-form";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false);
-  console.log("modal", showHospitalModal);
   const [showUsersModal, setShowUsersModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [hospitalDetails, setHospitalDetails] = useState<any>([]);
   const cardData = [
     {
       title: "Hospital Count",
@@ -64,7 +58,21 @@ const Dashboard = () => {
     <DashboardLayout>
       {showHospitalModal && (
         <Modal isOpen={showHospitalModal}>
-          <HospitalForm onClick={handleShowHospitalModal} />
+          {currentStep == 0 ? (
+            <HospitalForm
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              hospitalDetails={hospitalDetails}
+              setHospitalDetails={setHospitalDetails}
+              onClick={handleShowHospitalModal}
+            />
+          ) : (
+            <AdditionalDetailForm
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              onClick={handleShowHospitalModal}
+            />
+          )}
         </Modal>
       )}
       {isLoading ? (

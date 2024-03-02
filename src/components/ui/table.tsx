@@ -30,7 +30,6 @@ const Table: React.FC<IProps> = ({
   pagination,
 }) => {
   const data = React.useMemo(() => (tableData ? tableData : []), [tableData]);
-  console.log("data", data, tableData);
   const columns = React.useMemo(() => tableColumn, []);
   const {
     headerGroups,
