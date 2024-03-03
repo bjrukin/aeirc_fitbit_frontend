@@ -8,13 +8,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-secondary-500 text-white hover:bg-secondary-500/90 w-full",
+        default: "h-9 xl:h-10 bg-secondary-500 text-white hover:bg-secondary-500/90 w-full",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-        "w-fit h-10 bg-primary-500 hover:bg-primary-800  border border-none text-white text-lg hover:bg-primary-500/90 hover:text-white rounded-lg",
+          "w-fit h-9 xl:h-10 bg-primary-500 hover:bg-primary-800  border border-none text-white text-lg hover:bg-primary-500/90 hover:text-white rounded-lg",
         secondary:
-          "w-fit h-10 bg-transparent hover:bg-none text-text border border-text text-lg hover:bg-text/90 hover:text-white rounded-lg",
+          "w-fit h-9 xl:h-100 bg-transparent hover:bg-none text-text border border-text text-lg hover:bg-text/90 hover:text-white rounded-lg",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -54,8 +54,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {icon ? (
           <div className="flex items-center">
-            <span> {text}</span>
-            <span className="ml-2"> {icon}</span>
+            <span className="hidden lg:block"> {text}</span>
+            <span className="ml-0 lg:ml-2"> {icon}</span>
           </div>
         ) : (
           text

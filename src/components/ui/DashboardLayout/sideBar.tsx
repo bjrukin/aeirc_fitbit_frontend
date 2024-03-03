@@ -21,77 +21,6 @@ interface SideBarProps {
   showSideNav?: boolean;
 }
 
-// const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
-//   return (
-//     <div className="py-4 pl-6">
-//       <div>
-//         {" "}
-//         <div className="pr-6">
-//           <Button
-//             text={"Create New Session"}
-//             className="h-12 w-full bg-grey-300 text-tertiary-100 text-lg font-semibold text-center py-[18px] hover:bg-[none]"
-//           />
-//           <Separator className="mt-4" />
-//         </div>
-//         <div className="pr-0">
-//           <p className="text-black mt-4 mb-8 text-lg font-medium">
-//             Menu Options
-//           </p>
-//           <div className="flex  flex-col w-full ">
-//             {navItems?.map((el: any) => (
-//               <NavLink
-//                 to={el?.path}
-//                 style={({ isActive }) => {
-//                   return {
-//                     color: isActive ? "#3E6DF9" : "#000",
-//                     borderRightWidth: isActive ? "3px" : "0",
-//                     borderRightColor: "#3E6DF9",
-//                     borderRightHeight: isActive ? "3px" : "0",
-//                     transition: "border-right 1s ease-in-out",
-//                   };
-//                 }}
-//               >
-//                 <div className="">
-//                   <motion.div
-//                     className="h-full py-4 w-full rounded  flex space-x-3 cursor-pointer"
-//                     key={el?.id}
-//                     whileHover={{
-//                       color: "#3E6DF9",
-//                     }}
-//                     transition={{ duration: 0.4 }}
-//                   >
-//                     {showSideNav ? (
-//                       <p> {el?.icon}</p>
-//                     ) : (
-//                       <ToolTip content={el?.title}>{el?.icon}</ToolTip>
-//                     )}
-//                     {showSideNav && (
-//                       <p className="p-semibold-20">{el?.title}</p>
-//                     )}
-//                   </motion.div>
-//                 </div>
-//               </NavLink>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//       <div className="flex items-center justify-between">
-//         <div className="flex items-center space-x-4">
-//           <Avatar>
-//             <AvatarImage src={AvatarImages} alt="avatar" />
-//           </Avatar>
-//           <div>
-//             <p className="p-semibold-18">Sumit Ghimire</p>
-//             <p className="text-grey-500">User Name</p>
-//           </div>
-//         </div>
-//         <MdOutlineLogout size={26} color="red"  className="cursor-pointer"/>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SideBar;
 
 const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
   // const buttonClassName =
@@ -108,7 +37,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
           <Separator className="mt-4" />
         </div> */}
         <div className="pr-6">
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full ml-2 lg:ml-0">
             {navItems.map(({ path, title, icon }) => (
               <NavLink
                 to={path}
@@ -122,7 +51,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               >
                 <motion.div
                   className={
-                    " py-4 px-6 w-full rounded  flex space-x-3 cursor-pointer "
+                    " py-3  2xl:py-4 3xl:py-6 px-6 w-full rounded  flex space-x-3 cursor-pointer "
                   }
                   whileHover={{ background: "white", color: "black" }}
                   transition={{ duration: 0.5 }}
@@ -132,7 +61,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                   ) : (
                     <ToolTip content={title}>{icon}</ToolTip>
                   )}
-                  {showSideNav && <p className="p-semibold-20">{title}</p>}
+                  {showSideNav && <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">{title}</p>}
                 </motion.div>
               </NavLink>
             ))}

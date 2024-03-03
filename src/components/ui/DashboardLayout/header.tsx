@@ -9,15 +9,15 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="w-full bg-white border-b border-gray-300 flex justify-between items-center px-4 lg:px-0 lg:justify-end h-[72px] w-full  ">
-      <div className="lg:hidden cursor-pointer">
+    <div className="w-full bg-white border-b border-gray-300 flex justify-end  px-4 lg:px-0 md:justify-end h-[65px] 2xl:h-[72px] w-full  ">
+      {/* <div className="lg:hidden cursor-pointer">
         <MobileNav />
-      </div>
-      <div className="pr-2 lg:pr-10 flex items-center  space-x-4">
+      </div> */}
+      <div className="pr-2 lg:pr-10 flex items-center justify-end  space-x-4">
         <div className="h-9 w-9 rounded-full  text-xl bg-black text-white pl-3 pt-1">
           S
         </div>
-        <div className="hidden lg:block">
+        <div className="hblock">
           <p className="p-semibold-14">Sumit Ghimire</p>
           <p className="p-medium-12 text-grey-500">23 years old</p>
         </div>
