@@ -12,7 +12,7 @@ interface initValProps {
 }
 
 interface HospitalFormProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement | SVGElement>;
+  onClick?:any
   currentStep?: any;
   setCurrentStep?: any;
   hospitalDetails?: any;
@@ -27,6 +27,7 @@ export const HospitalFormField = [
       label: "Name Of Hospital",
       placeholder: "Enter The Name Of Hospital",
       required: true,
+      inputType:"text",
     },
     {
       name: "contact",
@@ -34,6 +35,7 @@ export const HospitalFormField = [
       label: "Contact Number",
       placeholder: "+977 | Enter The Name Of Hospital",
       required: true,
+      inputType:"number",
     },
   ],
   [
@@ -43,6 +45,7 @@ export const HospitalFormField = [
       label: "Email Address",
       placeholder: "Enter Email Address",
       required: true,
+      inputType:"text",
     },
     {
       name: "province",
@@ -68,6 +71,7 @@ export const HospitalFormField = [
       label: "Hospital Ward",
       placeholder: "Enter Hospital Ward",
       required: true,
+      inputType:"number",
     },
   ],
 ];
@@ -76,10 +80,8 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
-  hospitalDetails,
   setHospitalDetails,
 }) => {
-  console.log("hospital detail", hospitalDetails);
 
   const FORM_VALIDATION = Yup.object().shape({
     name: Yup.string()

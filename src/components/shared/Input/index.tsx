@@ -1,7 +1,6 @@
 import React from "react";
 import { ErrorMessage, FieldHookConfig, useField } from "formik";
 import { cn } from "../../../lib/utilis";
-import { BiErrorCircle } from "react-icons/bi";
 interface IProps {
   label?: string | number;
   placeholder?: string;
@@ -22,6 +21,13 @@ const Input = ({
   ...props
 }: IProps & FieldHookConfig<string>) => {
   const [field, meta] = useField(props);
+
+  const handleWheel = (e: any) => {
+    if (type === "number") {
+      e.target?.blur();
+    }
+  };
+
   return (
     <div className="h-[95px]">
       <label
@@ -41,6 +47,7 @@ const Input = ({
       <input
         placeholder={placeholder}
         type={type}
+        onWheel={handleWheel}
         className={cn(
           `mt-4 flex h-11 autocomplete-off w-full rounded-md border border-tertiary-350 bg-background px-3 py-2 text-sm ring-offset-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-none focus-visible:ring-ring focus-visible:ring-offset-2 focus:border-secondary-400 disabled:cursor-not-allowed disabled:opacity-50 w-full ${
             meta.error && meta.touched

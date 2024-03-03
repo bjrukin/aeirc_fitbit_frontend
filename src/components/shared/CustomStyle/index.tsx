@@ -30,7 +30,7 @@ export const customStyles = {
   }),
   menu: (provided: any) => ({
     ...provided,
-    minHeight: "150px",
+    maxHeight: "250px",
     overflowY: "auto",
   }),
 
@@ -45,7 +45,7 @@ export const customStyles = {
     },
   }),
 
-  multiValue: (styles: any, { data }: { data: any }) => {
+  multiValue: (styles: any) => {
     return {
       ...styles,
       backgroundColor: mainColor,
@@ -58,7 +58,7 @@ export const customStyles = {
     ...styles,
     color: data.color,
   }),
-  multiValueRemove: (styles: any, { data }: { data: any }) => ({
+  multiValueRemove: (styles: any) => ({
     ...styles,
     color: "white",
     backgroundColor: "none",

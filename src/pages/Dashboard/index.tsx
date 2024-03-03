@@ -16,12 +16,22 @@ import { GoPlus } from "react-icons/go";
 import Modal from "../../components/shared/Modal";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
 import AdditionalDetailForm from "../../components/forms/Hospital/additional-detail-form";
+import PersonalDetailForm from "../../components/forms/MedicalPerson/personal-detail-form";
+import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
+import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false);
-  const [showUsersModal, setShowUsersModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [showHospitalUsersModal, setShowHospitalUsersModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState<any>(0);
+  console.log("current step is", currentStep);
   const [hospitalDetails, setHospitalDetails] = useState<any>([]);
   const cardData = [
     {
@@ -50,48 +60,125 @@ const Dashboard = () => {
     },
   ];
 
-  const handleShowHospitalModal = () => {
-    setShowHospitalModal(!showHospitalModal);
-    setCurrentStep(0);
+  // const handleShowHospitalModal = () => {
+  //   setShowHospitalModal(!showHospitalModal);
+  //   setCurrentStep(currentStep - 1);
+  // };
+
+  // const handleShowHospitalUserModal = () => {
+  //   setShowHospitalUsersModal(!showHospitalUsersModal);
+  //   setCurrentStep(currentStep - 1);
+  // };
+  const toggleModal = (
+    modalState: boolean,
+    setModalState: any,
+    setCurrentStep: any,
+  ) => {
+    return () => {
+      setModalState(!modalState);
+      // setCurrentStep(0);
+    };
+  };
+
+  const handleShowHospitalModal = toggleModal(
+    showHospitalModal,
+    setShowHospitalModal,
+    setCurrentStep,
+  );
+  const handleShowHospitalUserModal = toggleModal(
+    showHospitalUsersModal,
+    setShowHospitalUsersModal,
+    setCurrentStep,
+  );
+
+  const hospitalUserForms = [
+    <PersonalDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      onClick={handleShowHospitalUserModal}
+    />,
+    <ContactDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      onClick={handleShowHospitalUserModal}
+    />,
+    <MedicalPersonAddressDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      onClick={handleShowHospitalUserModal}
+    />,
+  ];
+
+  const hospitalForms = [
+    <HospitalForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      hospitalDetails={hospitalDetails}
+      setHospitalDetails={setHospitalDetails}
+      onClick={handleShowHospitalModal}
+    />,
+    <AdditionalDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      onClick={handleShowHospitalModal}
+      hospitalDetails={hospitalDetails}
+    />,
+  ];
+
+  const modalsConfig = {
+    hospitalUsers: {
+      showModal: showHospitalUsersModal,
+      forms: hospitalUserForms,
+    },
+    hospital: {
+      showModal: showHospitalModal,
+      forms: hospitalForms,
+    },
   };
 
   return (
     <DashboardLayout>
-      {showHospitalModal && (
-        <Modal isOpen={showHospitalModal}>
-          {currentStep == 0 ? (
-            <HospitalForm
-              currentStep={currentStep}
-              setCurrentStep={setCurrentStep}
-              hospitalDetails={hospitalDetails}
-              setHospitalDetails={setHospitalDetails}
-              onClick={handleShowHospitalModal}
-            />
-          ) : (
-            <AdditionalDetailForm
-              currentStep={currentStep}
-              setCurrentStep={setCurrentStep}
-              onClick={handleShowHospitalModal}
-            />
-          )}
-        </Modal>
-      )}
+      {Object.entries(modalsConfig).map(([key, e]) => {
+        console.log("e is", e);
+        return (
+          e.showModal && (
+            <Modal key={key} isOpen={e.showModal}>
+              {e.forms[currentStep]}
+            </Modal>
+          )
+        );
+      })}
       {isLoading ? (
         <DashboardSkeleton />
       ) : (
         <div className="text-black">
           <div className="flex  items-center justify-between  mb-7">
             <p className="text-2xl font-semibold">Super Admin Dashboard</p>
-            <Button
-              onClick={handleShowHospitalModal}
-              icon={<GoPlus size={22} />}
-              className="w-fit p-6 bg-primary-500"
-              text="Create New Item"
-            />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button
+                  icon={<GoPlus size={22} />}
+                  className="w-fit p-6 bg-primary-500"
+                  text="Create New Item"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-[200px]">
+                <DropdownMenuItem onClick={() => handleShowHospitalModal()}>
+                  Create Hospital
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleShowHospitalUserModal()}>
+                  Create Doctor/Nurse
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div className="flex  space-x-8 mt-6">
             {cardData.map((data, index) => (
-              <Card key={index} className="bg-white w-1/4 border-none ">
+              <Card
+                key={index}
+                className="bg-white w-1/4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out  "
+              >
                 <CardHeader>
                   <CardTitle className=" flex  items-center  space-x-2">
                     <div className="bg-secondary-200 h-10 w-10 rounded-full">

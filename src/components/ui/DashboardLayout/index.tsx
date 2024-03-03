@@ -16,7 +16,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     key: "showSideNav",
     defaultValue: true,
   });
-  console.log("show side nav", showSideNav);
   const handleShowSideBar = () => {
     setShowSideNav(!showSideNav);
   };

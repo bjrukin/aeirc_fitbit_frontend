@@ -3,16 +3,14 @@ import Formheader from "../../shared/FormHeader";
 import DynamicForm from "../../shared/DynamicForm";
 import { HospitalFormStep } from "../../../constants";
 interface initValProps {
-  name: string;
-  contact: number | null;
-  email: string;
-  province: string;
-  district: string;
-  ward: string;
+  website: string;
+  username: string;
+  password: string;
+  image: string;
 }
 
 interface AdditionalDetailProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement | SVGElement>;
+  onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
   hospitalDetails?: any;
@@ -27,6 +25,7 @@ export const AdditionalDetailField = [
       label: "Hospital Website",
       placeholder: "Enter The Website Of Hospital",
       required: true,
+      inputType:"text",
     },
     {
       name: "username",
@@ -34,6 +33,7 @@ export const AdditionalDetailField = [
       label: "Admin Username",
       placeholder: "Enter The Username Of Admin",
       required: true,
+      inputType:"text",
     },
   ],
   [
@@ -43,6 +43,7 @@ export const AdditionalDetailField = [
       label: "Admin Password",
       placeholder: "Enter The Admin Password",
       required: true,
+      inputType:"text",
     },
   ],
   [
@@ -52,6 +53,7 @@ export const AdditionalDetailField = [
       label: "Upload Hospital Logo",
       placeholder: "Select Hospital Logo",
       required: false,
+      
     },
   ],
 ];
@@ -61,42 +63,30 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   currentStep,
   setCurrentStep,
   hospitalDetails,
-  setHospitalDetails,
 }) => {
-  console.log("hospital detail", hospitalDetails);
-
   const FORM_VALIDATION = Yup.object().shape({
-    name: Yup.string()
-      .min(3, "*Name must be at least 3 character")
-      .required("*Name is required"),
-    contact: Yup.number()
-      .required("*Contact is required")
-      .test(
-        "len",
-        "*Contact number must be exactly 10 digits",
-        (val: any) => val && val.toString().length === 10
-      ),
-    email: Yup.string()
-      .email("*Please enter a valid email address")
-      .required("*Email is required"),
-    province: Yup.string().required("*Province is required"),
-    district: Yup.string().required("*District is required"),
-    ward: Yup.string().required("*Ward is required"),
+    website: Yup.string()
+      .url("*Must be a valid URL")
+      .required("*Website is required"),
+    password: Yup.string()
+      .min(8, "Password must be 8 characters long")
+      .required("*Password is required"),
+    username: Yup.string()
+      .min(3, "*Username must be at least 3 character")
+      .required("*Username is required"),
+    image: Yup.mixed().notRequired(),
   });
   const initVal: initValProps = {
-    name: "",
-    contact: null,
-    email: "",
-    province: "",
-    district: "",
-    ward: "",
+    website: "",
+    username: "",
+    password: "",
+    image: "",
   };
 
   const handleSubmit = async (values: initValProps) => {
+    console.log("The hospital details", hospitalDetails);
     console.log("the values are", values);
     try {
-      setHospitalDetails(values);
-      setCurrentStep(currentStep + 1);
     } catch (err) {
       console.log("err while adding hospital detail");
     }

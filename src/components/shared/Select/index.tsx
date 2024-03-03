@@ -1,8 +1,5 @@
-import React from "react";
 import { ErrorMessage, FieldProps } from "formik";
-import { memo } from "react";
 import Select from "react-select";
-import { BiErrorCircle } from "react-icons/bi";
 import { customStyles } from "../CustomStyle";
 
 interface Option {
@@ -27,7 +24,6 @@ export const DefaultSelect = ({
   placeholder,
   field,
   form,
-  name,
   options,
   label,
   defaultValue,

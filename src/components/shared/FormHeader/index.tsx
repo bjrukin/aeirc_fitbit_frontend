@@ -13,7 +13,7 @@ const Formheader: React.FC<FormHeaderProps> = ({
 }) => {
   return (
     <>
-      <div className="bg-white w-[350px] rounded-lg px-4 py-6">
+      <div className="bg-white w-[340px] rounded-lg px-4 py-6">
         <div>
           <p className="p-semibold-20">{title}</p>
           <p className="p-semibold-16 text-tertiary-800 mt-6 ">

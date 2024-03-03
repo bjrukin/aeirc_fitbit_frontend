@@ -79,3 +79,8 @@ export const HospitalFormStep = [
   { id: 1, title: "Hospital Details", subtitle: "Step 1" },
   { id: 2, title: "Additional Details", subtitle: "Step 2" },
 ];
+export const MedicalPersonalFormStep = [
+  { id: 1, title: "Basic Personal Info", subtitle: "Step 1" },
+  { id: 2, title: "Contact And Id Details", subtitle: "Step 2" },
+  { id: 3, title: "Address Details", subtitle: "Step 3" },
+];

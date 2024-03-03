@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 interface ModalProps {
   children?: React.ReactNode;
-  isOpen?:boolean
+  isOpen?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen }) => {
@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen }) => {
         // onClick={onClick}
       />
       <div
-        className={`w-[80%] h-[694px]  max-h-[694px] overflow-y-auto fixed top-1/2  z-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2  p-4 rounded-xl bg-tertiary-300  text-[black] `}
+        className={`w-[80%] h-[710px] min-h-[710px]  overflow-y-auto fixed top-1/2  z-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2  p-3 rounded-xl bg-tertiary-300  text-[black] `}
       >
         {children}
       </div>

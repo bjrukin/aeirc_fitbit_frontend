@@ -6,9 +6,10 @@ import { DefaultSelect } from "../Select";
 
 interface FieldProps {
   name: string;
+  inputType?: string;
   type: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   required: boolean;
   options?: { label: string; value: string }[];
 }
@@ -35,7 +36,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onCrossClick,
 }) => {
   return (
-    <div className="bg-white flex-1 rounded-lg p-6  h-full">
+    <div className="h-full bg-white flex-1 rounded-lg p-5 px-11  h-full">
       <div className="flex items-center justify-between">
         <p className="p-semibold-20">{title}</p>
         <RxCross2 size={22} className="cursor-pointer" onClick={onCrossClick} />
@@ -53,11 +54,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 {formFields.map((fieldGroup, index) => (
                   <div key={index} className="flex w-full space-x-5">
                     {fieldGroup.map((field, index) => {
+                      console.log("the field are", field);
                       const widthClass =
                         fieldGroup.length === 1 ? "w-1/2" : "w-full";
                       return field.type === "input" ? (
                         <div className={`${widthClass} mt-10`}>
                           <Input
+                            type={field.inputType}
                             key={index}
                             name={field.name}
                             labelClassName="font-bold text-lg"
