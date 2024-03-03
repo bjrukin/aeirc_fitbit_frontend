@@ -121,12 +121,13 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-full">
+    <div className="flex space-x-4 h-full bg-  ">
       <Formheader
         title={"Create A New Hospital"}
         currentStep={currentStep}
         data={HospitalFormStep}
       />
+
       <DynamicForm
         title={"Enter Hospital Details"}
         formFields={HospitalFormField}
@@ -136,7 +137,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Hospital"
-      />
+        />
     </div>
   );
 };

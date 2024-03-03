@@ -132,7 +132,7 @@ const ContactDetailForm: React.FC<ContactDetailFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-[694px]">
+    <div className="flex space-x-4 h-full">
       <Formheader
         title={"Add A New Medical Personal"}
         currentStep={currentStep}

@@ -36,12 +36,18 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onCrossClick,
 }) => {
   return (
-    <div className="h-full bg-white flex-1 rounded-lg p-5 px-11  h-full">
-      <div className="flex items-center justify-between">
-        <p className="p-semibold-20">{title}</p>
-        <RxCross2 size={22} className="cursor-pointer" onClick={onCrossClick} />
+    <div className="bg-white h-full flex-1 rounded-lg p-5 px-11 ">
+      <div>
+        <div className="flex items-center justify-between">
+          <p className="p-semibold-20">{title}</p>
+          <RxCross2
+            size={22}
+            className="cursor-pointer"
+            onClick={onCrossClick}
+          />
+        </div>
+        <div className="mt-4 h-[8px]  bg-[green] rounded" />
       </div>
-
       <Formik
         initialValues={initialValues}
         validationSchema={formValidation}
@@ -49,8 +55,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       >
         {({ isSubmitting }) => {
           return (
-            <Form className="h-full flex flex-col justify-between">
-              <div className="mt-6 ">
+            <Form className=" flex flex-col justify-between min-h-[570px]">
+              <div className="">
                 {formFields.map((fieldGroup, index) => (
                   <div key={index} className="flex w-full space-x-5">
                     {fieldGroup.map((field, index) => {
@@ -99,7 +105,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center  mb-6 ">
+              <div className="flex justify-between items-center   ">
                 <Button
                   variant={"secondary"}
                   type={"click"}
