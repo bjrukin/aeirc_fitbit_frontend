@@ -10,8 +10,8 @@ const useFetch = (url: string) => {
     setIsLoading(true);
     try {
       const response = await Service.get(url);
-      console.log("The response is", response);
-      const value: any = setData(response?.data?.data);
+      console.log("The response is", response?.data);
+      const value: any = response?.data;
       setData(value);
       setIsLoading(false);
     } catch (err) {

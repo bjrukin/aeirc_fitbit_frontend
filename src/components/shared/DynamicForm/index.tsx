@@ -12,6 +12,7 @@ interface FieldProps {
   placeholder?: string;
   required: boolean;
   options?: { label: string; value: string }[];
+  onChange?: any;
 }
 
 interface DynamicFormProps {
@@ -60,7 +61,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 {formFields.map((fieldGroup, index) => (
                   <div key={index} className="flex w-full space-x-5">
                     {fieldGroup.map((field, index) => {
-                      console.log("the field are", field);
                       const widthClass =
                         fieldGroup.length === 1 ? "w-1/2" : "w-full";
                       return field.type === "input" ? (
@@ -87,6 +87,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             placeholder={field.placeholder}
                             label={field.label}
                             defaultValue={[]}
+                            onChangeCallback={field.onChange}
                           />
                         </div>
                       ) : (
@@ -105,7 +106,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center   ">
+              <div className="flex justify-between items-center mt-12  ">
                 <Button
                   variant={"secondary"}
                   type={"click"}

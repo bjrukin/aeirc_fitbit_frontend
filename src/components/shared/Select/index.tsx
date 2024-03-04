@@ -13,10 +13,10 @@ interface CustomSelectProps extends FieldProps {
   className?: string;
   placeholder?: string;
   label?: string;
-  onChangeCallback: any;
   editDiscount: boolean;
   name: string;
   defaultValue: any;
+  onChangeCallback?: (selectedOption: any) => void;
 }
 
 export const DefaultSelect = ({
@@ -28,6 +28,7 @@ export const DefaultSelect = ({
   label,
   defaultValue,
   isMulti = false,
+  onChangeCallback,
 }: //   onChangeCallback,
 //   defaultValue,
 CustomSelectProps) => {
@@ -42,7 +43,24 @@ CustomSelectProps) => {
           : (selectedOptions as Option).label
       );
     }
+    if (onChangeCallback) {
+      onChangeCallback(selectedOptions);
+    }
   };
+
+  // const onChange = (selectedOptions: any) => {
+  //   if (selectedOptions === null) {
+  //     form.setFieldValue(field.name, "");
+  //   } else {
+  //     form.setFieldValue(
+  //       field.name,
+  //       isMulti ? (selectedOptions as Option[]) : (selectedOptions as Option)
+  //     );
+  //   }
+  //   if (onChangeCallback) {
+  //     onChangeCallback(selectedOptions);
+  //   }
+  // };
   return (
     <div className="">
       <div className="mb-4">
@@ -64,17 +82,12 @@ CustomSelectProps) => {
             : `${className} `
         }
         name={field.name}
-        // onChange={(newSelectOptions) => {
-        //   onChangeCallback(newSelectOptions);
-        // }}
         styles={customStyles}
         placeholder={placeholder}
         options={options}
         isClearable={true}
         onChange={onChange}
         defaultValue={defaultValue}
-        //   defaultValue={options[defaultValue]}
-        // defaultValue={defaultValue ? options[defaultValue] : null}
         isMulti={isMulti}
         classNamePrefix="react-select"
         menuPortalTarget={document.body}
