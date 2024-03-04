@@ -2,10 +2,6 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import { HospitalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import useFetch from "../../../hooks/useFetch";
 import { findOptionValue } from "../../../lib/utilis";
 import useLocationData from "../../../hooks/useLocationData";
 interface initValProps {
@@ -68,7 +64,6 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     handleDistrictChange,
   } = useLocationData();
 
-  
   const HospitalFormField = [
     [
       {
@@ -173,6 +168,8 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         onCrossClick={onClick}
         initialValues={initVal}
         onSubmit={handleSubmit}
+        currentStep={currentStep}
+        totalStep={HospitalFormStep.length}
         submitButtonText="Create Hospital"
       />
     </div>

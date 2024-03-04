@@ -2,12 +2,12 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import DynamicForm from "../../shared/DynamicForm";
 import { HospitalFormStep } from "../../../constants";
-import usePost from "../../../hooks/usePost";
 import Service from "../../../setup/Service";
 interface initValProps {
   website: string;
-  username: string;
-  password: string;
+  admin_email: string;
+  admin_password: string;
+  description: string;
   image: string;
 }
 
@@ -58,7 +58,7 @@ export const AdditionalDetailField = [
   ],
   [
     {
-      name: "image",
+      name: "logo",
       type: "image",
       label: "Upload Hospital Logo",
       placeholder: "Select Hospital Logo",
@@ -82,9 +82,10 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 const initVal: initValProps = {
   website: "",
-  username: "",
-  password: "",
+  admin_email: "",
+  admin_password: "",
   image: "",
+  description: "",
 };
 
 const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
@@ -118,15 +119,17 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
     //   console.log(key, value);
     // }
 
+
+    
     const formData = new FormData();
 
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
 
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     try {
       // await postData(payload);
@@ -137,7 +140,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       });
       console.log("The res of post is", res);
     } catch (err) {
-      console.log("err while adding hospital detail",err);
+      console.log("err while adding hospital detail", err);
     }
   };
 
@@ -157,6 +160,8 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Hospital"
+        currentStep={currentStep}
+        totalStep={HospitalFormStep.length}
       />
     </div>
   );

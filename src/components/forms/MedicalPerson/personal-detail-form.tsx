@@ -138,6 +138,8 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Medical Personal"
+        currentStep={currentStep}
+        totalStep={MedicalPersonalFormStep.length}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import Input from "../Input";
 import { Button } from "../Button";
 import { DefaultSelect } from "../Select";
+import { Progress } from "../../ui/progress";
 
 interface FieldProps {
   name: string;
@@ -24,6 +25,8 @@ interface DynamicFormProps {
   submitButtonText: string;
   title: string;
   onCrossClick: any;
+  currentStep?: number | any;
+  totalStep?: number | any;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -35,19 +38,27 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onSubmit,
   submitButtonText,
   onCrossClick,
+  currentStep,
+  totalStep,
 }) => {
+  const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
     <div className="bg-white h-full flex-1 rounded-lg p-5 px-11 ">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <p className="p-semibold-20">{title}</p>
-          <RxCross2
-            size={22}
-            className="cursor-pointer"
-            onClick={onCrossClick}
-          />
+          <div className="flex space-x-5 items-center">
+            <div className="font-semibold text-2xl">
+              Step {currentStep + 1} of {totalStep}
+            </div>
+            <RxCross2
+              size={24}
+              className="cursor-pointer"
+              onClick={onCrossClick}
+            />
+          </div>
         </div>
-        <div className="mt-4 h-[8px]  bg-[green] rounded" />
+        <Progress value={progressValue} />
       </div>
       <Formik
         initialValues={initialValues}
@@ -88,6 +99,18 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             label={field.label}
                             defaultValue={[]}
                             onChangeCallback={field.onChange}
+                          />
+                        </div>
+                      ) : field.type === "image" ? (
+                        <div className={`w-full mt-10`}>
+                          <input
+                            type="file"
+                            name="image"
+                            required
+                            accept="image/*"
+                            onChange={(e: any) => {
+                              let file = e?.target?.files[0];
+                            }}
                           />
                         </div>
                       ) : (
