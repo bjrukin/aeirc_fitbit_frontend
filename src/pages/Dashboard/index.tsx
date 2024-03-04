@@ -144,8 +144,7 @@ const Dashboard = () => {
     loading,
     fetchData,
   }: any = useFetch("/hospitals");
-  console.log("the data of hospital is", hospitalData);
-
+  console.log("the data of hospital is", hospitalData?.data?.results);
   return (
     <DashboardLayout>
       {Object.entries(modalsConfig).map(([key, e]) => {
@@ -230,7 +229,7 @@ const Dashboard = () => {
           <div>
             <Table
               pagination={true}
-              tableColumn={HospitalColumn}
+              tableColumn={HospitalColumn(fetchData)} 
               tableData={hospitalData?.data?.results}
             />
           </div>

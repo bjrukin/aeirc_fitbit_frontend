@@ -1,13 +1,12 @@
-export const HospitalColumn = [
+import { MdOutlineModeEdit } from "react-icons/md";
+import CrudIcon from "../shared/CrudIcon";
+
+export const HospitalColumn = (fetchData: any) => [
   {
     Header: "Id",
     accessor: "",
     Cell: ({ row }: { row: any }) => {
-      return (
-        <p>asd</p>
-
-        // <p className="whitespace-nowrap">{row?.original?.institution?.label}</p>
-      );
+      return <p>{row.index + 1}</p>;
     },
   },
   {
@@ -24,50 +23,45 @@ export const HospitalColumn = [
   },
   {
     Header: "Status",
-    accessor: "is_active",
+    accessor: "",
+    Cell: ({ row }: { row: any }) => {
+      return (
+        <p className="text-[black]">
+          {" "}
+          {row?.original?.is_active ? (
+            <p className="bg-tertiary-850 text-tertiary-900  font-semibold rounded-xl px-2 py-2 w-fit ">
+              Active
+            </p>
+          ) : (
+            <p className="bg-warning text-white  font-semibold rounded-xl px-2 py-2 w-fit ">
+              Inactive
+            </p>
+          )}
+        </p>
+      );
+    },
   },
   {
-    Header: "Actions",
-    accessor: "",
+    Header: "Action",
+    Cell: (row: any) => {
+      return (
+        <>
+          <CrudIcon
+            data={row?.cell?.row?.original}
+            url="/hospitals"
+            fetchData={fetchData}
+          >
+            <div
+              className="w-7 h-7 rounded-xl bg-light-grey bg-opacity-50 flex items-center justify-center"
+              onClick={() => console.log("row is", row)}
+            >
+              <div className="bg-white p-2 rounded-xl border-[1px] border-tertiary-350 mr-4">
+                <MdOutlineModeEdit size={24} />
+              </div>
+            </div>
+          </CrudIcon>
+        </>
+      );
+    },
   },
 ];
-
-// export const PatientColumn = [
-//   {
-//     Header: "Id",
-//     accessor: "",
-//     Cell: ({ row }: { row: any }) => {
-//       return (
-//         <p className="whitespace-nowrap">{row?.original?.institution?.label}</p>
-//       );
-//     },
-//   },
-//   {
-//     Header: "Name",
-//     accessor: "mature_at",
-//   },
-//   {
-//     Header: "Address",
-//     accessor: "",
-//   },
-//   {
-//     Header: "Phone Number",
-//     interest_rate: "10.130",
-//     accessor: "",
-//   },
-//   {
-//     Header: "Email Address",
-//     interest_rate: "10.130",
-//     accessor: "",
-//   },
-//   {
-//     Header: "Status",
-//     interest_rate: "10.130",
-//     accessor: "",
-//   },
-//   {
-//     Header: "Actions",
-//     interest_rate: "10.130",
-//     accessor: "",
-//   },
-// ];

@@ -147,7 +147,7 @@ const Table: React.FC<IProps> = ({
                                 <td
                                   {...cell.getCellProps()}
                                   key={idx}
-                                  className="border px-3 h-[80px] text-xl border-tertiary-750  "
+                                  className="border-none pl-10 h-[80px] text-xl  "
                                 >
                                   {cell.render("Cell")}
                                 </td>
