@@ -37,6 +37,7 @@ const FORM_VALIDATION = Yup.object().shape({
     .email("*Please enter a valid email address")
     .required("*Email is required"),
   province: Yup.string().required("*Province is required"),
+  address: Yup.string().required("*Address is required"),
   district: Yup.string().required("*District is required"),
   mnu_vdc: Yup.string().required("*Municipality/VDC is required"),
 });

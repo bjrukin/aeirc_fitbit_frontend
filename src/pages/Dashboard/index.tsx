@@ -10,7 +10,7 @@ import {
 import { DashboardSkeleton } from "../../components/shared/skeleton/dashboardSkeleton";
 import { Button } from "../../components/shared/Button";
 import { IoFilterOutline } from "react-icons/io5";
-import { PatientColumn } from "../../components/columns/dashboard-column";
+import { HospitalColumn } from "../../components/columns/dashboard-column";
 import Table from "../../components/ui/table";
 import { GoPlus } from "react-icons/go";
 import Modal from "../../components/shared/Modal";
@@ -25,8 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-
-
+import useFetch from "../../hooks/useFetch";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -139,6 +138,14 @@ const Dashboard = () => {
     },
   };
 
+  const {
+    data: hospitalData,
+    error,
+    loading,
+    fetchData,
+  }: any = useFetch("/hospitals");
+  console.log("the data of hospital is", hospitalData);
+
   return (
     <DashboardLayout>
       {Object.entries(modalsConfig).map(([key, e]) => {
@@ -209,8 +216,10 @@ const Dashboard = () => {
               </Card>
             ))}
           </div>
-          {/* <div className="flex  items-center justify-between  my-7">
-            <p className="text-2xl font-semibold">Hospital List</p>
+          <div className="flex  items-center justify-between  my-7">
+            <p className="text-2xl font-semibold">
+              Hospital List ({hospitalData?.data?.count})
+            </p>
             <Button
               icon={<IoFilterOutline size={22} />}
               className="w-fit p-6"
@@ -221,10 +230,10 @@ const Dashboard = () => {
           <div>
             <Table
               pagination={true}
-              tableColumn={PatientColumn}
-              tableData={[]}
+              tableColumn={HospitalColumn}
+              tableData={hospitalData?.data?.results}
             />
-          </div> */}
+          </div>
         </div>
       )}
     </DashboardLayout>

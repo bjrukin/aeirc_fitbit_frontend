@@ -11,7 +11,7 @@ import NoData from "./no-result";
 
 interface IProps {
   loading?: boolean;
-  tableData: any[];
+  tableData?: any;
   tableColumn: any;
   text?: string;
   pagination?: boolean;
@@ -140,14 +140,14 @@ const Table: React.FC<IProps> = ({
                           <tr
                             {...row.getRowProps()}
                             key={i}
-                            className="even:bg-gray-200 odd:bg-white  px-4 py-6 border text-left border-gray-200 hover:bg-secondary-100 hover:cursor-pointer "
+                            className="even:bg-gray-200 odd:bg-white  px-4 py-6 border text-left  text-black border-tertiary-750 hover:bg-tertiary-750 hover:text-[black] hover:cursor-pointer  ease-in-out duration-800"
                           >
                             {row.cells.map((cell: any, idx: number) => {
                               return (
                                 <td
                                   {...cell.getCellProps()}
                                   key={idx}
-                                  className="border px-2 py-0  "
+                                  className="border px-3 h-[80px] text-xl border-tertiary-750  "
                                 >
                                   {cell.render("Cell")}
                                 </td>

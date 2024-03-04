@@ -4,6 +4,8 @@ import Input from "../Input";
 import { Button } from "../Button";
 import { DefaultSelect } from "../Select";
 import { Progress } from "../../ui/progress";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface FieldProps {
   name: string;
@@ -43,7 +45,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 }) => {
   const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
-    <div className="bg-white h-full flex-1 rounded-lg p-5 px-11 ">
+    <div className="bg-white relative h-full flex-1 rounded-lg p-5 px-11 ">
       <div>
         <div className="flex items-center justify-between mb-4">
           <p className="p-semibold-20">{title}</p>
@@ -75,7 +77,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                       const widthClass =
                         fieldGroup.length === 1 ? "w-1/2" : "w-full";
                       return field.type === "input" ? (
-                        <div className={`${widthClass} mt-10`}>
+                        <div className={`${widthClass} mt-8 `}>
                           <Input
                             type={field.inputType}
                             key={index}
@@ -87,7 +89,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                           />
                         </div>
                       ) : field.type === "select" ? (
-                        <div className={`${widthClass} mt-10`}>
+                        <div className={`${widthClass} mt-8 `}>
                           <Field
                             key={index}
                             name={field.name}
@@ -129,7 +131,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center mt-12  ">
+              {/* <div className="flex justify-between items-center mt-12  "> */}
+              <div className="flex justify-between items-center mt-12 absolute bottom-5 left-10 right-10  ">
                 <Button
                   variant={"secondary"}
                   type={"click"}
@@ -137,12 +140,22 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   text={"Back"}
                   onClick={onClick}
                 />
+
                 <Button
                   type={"click"}
                   className="w-fit "
-                  text={isSubmitting ? "..." : submitButtonText}
+                  text={
+                    isSubmitting ? (
+                      <>
+                        <Loader2 className="animate-spin mr-2" />
+                        Creating...
+                      </>
+                    ) : (
+                      submitButtonText
+                    )
+                  }
                   variant={"outline"}
-                />
+                ></Button>
               </div>
             </Form>
           );

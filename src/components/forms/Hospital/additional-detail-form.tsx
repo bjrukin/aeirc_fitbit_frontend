@@ -3,6 +3,7 @@ import Formheader from "../../shared/FormHeader";
 import DynamicForm from "../../shared/DynamicForm";
 import { HospitalFormStep } from "../../../constants";
 import Service from "../../../setup/Service";
+import { toastAlert } from "../../../lib/toastAlert";
 interface initValProps {
   website: string;
   admin_email: string;
@@ -94,53 +95,31 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   setCurrentStep,
   hospitalDetails,
 }) => {
+  console.log("on click is", onClick);
+
   const handleSubmit = async (values: initValProps) => {
-    console.log("hello");
     const payload = {
       ...hospitalDetails,
       ...values,
     };
-    console.log("payload", payload);
-    // const formData = new FormData();
-    // console.log("form data is", formData);
-    // formData.append("name", payload.name);
-    // formData.append("address", payload.address);
-    // formData.append("phone", payload.phone);
-    // formData.append("email", payload.email);
-    // formData.append("admin_email", payload.admin_email);
-    // formData.append("admin_password", payload.admin_password);
-    // formData.append("website", payload.website);
-    // formData.append("description", payload.description);
-    // formData.append("logo", payload.image);
-    // formData.append("province", payload.province);
-    // formData.append("district", payload.district);
-    // formData.append("mnu_vdc", payload.mnu_vdc);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // }
-
-
-    
     const formData = new FormData();
-
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
-
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     try {
-      // await postData(payload);
       const res = await Service.post("/hospitals", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       console.log("The res of post is", res);
+      if (onClick) {
+        onClick();
+      }
+      toastAlert("success", res?.data?.message);
     } catch (err) {
       console.log("err while adding hospital detail", err);
+      toastAlert("error", "Error While Submitting Form");
     }
   };
 
