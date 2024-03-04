@@ -11,7 +11,7 @@ const buttonVariants = cva(
         destructive:
           "bg-warning text-white hover:bg-warning/90 focus:ring-0",
         outline:
-          "w-fit h-9 xl:h-10 bg-primary-500 hover:bg-primary-800  border border-none  focus:ring-0text-white text-lg hover:bg-primary-500/90 hover:text-white rounded-lg",
+          "w-fit h-9 xl:h-10 bg-primary-500 hover:bg-primary-800  border border-none  focus:ring-0 text-white text-lg hover:bg-primary-500/90 hover:text-white rounded-lg",
         secondary:
           "w-fit h-9 xl:h-100 bg-transparent hover:bg-none text-text border border-text  focus:ring-0 text-lg hover:bg-text/90 hover:text-white rounded-lg",
         ghost: "hover:bg-accent hover:text-accent-foreground focus:ring-0",
@@ -52,7 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {icon ? (
-          <div className="flex items-center">
+          <div className="flex items-center ">
             <span className="hidden lg:block"> {text}</span>
             <span className="ml-0 lg:ml-2"> {icon}</span>
           </div>

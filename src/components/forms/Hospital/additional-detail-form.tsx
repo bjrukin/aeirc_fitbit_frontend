@@ -18,6 +18,7 @@ interface AdditionalDetailProps {
   setCurrentStep?: any;
   hospitalDetails?: any;
   setHospitalDetails?: any;
+  fetchData?: any;
 }
 
 export const AdditionalDetailField = [
@@ -94,9 +95,8 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   currentStep,
   setCurrentStep,
   hospitalDetails,
+  fetchData,
 }) => {
-  console.log("on click is", onClick);
-
   const handleSubmit = async (values: initValProps) => {
     const payload = {
       ...hospitalDetails,
@@ -112,10 +112,11 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("The res of post is", res);
+
       if (onClick) {
         onClick();
       }
+      fetchData();
       toastAlert("success", res?.data?.message);
     } catch (err) {
       console.log("err while adding hospital detail", err);

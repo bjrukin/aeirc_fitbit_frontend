@@ -78,7 +78,7 @@ const Dashboard = () => {
   ) => {
     return () => {
       setModalState(!modalState);
-      // setCurrentStep(0);
+      setCurrentStep(0);
     };
   };
 
@@ -92,6 +92,12 @@ const Dashboard = () => {
     setShowHospitalUsersModal,
     setCurrentStep
   );
+  const {
+    data: hospitalData,
+    error,
+    loading,
+    fetchData,
+  }: any = useFetch("/hospitals");
 
   const hospitalUserForms = [
     <PersonalDetailForm
@@ -124,6 +130,7 @@ const Dashboard = () => {
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
       hospitalDetails={hospitalDetails}
+      fetchData={fetchData}
     />,
   ];
 
@@ -138,17 +145,9 @@ const Dashboard = () => {
     },
   };
 
-  const {
-    data: hospitalData,
-    error,
-    loading,
-    fetchData,
-  }: any = useFetch("/hospitals");
-  console.log("the data of hospital is", hospitalData?.data?.results);
   return (
     <DashboardLayout>
       {Object.entries(modalsConfig).map(([key, e]) => {
-        console.log("e is", e);
         return (
           e.showModal && (
             <Modal key={key} isOpen={e.showModal}>
@@ -229,7 +228,7 @@ const Dashboard = () => {
           <div>
             <Table
               pagination={true}
-              tableColumn={HospitalColumn(fetchData)} 
+              tableColumn={HospitalColumn(fetchData)}
               tableData={hospitalData?.data?.results}
             />
           </div>
