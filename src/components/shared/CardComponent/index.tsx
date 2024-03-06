@@ -21,14 +21,16 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   increase,
   chart,
   isFullWidth,
-}) => (
-  <Card
-    className={`w-[49%] ${
-      isFullWidth ? "w-full" : ""
-    } bg-[${bgColor}] mt-4 lg:mt-6 xl:mt-0 hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out`}
-  >
-    <div className="flex items-center space-x-8">
-      <div>
+}) => {
+  return (
+    <>
+      <Card
+        className={`w-[49%] ${
+          isFullWidth ? "w-full" : ""
+        } mt-4 lg:mt-4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out  bg-[${bgColor}]`}
+      >
+        {/* <div className="flex items-center space-x-8"> */}
+        {/* <div> */}
         <CardHeader className="">
           <CardTitle className="flex items-center justify-between ">
             <span
@@ -60,8 +62,10 @@ export const CardComponent: React.FC<CardComponentProps> = ({
             </p>
           </div>
         </CardFooter>
-      </div>
-      {chart && <div>{chart}</div>}
-    </div>
-  </Card>
-);
+        {/* </div>
+      {chart && <div>{chart}</div>} */}
+        {/* </div> */}
+      </Card>
+    </>
+  );
+};

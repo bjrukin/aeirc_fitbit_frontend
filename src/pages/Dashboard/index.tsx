@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { IoMdArrowUp } from "react-icons/io";
 import { DashboardSkeleton } from "../../components/shared/skeleton/dashboardSkeleton";
 import { Button } from "../../components/shared/Button";
 import { GoPlus } from "react-icons/go";
@@ -24,6 +25,7 @@ import {
 } from "../../components/ui/dropdown-menu";
 import useFetch from "../../hooks/useFetch";
 import { CardComponent } from "../../components/shared/CardComponent";
+import { Overview } from "../../components/shared/Chart";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -149,67 +151,77 @@ const Dashboard = () => {
             </DropdownMenu>
           </div>
 
-          <div className="rounded p-[22px] bg-white">
-            <div className="flex items-center justify-between">
-              <p className="text-xl font-semibold ">
-                Total User's Throughout Last Week
-              </p>
-              <Button
-                variant={"secondary"}
-                className="w-fit p-6"
-                text="View Details"
-              />
-            </div>
-            <div className="mt-2">
-              <div className="flex items-center space-x-3">
-                <div className="text-[#606060] text-2xl font-bold">2000</div>
-                <p className="text-tertiary-550 text-base bg-[#B7FFB6] rounded-[10px] w-fit p-2">20%</p>
+          <div className="xl:flex space-x-5">
+            <div className="rounded p-[22px] bg-white xl:w-[100%]">
+              <div className="flex items-center justify-between">
+                <p className="text-xl font-semibold ">
+                  Total User's Throughout Last Week
+                </p>
+                <Button
+                  variant={"secondary"}
+                  className="w-fit p-6"
+                  text="View Details"
+                />
               </div>
-              <p className="text-tertiary-10 mt-4 text-base">
-                This means that revenue generated during the current week (20%)
-                higher than past week
-              </p>
+              <div className="mt-2">
+                <div className="flex items-center space-x-3">
+                  <div className="text-[#606060] text-2xl font-bold">2000</div>
+                  <p className="flex  items-center space-x-4 text-tertiary-550 text-base bg-[#B7FFB6] rounded-[10px] w-fit p-2">
+                    20%{" "}
+                    <span>
+                      <IoMdArrowUp size={20} />
+                    </span>
+                  </p>
+                </div>
+                <p className="text-tertiary-10 mt-4 text-base">
+                  This means that revenue generated during the current week
+                  (20%) higher than past week
+                </p>
+              </div>
+              <div className="mt-8">
+                <Overview />
+              </div>
             </div>
-          </div>
 
-          <div className="rounded p-[22px] bg-white mt-6">
-            <div className="flex items-center justify-between">
-              <p className="text-xl font-semibold ">
-                Other Hospital And Patient Data
-              </p>
-              <Button
-                variant={"secondary"}
-                className="w-fit p-6"
-                text="Last Week"
-              />
-            </div>
-            <div className="flex flex-wrap justify-between">
-              <div className="w-full flex flex-wrap justify-between">
-                <CardComponent
-                  bgColor="#F3F3F3"
-                  textColor="black"
-                  iconSrc={Hospital}
-                  title="Total Hospital"
-                  value="2000"
-                  increase="20"
+            <div className="rounded p-[22px] bg-white mt-6 xl:mt-0">
+              <div className="flex items-center justify-between">
+                <p className="text-xl xl:text-lg font-semibold ">
+                  Other Hospital And Patient Data
+                </p>
+                <Button
+                  variant={"secondary"}
+                  className="w-fit p-6"
+                  text="Last Week"
                 />
-                <CardComponent
-                  bgColor="blue"
-                  textColor="white"
-                  iconSrc={Hospital}
-                  title="Total Hospital"
-                  value="2000"
-                  increase="20"
-                />
-                <CardComponent
-                  bgColor="#F3F3F3"
-                  textColor="black"
-                  title="Total Hospital"
-                  value="2000"
-                  increase="20"
-                  isFullWidth
-                  chart="asd"
-                ></CardComponent>
+              </div>
+              <div className="flex flex-wrap justify-between">
+                <div className="w-full flex flex-wrap justify-between">
+                  <CardComponent
+                    bgColor="#F3F3F3"
+                    textColor="black"
+                    iconSrc={Hospital}
+                    title="Total Hospital"
+                    value="2000"
+                    increase="20"
+                  />
+                  <CardComponent
+                    bgColor="yellow"
+                    textColor="black"
+                    iconSrc={Hospital}
+                    title="Total Hospital"
+                    value="2000"
+                    increase="20"
+                  />
+                  <CardComponent
+                    bgColor="#F3F3F3"
+                    textColor="black"
+                    title="Total Hospital"
+                    value="2000"
+                    increase="20"
+                    isFullWidth
+                    chart="asd"
+                  />
+                </div>
               </div>
             </div>
           </div>

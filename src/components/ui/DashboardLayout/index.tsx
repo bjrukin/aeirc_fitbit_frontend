@@ -71,7 +71,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         // animate={{ marginLeft: showSideNav ? "388px" : "80px" }}
         // transition={{ duration: 0.5 }}
         // className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
-        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[250px] xl:ml-[280px] 2xl:ml-[340px] 3xl:ml-[388px] `}
+        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[250px]  2xl:ml-[340px] 3xl:ml-[388px] `}
       >
         <div className="fixed z-10  w-full pr-[100px] lg:pr-[230px] xl:pr-[260px] 2xl:pr-[320px]  3xl:pr-[380px] ">
           <Header />
