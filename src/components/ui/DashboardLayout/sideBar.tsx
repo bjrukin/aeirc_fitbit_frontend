@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { navItems } from "../../../constants";
 import ToolTip from "../../shared/Tooltip";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { Button } from "../../shared/Button";
-import { Separator } from "../separator";
-import { Avatar, AvatarImage } from "../avatar";
-import { AvatarImages } from "../../../assets/images";
-import { MdOutlineLogout } from "react-icons/md";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../card";
 
 interface SideBarProps {
   showSideNav?: boolean;
 }
-
 
 const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
   // const buttonClassName =
@@ -31,7 +17,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
   // const percentage = (value / totalValue) * 100;
   return (
     <>
-      <div className="text-[white] max-h-screen">
+      <div className="text-[white]  ">
         {/* <div className="pr-6">
           <Button text={"Create New Session"} className={buttonClassName} />
           <Separator className="mt-4" />
@@ -42,8 +28,8 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               <NavLink
                 to={path}
                 style={({ isActive }) => ({
-                  color: isActive ? "black" : "white",
-                  background: isActive ? "white" : "",
+                  color: isActive ? "white" : "black",
+                  background: isActive ? "#3E6DF9" : "",
                   borderRadius: "8px",
                   transition: "border-right 1s ease-in-out",
                   marginBottom: "12px",
@@ -51,17 +37,19 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               >
                 <motion.div
                   className={
-                    " py-3  2xl:py-4 3xl:py-6 px-6 w-full rounded  flex space-x-3 cursor-pointer "
+                    " py-3  2xl:py-4 3xl:py-6 px-6 w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex space-x-3 cursor-pointer "
                   }
-                  whileHover={{ background: "white", color: "black" }}
-                  transition={{ duration: 0.5 }}
                 >
                   {showSideNav ? (
                     <p>{icon}</p>
                   ) : (
                     <ToolTip content={title}>{icon}</ToolTip>
                   )}
-                  {showSideNav && <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">{title}</p>}
+                  {showSideNav && (
+                    <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
+                      {title}
+                    </p>
+                  )}
                 </motion.div>
               </NavLink>
             ))}

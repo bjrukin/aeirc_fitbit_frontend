@@ -9,9 +9,6 @@ import {
 } from "../../components/ui/card";
 import { DashboardSkeleton } from "../../components/shared/skeleton/dashboardSkeleton";
 import { Button } from "../../components/shared/Button";
-import { IoFilterOutline } from "react-icons/io5";
-import { HospitalColumn } from "../../components/columns/dashboard-column";
-import Table from "../../components/ui/table";
 import { GoPlus } from "react-icons/go";
 import Modal from "../../components/shared/Modal";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
@@ -26,51 +23,15 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import useFetch from "../../hooks/useFetch";
+import { CardComponent } from "../../components/shared/CardComponent";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [showHospitalUsersModal, setShowHospitalUsersModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
-  console.log("current step is", currentStep);
   const [hospitalDetails, setHospitalDetails] = useState<any>([]);
-  const cardData = [
-    {
-      title: "Hospital Count",
-      value: "95%",
-      image: Hospital,
-      className: "absolute ml-2 mt-2 2xl:ml-[10px] 2xl:mt-[10px] h-5 w-5",
-    },
-    {
-      title: "Total Device Count",
-      value: "95%",
-      image: Watch,
-      className: "absolute ml-[10px] 2xl:ml-[11px] mt-2 h-[22px] w-4",
-    },
-    {
-      title: "Active User's Count",
-      value: "95%",
-      image: Person,
-      className: "absolute ml-2 mt-3 h-[14px] w-[22px]",
-    },
-    {
-      title: "Medical Personal",
-      value: "95%",
-      image: Sethescope,
-      className:
-        " absolute ml-[10px]  2xl:ml-3  mt-[10px] 2xl:mt-3 h-[18px] w-4",
-    },
-  ];
 
-  // const handleShowHospitalModal = () => {
-  //   setShowHospitalModal(!showHospitalModal);
-  //   setCurrentStep(currentStep - 1);
-  // };
-
-  // const handleShowHospitalUserModal = () => {
-  //   setShowHospitalUsersModal(!showHospitalUsersModal);
-  //   setCurrentStep(currentStep - 1);
-  // };
   const toggleModal = (
     modalState: boolean,
     setModalState: any,
@@ -161,14 +122,18 @@ const Dashboard = () => {
       ) : (
         <div className="text-black ">
           <div className="flex  items-center justify-between  mb-7">
-            <p className="text-xl lg:text-2xl font-semibold">
-              Super Admin Dashboard
-            </p>
-
+            <div>
+              <p className="text-xl lg:text-2xl font-semibold ">
+                Patient List Summary
+              </p>
+              <p className="text-base text-tertiary-10 mt-1 text-sm font-semibold xl:text-xl">
+                Lorem ipsum dolor sit amet, consectetur adipiscing eli
+              </p>
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button
-                  icon={<GoPlus size={22} />}
+                  icon={<GoPlus size={26} />}
                   className="w-fit p-4 xl:p-6 bg-primary-500"
                   text="Create New Item"
                 />
@@ -183,38 +148,73 @@ const Dashboard = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="flex flex-wrap xl:flex-nowrap  xl:space-x-4 2xl:space-x-8 -mt-6 xl:mt-6">
-            {cardData.map((data, index) => (
-              <Card
-                key={index}
-                className=" bg-white mr-4 lg:mr-5  last:mr-0 xl:mr-0  mt-4 lg:mt-6 xl:mt-0 w-[47%] xl:w-1/4   hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out  "
-              >
-                <CardHeader>
-                  <CardTitle className=" flex  items-center  space-x-2">
-                    <div className="bg-secondary-200 h-9 w-9 2xl:h-10 2xl:w-10 rounded-full">
-                      <img
-                        src={data?.image}
-                        alt="icon"
-                        className={`${data?.className} `}
-                      />
-                    </div>
-                    <span className="text-black  text-lg 2xl:text-xl font-semibold whitespace-nowrap">
-                      {data.title}
-                    </span>
-                  </CardTitle>
-                </CardHeader>
-                <CardFooter>
-                  <div className="text-lg  2xl:text-xl">
-                    <p className=" font-bold ">{data.value}</p>
-                    <p className=" cursor-pointer text-primary-850 hover:text-secondary-400  mt-1 font-semibold">
-                      Click For Details
-                    </p>
-                  </div>
-                </CardFooter>
-              </Card>
-            ))}
+
+          <div className="rounded p-[22px] bg-white">
+            <div className="flex items-center justify-between">
+              <p className="text-xl font-semibold ">
+                Total User's Throughout Last Week
+              </p>
+              <Button
+                variant={"secondary"}
+                className="w-fit p-6"
+                text="View Details"
+              />
+            </div>
+            <div className="mt-2">
+              <div className="flex items-center space-x-3">
+                <div className="text-[#606060] text-2xl font-bold">2000</div>
+                <p className="text-tertiary-550 text-base bg-[#B7FFB6] rounded-[10px] w-fit p-2">20%</p>
+              </div>
+              <p className="text-tertiary-10 mt-4 text-base">
+                This means that revenue generated during the current week (20%)
+                higher than past week
+              </p>
+            </div>
           </div>
-          <div className="flex  items-center justify-between  my-7">
+
+          <div className="rounded p-[22px] bg-white mt-6">
+            <div className="flex items-center justify-between">
+              <p className="text-xl font-semibold ">
+                Other Hospital And Patient Data
+              </p>
+              <Button
+                variant={"secondary"}
+                className="w-fit p-6"
+                text="Last Week"
+              />
+            </div>
+            <div className="flex flex-wrap justify-between">
+              <div className="w-full flex flex-wrap justify-between">
+                <CardComponent
+                  bgColor="#F3F3F3"
+                  textColor="black"
+                  iconSrc={Hospital}
+                  title="Total Hospital"
+                  value="2000"
+                  increase="20"
+                />
+                <CardComponent
+                  bgColor="blue"
+                  textColor="white"
+                  iconSrc={Hospital}
+                  title="Total Hospital"
+                  value="2000"
+                  increase="20"
+                />
+                <CardComponent
+                  bgColor="#F3F3F3"
+                  textColor="black"
+                  title="Total Hospital"
+                  value="2000"
+                  increase="20"
+                  isFullWidth
+                  chart="asd"
+                ></CardComponent>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="flex  items-center justify-between  my-7">
             <p className="text-2xl font-semibold">
               Hospital List ({hospitalData?.data?.count})
             </p>
@@ -224,14 +224,14 @@ const Dashboard = () => {
               variant="secondary"
               text="Filter Table"
             />
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <Table
               pagination={true}
               tableColumn={HospitalColumn(fetchData)}
               tableData={hospitalData?.data?.results}
             />
-          </div>
+          </div> */}
         </div>
       )}
     </DashboardLayout>

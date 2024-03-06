@@ -24,7 +24,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     <div className="w-full flex relative">
       <motion.div
         className={cn(
-          ` fixed text-white border-r-[1px]  overflow-auto  h-screen w-[100px] lg:w-[250px] xl:w-[280px]  2xl:w-[340px] 3xl:w-[388px]`
+          ` fixed text-white border-r-[1px]  overflow-auto  h-screen w-[100px] lg:w-[250px]  2xl:w-[340px]`
         )}
         // showSideNav ? " w-[388px]" : "w-[80px]"
         // )}
@@ -32,14 +32,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         // animate={{ width: showSideNav ? "388px" : "80px" }}
         // transition={{ duration: 0.5 }}
       >
-        <div className="bg-secondary-500 h-screen">
+        <div className="bg-white  h-screen border-[1px] border-tertiary-750 ">
           <div className=" flex items-center justify-between  px-8">
             <div className="flex space-x-3 items-center py-6 ">
               <img src={Logo} alt="" className="h-[35px] w-[35px]" />
               <p className="2xl:text-xl font-bold 3xl:p-bold-24 hidden 2xl:block">Healthfit Nepal</p>
             </div>
             <motion.div
-              className={`bg-black rounded p-2 cursor-pointer hidden  lg:block`}
+              className={`bg-black rounded p-2 cursor-pointer hidden  xl:block`}
               // initial={{ paddingLeft: showSideNav ? "80px" : "24px" }}
               // animate={{ paddingLeft: showSideNav ? "80px" : "24px" }}
               // transition={{ duration: 0.5 }}
@@ -61,7 +61,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               className="rounded-full bg-gray-200 text-white p-2"
             />
           </motion.div> */}
-          <div className=" w-full mt-11">
+          <div className=" w-full mt-11"> 
             <SideBar showSideNav={showSideNav} />
           </div>
         </div>
@@ -77,7 +77,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           <Header />
         </div>
 
-        <div className="p-4 -z-2  mt-[65px] xl:mt-[72px]">{children}</div>
+        <div className="p-4 -z-2  mt-[56px] lg:mt-[72px]">{children}</div>
       </motion.div>
     </div>
   );
