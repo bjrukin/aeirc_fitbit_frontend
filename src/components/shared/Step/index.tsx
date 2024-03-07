@@ -56,11 +56,7 @@ interface StepProps {
   subtitle?: string;
 }
 
-const Step: React.FC<StepProps> = ({
-  currentStep = 0,
-  stepNumber,
-  title,
-}) => (
+const Step: React.FC<StepProps> = ({ currentStep = 0, stepNumber, title }) => (
   <div className="mt-11 flex space-x-5 items-center">
     <div
       className={`h-[60px] relative rounded-full w-[60px]  border-[3px] ${
@@ -85,9 +81,9 @@ const Step: React.FC<StepProps> = ({
         )}
       </span>
     </div>
-    <div>
+    <div className="hidden  xl:block">
       <p className="text-tertiary-350 mb-2">{`Step ${stepNumber + 1}`}</p>
-      <p className="text-lg font-medium">{title}</p>
+      <p className="text-lg font-medium  ">{title}</p>
     </div>
   </div>
 );

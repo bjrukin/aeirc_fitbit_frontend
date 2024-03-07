@@ -263,12 +263,12 @@ const Dashboard = () => {
                 Hospital List ({hospitalData?.data?.count})
               </p>
             </div>
-            {hospitalData?.data?.results ? (
+            {/* {hospitalData?.data?.results ? (
               <DataTable
                 columns={HospitalColumn(fetchData)}
                 data={hospitalData.data.results}
               />
-            ) : null}
+            ) : null} */}
           </div>
         </DashboardLayout>
       )}

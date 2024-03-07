@@ -154,7 +154,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-full  ">
+    <div className="flex space-x-0 xl:space-x-4 h-[800px] xl:h-full  ">
       <Formheader
         title={"Create A New Hospital"}
         currentStep={currentStep}
@@ -164,6 +164,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
       <DynamicForm
         title={"Enter Hospital Details"}
         formFields={HospitalFormField}
+        data={HospitalFormStep}
         formValidation={FORM_VALIDATION}
         onClick={onClick}
         onCrossClick={onClick}

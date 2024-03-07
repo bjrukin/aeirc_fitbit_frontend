@@ -6,6 +6,7 @@ import { DefaultSelect } from "../Select";
 import { Progress } from "../../ui/progress";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import Step from "../Step";
 
 interface FieldProps {
   name: string;
@@ -29,6 +30,7 @@ interface DynamicFormProps {
   onCrossClick: any;
   currentStep?: number | any;
   totalStep?: number | any;
+  data?: any;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -42,10 +44,22 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onCrossClick,
   currentStep,
   totalStep,
+  data,
 }) => {
   const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
     <div className="bg-white relative h-full flex-1 rounded-lg p-5 px-11 ">
+      <div className="flex  items-center justify-between mb-6 xl:hidden">
+        {data.map((step: any, index: any) => (
+          <Step
+            key={index}
+            currentStep={currentStep}
+            stepNumber={index}
+            title={step.title}
+            subtitle={step.subtitle}
+          />
+        ))}
+      </div>
       <div>
         <div className="flex items-center justify-between mb-4">
           <p className="p-semibold-20">{title}</p>
