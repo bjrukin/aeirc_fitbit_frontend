@@ -15,7 +15,7 @@ import {
 } from "../../ui/alert-dialog";
 import Service from "../../../setup/Service";
 import { toastAlert } from "../../../lib/toastAlert";
-import Input from "../Input";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 interface IProps {
   data: any;
@@ -52,13 +52,13 @@ const CrudIcon: React.FC<IProps> = ({ data, url, children, fetchData }) => {
       <div className="flex items-center space-x-4">
         {children}
         <div
-          className="w-7 h-7 rounded-xl bg-light-grey bg-opacity-50 flex items-center justify-center"
+          className="ml-4 w-7 h-7 rounded-lg bg-white bg-opacity-50 flex items-center justify-center"
           onClick={() => handleDelete(data)}
         >
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <div className="bg-white p-2 rounded-xl border-[1px] border-tertiary-350">
-                <RiDeleteBin2Line size={24} />
+              <div className="bg-white p-[6px] rounded-lg border-[1px] border-warning">
+                <FaRegTrashCan size={22} color="red" />
               </div>
             </AlertDialogTrigger>
             <AlertDialogContent>

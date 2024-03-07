@@ -1,251 +1,124 @@
-import React, { useEffect, useRef } from "react";
-import { AiOutlineArrowUp } from "react-icons/ai";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import {
-  useTable,
-  usePagination,
-  useRowSelect,
-  TableOptions,
-} from "react-table";
-import NoData from "./no-result";
+import * as React from "react";
+import { cn } from "../../lib/utilis";
 
-interface IProps {
-  loading?: boolean;
-  tableData?: any;
-  tableColumn: any;
-  text?: string;
-  pagination?: boolean;
-  onSelectRow?: (row: any) => void;
-  selectedRows?: Set<number>;
-}
+const Table = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table
+      ref={ref}
+      className={cn("w-full caption-bottom text-sm bg-white", className)}
+      {...props}
+    />
+  </div>
+));
+Table.displayName = "Table";
 
-interface MyTableOptions<D extends object> extends TableOptions<D> {
-  autoResetPage?: boolean;
-}
+const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+));
+TableHeader.displayName = "TableHeader";
 
-const Table: React.FC<IProps> = ({
-  loading,
-  tableData,
-  tableColumn,
-  pagination,
-}) => {
-  const data = React.useMemo(() => (tableData ? tableData : []), [tableData]);
-  const columns = React.useMemo(() => tableColumn, []);
-  const {
-    headerGroups,
-    getTableBodyProps,
-    page,
-    prepareRow,
-    getTableProps,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    selectedFlatRows,
-    state: { pageIndex, pageSize },
-  }: any = useTable(
-    {
-      data,
-      columns,
-      autoResetPage: false,
-    } as MyTableOptions<any>,
-    usePagination
-  );
+const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tbody
+    ref={ref}
+    className={cn("[&_tr:last-child]:border-0 bg-white", className)}
+    {...props}
+  />
+));
+TableBody.displayName = "TableBody";
 
-  const pageList = (totalPages: number, currentPage: number) => {
-    const listItems = [];
-    for (let pageNo = 0; pageNo < totalPages; pageNo++) {
-      if (
-        pageNo < 2 ||
-        (pageNo > totalPages - 7 && totalPages < 8) ||
-        (pageNo > totalPages - 3 && totalPages >= 8) ||
-        pageNo === currentPage ||
-        pageNo === currentPage - 1 ||
-        pageNo === currentPage + 1
-      ) {
-        listItems.push(
-          <button
-            onClick={(e) => {
-              const page = pageNo ? Number(pageNo) : 0;
-              gotoPage(page);
-            }}
-            key={pageNo}
-            className={`flex w-[30px] h-[30px] p-[10px] justify-center items-center roundd-[4px]  ${
-              pageNo === currentPage
-                ? "text-white bg-secondary-500"
-                : "bg-tertiary-750"
-            }`}
-          >
-            {pageNo + 1}
-          </button>
-        );
-      }
-      if (
-        totalPages >= 8 &&
-        (pageNo === 3 || pageNo === totalPages - 3) &&
-        pageNo > 2
-      ) {
-        listItems.push(<span key={pageNo}>...</span>);
-      }
-    }
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-neutral-100/50 font-medium [&>tr]:last:border-b-0 dark:bg-neutral-800/50",
+      className
+    )}
+    {...props}
+  />
+));
+TableFooter.displayName = "TableFooter";
 
-    return listItems;
-  };
-  return (
-    <>
-      {loading ? (
-        <p>Loading</p>
-      ) : (
-        // <Loader/>
-        <>
-          <div className="-z-2 w-full">
-            <div className="mt-5 rounded-xl border border-border-color-dark overflow-x-auto relative sm:rounded-lg w-full">
-              <table
-                {...getTableProps()}
-                className="w-full text-left text-text-black  "
-              >
-                <thead className="font-bold text-center">
-                  {headerGroups.map((headerGroup: any, i: number) => (
-                    <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                      {headerGroup.headers.map((column: any, idx: number) => (
-                        <th
-                          {...column.getHeaderProps()}
-                          key={idx}
-                          scope="col"
-                          className={`border-[2px] ${
-                            idx === headerGroup.headers.length - 1
-                              ? ""
-                              : "border-r-tertiary-700"
-                          } rounded bg-tertiary-600`}
-                          // className="border-[2px] border-r-tertiary-700 rounded   bg-tertiary-600 "
-                        >
-                          {/* {column.render('Header')} */}
-                          <div className="flex items-center justify-center">
-                            <span className="font-bold  px-2 py-4 flex  text-xl  rounded-lg">
-                              {column.render("Header")}
-                            </span>
-                            <span className="ml-2"></span>
-                          </div>
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody
-                  {...getTableBodyProps()}
-                  className="text-sm font-normal text-gray-700"
-                >
-                  {page?.length ? (
-                    <>
-                      {page.map((row: any, i: number) => {
-                        prepareRow(row);
-                        return (
-                          <tr
-                            {...row.getRowProps()}
-                            key={i}
-                            className="even:bg-gray-200 odd:bg-white  px-4 py-6 border text-left  text-black border-tertiary-750 hover:bg-tertiary-750 hover:text-[black] hover:cursor-pointer  ease-in-out duration-800"
-                          >
-                            {row.cells.map((cell: any, idx: number) => {
-                              return (
-                                <td
-                                  {...cell.getCellProps()}
-                                  key={idx}
-                                  className="border-none pl-4 h-[80px] text-xl  "
-                                >
-                                  {cell.render("Cell")}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <tr>
-                      <td colSpan={headerGroups[0]?.headers.length}>
-                        <NoData />
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-              {pagination && data?.length > 0 && (
-                <div className=" bg-white p-5 flex justify-between items-center ">
-                  <div className="text-black text-base">
-                    <span className="text-black">Results: Showing</span>
-                    <select
-                      value={pageSize}
-                      onChange={(e) => {
-                        setPageSize(Number(e.target.value));
-                      }}
-                      className="font-normal  text-sm  rounded p-2 focus:outline-0 ml-2 bg-[white] border border-border-color-dark "
-                    >
-                      {[1, 5, 10, 20, 30, 40, 50].map((pageSize) => (
-                        <option
-                          key={pageSize}
-                          value={pageSize}
-                          className="text-sm "
-                        >
-                          {pageSize}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="ml-2">Entries Per Page</span>
-                  </div>
-                  <div className="flex items-center space-x-5">
-                    <div className="flex items-center ">
-                      <button
-                        onClick={() => previousPage()}
-                        disabled={!canPreviousPage}
-                        className="bg-almost-white mr-2  cursor-pointer  rounded-md h-6 w-fit pl-1 text-normal  text-black"
-                      >
-                        <div className="flex items-center space-x-1">
-                          {" "}
-                          <MdKeyboardArrowLeft />
-                          <span>Prev</span>
-                        </div>
-                      </button>
-                      <div className="flex items-center gap-2">
-                        {pageList(pageOptions.length, pageIndex)}
-                      </div>
-                      <button
-                        onClick={() => nextPage()}
-                        disabled={!canNextPage}
-                        className=" cursor-pointer  bg-almost-white rounded-md h-6 w-fit pl-1  text-normal  ml-3 text-black"
-                      >
-                        <div className="flex items-center space-x-1">
-                          <span>Next</span>
-                          <MdKeyboardArrowRight />
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="ml-2 flex items-center gap-1">
-                    <span>Go to page:</span>
-                    <input
-                      type="number"
-                      defaultValue={""}
-                      value={pageIndex + 1}
-                      onChange={(e) => {
-                        const page = e.target.value
-                          ? Number(e.target.value) - 1
-                          : 0;
-                        gotoPage(page);
-                      }}
-                      className="border p-1 rounded w-16"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </>
-      )}
-    </>
-  );
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement>
+>(({ className, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(
+      "border-b transition-colors text-center bg-tertiary-750 cursor-pointer hover:bg-tertiary-350",
+      "odd:bg-white",
+
+      className
+    )}
+    {...props}
+  />
+));
+TableRow.displayName = "TableRow";
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4   text-center align-middle font-semibold  [&:has([role=checkbox])]:pr-0  bg-tertiary-750 text-black text-base border-r-[1px] border-tertiary-950",
+      className
+    )}
+    {...props}
+  />
+));
+TableHead.displayName = "TableHead";
+
+const TableCell = React.forwardRef<
+  HTMLTableCellElement,
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn(
+      "p-2 border-r-[1px] border-gray-200",
+      className
+    )}
+    {...props}
+  />
+));
+TableCell.displayName = "TableCell";
+
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
+>(({ className, ...props }, ref) => (
+  <caption
+    ref={ref}
+    className={cn(
+      "mt-4 text-sm text-neutral-500 dark:text-neutral-400",
+      className
+    )}
+    {...props}
+  />
+));
+TableCaption.displayName = "TableCaption";
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
 };
-
-export default React.memo(Table);
