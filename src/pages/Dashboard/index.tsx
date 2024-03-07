@@ -25,7 +25,8 @@ import {
 } from "../../components/ui/dropdown-menu";
 import useFetch from "../../hooks/useFetch";
 import { CardComponent } from "../../components/shared/CardComponent";
-import { Overview } from "../../components/shared/Chart";
+import { Overview } from "../../components/shared/Chart/barChart";
+import LineChart from "../../components/shared/Chart/areaChart";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -151,7 +152,7 @@ const Dashboard = () => {
             </DropdownMenu>
           </div>
 
-          <div className="xl:flex space-x-5">
+          <div className="xl:flex space-x-0 ">
             <div className="rounded p-[22px] bg-white xl:w-[100%]">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-semibold ">
@@ -159,7 +160,7 @@ const Dashboard = () => {
                 </p>
                 <Button
                   variant={"secondary"}
-                  className="w-fit p-6"
+                  className="w-fit p-6 "
                   text="View Details"
                 />
               </div>
@@ -183,7 +184,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="rounded p-[22px] bg-white mt-6 xl:mt-0">
+            <div className="rounded bg-[white] p-[22px]  mt-6 xl:mt-0">
               <div className="flex items-center justify-between">
                 <p className="text-xl xl:text-lg font-semibold ">
                   Other Hospital And Patient Data
@@ -205,12 +206,13 @@ const Dashboard = () => {
                     increase="20"
                   />
                   <CardComponent
-                    bgColor="yellow"
-                    textColor="black"
+                    bgColor={"#000B2C"}
+                    textColor="white"
                     iconSrc={Hospital}
                     title="Total Hospital"
                     value="2000"
                     increase="20"
+                    isDifferentColor={true}
                   />
                   <CardComponent
                     bgColor="#F3F3F3"
@@ -219,7 +221,7 @@ const Dashboard = () => {
                     value="2000"
                     increase="20"
                     isFullWidth
-                    chart="asd"
+                    chart={<LineChart />}
                   />
                 </div>
               </div>

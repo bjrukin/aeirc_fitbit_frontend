@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline:
           "w-fit h-9 xl:h-10 bg-primary-500 hover:bg-primary-800  border border-none  focus:ring-0 text-white text-lg hover:bg-primary-500/90 hover:text-white rounded-lg",
         secondary:
-          "w-fit h-9 xl:h-100 bg-transparent hover:bg-none text-text border border-tertiary-950  focus:ring-0 text-lg hover:bg-text/90 hover:text-white rounded-lg",
+          "w-fit h-8 xl:h-10 bg-transparent hover:bg-none text-text border border-tertiary-950  focus:ring-0 text-lg hover:bg-text/90 hover:text-white rounded-lg",
         ghost: "hover:bg-accent hover:text-accent-foreground focus:ring-0",
         link: "text-primary underline-offset-4 hover:underline focus:ring-0",
       },
