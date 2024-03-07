@@ -73,8 +73,10 @@ const Table: React.FC<IProps> = ({
               gotoPage(page);
             }}
             key={pageNo}
-            className={`flex w-[30px] h-[30px] p-[10px] justify-center items-center roundd-[4px] bg-tertiary-200 ${
-              pageNo === currentPage ? "text-white bg-primary-800" : ""
+            className={`flex w-[30px] h-[30px] p-[10px] justify-center items-center roundd-[4px]  ${
+              pageNo === currentPage
+                ? "text-white bg-secondary-500"
+                : "bg-tertiary-750"
             }`}
           >
             {pageNo + 1}
@@ -100,10 +102,10 @@ const Table: React.FC<IProps> = ({
         // <Loader/>
         <>
           <div className="-z-2 w-full">
-            <div className="mt-5 rounded-xl border border-border-color-dark overflow-x-hidden relative sm:rounded-lg w-full">
+            <div className="mt-5 rounded-xl border border-border-color-dark overflow-x-auto relative sm:rounded-lg w-full">
               <table
                 {...getTableProps()}
-                className="w-full text-left text-text-black"
+                className="w-full text-left text-text-black  "
               >
                 <thead className="font-bold text-center">
                   {headerGroups.map((headerGroup: any, i: number) => (
@@ -113,7 +115,11 @@ const Table: React.FC<IProps> = ({
                           {...column.getHeaderProps()}
                           key={idx}
                           scope="col"
-                          className={`border-[2px] ${idx === headerGroup.headers.length - 1 ? '' : 'border-r-tertiary-700'} rounded bg-tertiary-600`}
+                          className={`border-[2px] ${
+                            idx === headerGroup.headers.length - 1
+                              ? ""
+                              : "border-r-tertiary-700"
+                          } rounded bg-tertiary-600`}
                           // className="border-[2px] border-r-tertiary-700 rounded   bg-tertiary-600 "
                         >
                           {/* {column.render('Header')} */}
@@ -122,7 +128,7 @@ const Table: React.FC<IProps> = ({
                               {column.render("Header")}
                             </span>
                             <span className="ml-2"></span>
-                          </div>  
+                          </div>
                         </th>
                       ))}
                     </tr>
@@ -147,7 +153,7 @@ const Table: React.FC<IProps> = ({
                                 <td
                                   {...cell.getCellProps()}
                                   key={idx}
-                                  className="border-none pl-10 h-[80px] text-xl  "
+                                  className="border-none pl-4 h-[80px] text-xl  "
                                 >
                                   {cell.render("Cell")}
                                 </td>

@@ -3,11 +3,15 @@ import CrudIcon from "../shared/CrudIcon";
 
 export const HospitalColumn = (fetchData: any) => [
   {
-    Header: "Id",
+    Header: "S.N",
     accessor: "",
     Cell: ({ row }: { row: any }) => {
       return <p>{row.index + 1}</p>;
     },
+  },
+  {
+    Header: "Name",
+    accessor: "name",
   },
   {
     Header: "Address",

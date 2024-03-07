@@ -27,6 +27,9 @@ import useFetch from "../../hooks/useFetch";
 import { CardComponent } from "../../components/shared/CardComponent";
 import { Overview } from "../../components/shared/Chart/barChart";
 import LineChart from "../../components/shared/Chart/areaChart";
+import { IoFilterOutline } from "react-icons/io5";
+import Table from "../../components/ui/table";
+import { HospitalColumn } from "../../components/columns/dashboard-column";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +65,7 @@ const Dashboard = () => {
     loading,
     fetchData,
   }: any = useFetch("/hospitals");
+  console.log("hospital data", hospitalData);
 
   const hospitalUserForms = [
     <PersonalDetailForm
@@ -153,7 +157,7 @@ const Dashboard = () => {
           </div>
 
           <div className="xl:flex space-x-0 ">
-            <div className="rounded p-[22px] bg-white xl:w-[100%]">
+            <div className="rounded p-[22px] bg-white xl:w-[100%]  mr-4 xl:mr-8">
               <div className="flex items-center justify-between">
                 <p className="text-xl font-semibold ">
                   Total User's Throughout Last Week
@@ -228,7 +232,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* <div className="flex  items-center justify-between  my-7">
+          <div className="flex  items-center justify-between  my-7">
             <p className="text-2xl font-semibold">
               Hospital List ({hospitalData?.data?.count})
             </p>
@@ -238,14 +242,14 @@ const Dashboard = () => {
               variant="secondary"
               text="Filter Table"
             />
-          </div> */}
-          {/* <div>
+          </div>
+          <div className="">
             <Table
               pagination={true}
               tableColumn={HospitalColumn(fetchData)}
               tableData={hospitalData?.data?.results}
             />
-          </div> */}
+          </div>
         </div>
       )}
     </DashboardLayout>
