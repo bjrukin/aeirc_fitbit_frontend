@@ -19,6 +19,7 @@ interface AdditionalDetailProps {
   hospitalDetails?: any;
   setHospitalDetails?: any;
   fetchData?: any;
+  isEdit?: any;
 }
 
 export const AdditionalDetailField = [
@@ -60,7 +61,7 @@ export const AdditionalDetailField = [
   ],
   [
     {
-      name: "logo",
+      name: "image",
       type: "image",
       label: "Upload Hospital Logo",
       placeholder: "Select Hospital Logo",
@@ -82,13 +83,6 @@ const FORM_VALIDATION = Yup.object().shape({
     .required("*Email is required"),
   image: Yup.mixed().notRequired(),
 });
-const initVal: initValProps = {
-  website: "",
-  admin_email: "",
-  admin_password: "",
-  image: "",
-  description: "",
-};
 
 const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   onClick,
@@ -96,22 +90,68 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   setCurrentStep,
   hospitalDetails,
   fetchData,
+  setHospitalDetails,
+  isEdit,
 }) => {
+  const initVal: initValProps = hospitalDetails
+    ? hospitalDetails
+    : {
+        website: "",
+        admin_email: "",
+        admin_password: "",
+        image: "",
+        description: "",
+      };
+  console.log("ininital values", initVal);
   const handleSubmit = async (values: initValProps) => {
+    // const payload = {
+    //   ...hospitalDetails,
+    //   ...values,
+    // };
+    const updatedValues = Object.keys(values).reduce(
+      (acc: any, key: string) => {
+        if (
+          values[key as keyof initValProps] !==
+          initVal[key as keyof initValProps]
+        ) {
+          acc[key] = values[key as keyof initValProps];
+        }
+        return acc;
+      },
+      {}
+    );
+    console.log("updated val",updatedValues)
+
     const payload = {
       ...hospitalDetails,
-      ...values,
+      ...updatedValues,
     };
+    console.log("values", values);
+    console.log("the payload in additional is", payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
     try {
-      const res = await Service.post("/hospitals", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      let res;
+      if (isEdit) {
+        res = await Service.patch(
+          `/hospitals/${hospitalDetails?.id}`,
+          payload,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } else {
+        res = await Service.post("/hospitals", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
+      console.log("The res is", res);
 
       if (onClick) {
         onClick();
@@ -136,7 +176,10 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         formFields={AdditionalDetailField}
         formValidation={FORM_VALIDATION}
         onCrossClick={onClick}
-        onClick={() => setCurrentStep(currentStep - 1)}
+        onClick={() => {
+          setCurrentStep(currentStep - 1);
+          setHospitalDetails(hospitalDetails);
+        }}
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Hospital"

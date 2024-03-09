@@ -9,9 +9,9 @@ interface initValProps {
   address: string;
   phone: number | null;
   email: string;
-  province: string;
-  district: string;
-  mnu_vdc: string;
+  province: any;
+  district: any;
+  mnu_vdc: any;
 }
 
 interface HospitalFormProps {
@@ -20,6 +20,7 @@ interface HospitalFormProps {
   setCurrentStep?: any;
   hospitalDetails?: any;
   setHospitalDetails?: any;
+  isEdit?: any;
 }
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -36,26 +37,31 @@ const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string()
     .email("*Please enter a valid email address")
     .required("*Email is required"),
-  province: Yup.string().required("*Province is required"),
+  province: Yup.mixed().required("*Province is required"),
   address: Yup.string().required("*Address is required"),
-  district: Yup.string().required("*District is required"),
-  mnu_vdc: Yup.string().required("*Municipality/VDC is required"),
+  district: Yup.mixed().required("*District is required"),
+  mnu_vdc: Yup.mixed().required("*Municipality/VDC is required"),
 });
 const HospitalForm: React.FC<HospitalFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
   setHospitalDetails,
+  hospitalDetails,
+  isEdit,
 }) => {
-  const initVal: initValProps = {
-    name: "",
-    phone: null,
-    mnu_vdc: "",
-    email: "",
-    province: "",
-    district: "",
-    address: "",
-  };
+  console.log("hospital deta", hospitalDetails);
+  const initVal: initValProps = hospitalDetails
+    ? hospitalDetails
+    : {
+        name: "",
+        phone: null,
+        mnu_vdc: "",
+        email: "",
+        province: "",
+        district: "",
+        address: "",
+      };
 
   const {
     provinceOptions,
@@ -137,15 +143,16 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   const handleSubmit = async (values: initValProps) => {
     console.log("the values are", values);
     try {
-      const province = findOptionValue(provinceOptions, values?.province);
-      const district = findOptionValue(districtOptions, values?.district);
-      const mnu_vdc = findOptionValue(municiplaityOptions, values?.mnu_vdc);
+      // const province = findOptionValue(provinceOptions, values?.province);
+      // const district = findOptionValue(districtOptions, values?.district);
+      // const mnu_vdc = findOptionValue(municiplaityOptions, values?.mnu_vdc);
       const payload = {
         ...values,
-        province,
-        district,
-        mnu_vdc,
+        province: values?.province?.value,
+        district: values?.province?.value,
+        mnu_vdc: values?.mnu_vdc?.value,
       };
+      console.log("payload  in hospital form are", payload);
       setHospitalDetails(payload);
       setCurrentStep(currentStep + 1);
     } catch (err) {

@@ -1,7 +1,5 @@
-import React from "react";
-import { RiDeleteBin2Line } from "react-icons/ri";
+import React, { useState } from "react";
 
-import { useDispatch } from "react-redux";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,21 +14,21 @@ import {
 import Service from "../../../setup/Service";
 import { toastAlert } from "../../../lib/toastAlert";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   data: any;
   url: string;
-  children?: React.ReactNode;
   fetchData: () => void;
+  children?: React.ReactNode;
 }
 
-const CrudIcon: React.FC<IProps> = ({ data, url, children, fetchData }) => {
+const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
+  const dispatch = useDispatch();
   const [deleteContent, setDeleteContent] = React.useState<any>("");
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
-  console.log("input value", inputValue, deleteContent);
   const handleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
-  const dispatch = useDispatch();
 
   const handleDelete = (value: any) => {
     setDeleteContent(value);

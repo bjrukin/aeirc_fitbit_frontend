@@ -46,19 +46,21 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   totalStep,
   data,
 }) => {
+  console.log("The inital values in dynamic form is", initialValues);
   const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
-    <div className="bg-white relative h-full flex-1 rounded-lg p-5 px-11 ">
+    <div className="bg-white relative overflow-auto flex-1 rounded-lg p-5 px-11 ">
       <div className="flex  items-center justify-between mb-6 xl:hidden">
-        {data.map((step: any, index: any) => (
-          <Step
-            key={index}
-            currentStep={currentStep}
-            stepNumber={index}
-            title={step.title}
-            subtitle={step.subtitle}
-          />
-        ))}
+        {data &&
+          data.map((step: any, index: any) => (
+            <Step
+              key={index}
+              currentStep={currentStep}
+              stepNumber={index}
+              title={step.title}
+              subtitle={step.subtitle}
+            />
+          ))}
       </div>
       <div>
         <div className="flex items-center justify-between mb-4">
@@ -81,72 +83,94 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         validationSchema={formValidation}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, isValid }) => {
+          console.log("is valid", isValid);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
               <div className="">
-                {formFields.map((fieldGroup, index) => (
-                  <div key={index} className="flex w-full space-x-5">
-                    {fieldGroup.map((field, index) => {
-                      const widthClass =
-                        fieldGroup.length === 1 ? "w-1/2" : "w-full";
-                      return field.type === "input" ? (
-                        <div className={`${widthClass} mt-8 `}>
-                          <Input
-                            type={field.inputType}
-                            key={index}
-                            name={field.name}
-                            labelClassName="font-bold text-lg"
-                            label={field.label}
-                            required={field.required}
-                            placeholder={field.placeholder}
-                          />
-                        </div>
-                      ) : field.type === "select" ? (
-                        <div className={`${widthClass} mt-8 `}>
-                          <Field
-                            key={index}
-                            name={field.name}
-                            className=""
-                            options={field.options}
-                            component={DefaultSelect}
-                            isMulti={false}
-                            placeholder={field.placeholder}
-                            label={field.label}
-                            defaultValue={[]}
-                            onChangeCallback={field.onChange}
-                          />
-                        </div>
-                      ) : field.type === "image" ? (
-                        <div className={`w-full mt-10`}>
-                          <input
-                            type="file"
-                            name="image"
-                            required
-                            accept="image/*"
-                            onChange={(e: any) => {
-                              let file = e?.target?.files[0];
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <div className={`w-full mt-10`}>
-                          <Input
-                            key={index}
-                            name={field.name}
-                            labelClassName="font-bold text-lg"
-                            label={field.label}
-                            required={field.required}
-                            placeholder={field.placeholder}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
+                {formFields.map((fieldGroup, index) => {
+                  return (
+                    <>
+                      <div key={index} className="flex w-full space-x-5">
+                        {fieldGroup.map((field, index) => {
+                          console.log(
+                            "option is",
+                            field?.options,
+                            field?.options &&
+                              field?.options[
+                                field.options?.findIndex(
+                                  (x) =>
+                                    x.value === initialValues?.province?.rank
+                                )
+                              ]
+                          );
+                          const widthClass =
+                            fieldGroup.length === 1 ? "w-1/2" : "w-full";
+                          return field.type === "input" ? (
+                            <div className={`${widthClass} mt-8 `}>
+                              <Input
+                                type={field.inputType}
+                                key={index}
+                                name={field.name}
+                                labelClassName="font-bold text-lg"
+                                label={field.label}
+                                required={field.required}
+                                placeholder={field.placeholder}
+                              />
+                            </div>
+                          ) : field.type === "select" ? (
+                            <div className={`${widthClass} mt-8 `}>
+                              <Field
+                                key={index}
+                                name={field.name}
+                                className=""
+                                options={field.options}
+                                component={DefaultSelect}
+                                isMulti={false}
+                                placeholder={field.placeholder}
+                                label={field.label}
+                                defaultValue={
+                                  field?.options &&
+                                  field.options?.findIndex(
+                                    (x) =>
+                                      x.value === initialValues?.province?.rank
+                                  )
+                                }
+                                onChangeCallback={field.onChange}
+                              />
+                            </div>
+                          ) : field.type === "image" ? (
+                            <div className={`w-full mt-10`}>
+                              <input
+                                type="file"
+                                name="image"
+                                required
+                                accept="image/*"
+                                onChange={(e: any) => {
+                                  let file = e?.target?.files[0];
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className={`w-full mt-10`}>
+                              <Input
+                                key={index}
+                                name={field.name}
+                                labelClassName="font-bold text-lg"
+                                label={field.label}
+                                required={field.required}
+                                placeholder={field.placeholder}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })}
               </div>
               {/* <div className="flex justify-between items-center mt-12  "> */}
-              <div className="flex justify-between items-center mt-12 absolute bottom-5 left-10 right-10  ">
+              <div className="flex justify-between items-center mt-12  ">
                 <Button
                   variant={"secondary"}
                   type={"click"}

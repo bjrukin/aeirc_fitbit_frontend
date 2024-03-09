@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Hospital } from "../../assets/images";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import { IoMdArrowUp } from "react-icons/io";
@@ -22,14 +22,17 @@ import { CardComponent } from "../../components/shared/CardComponent";
 import { Overview } from "../../components/shared/Chart/barChart";
 import LineChart from "../../components/shared/Chart/areaChart";
 import { DataTable } from "../../components/ui/data-table";
-import { HospitalColumn } from "../../components/columns/dashboard-column";
+import CrudIcon from "../../components/shared/CrudIcon";
+import { MdOutlineModeEdit } from "react-icons/md";
+import Service from "../../setup/Service";
 
 const Dashboard = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [showHospitalUsersModal, setShowHospitalUsersModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
-  const [hospitalDetails, setHospitalDetails] = useState<any>([]);
+  const [hospitalDetails, setHospitalDetails] = useState<any>({});
+  const [isEdit, setIsEdit] = useState(false);
+  console.log("hospital details", hospitalDetails);
 
   const toggleModal = (
     modalState: boolean,
@@ -53,32 +56,17 @@ const Dashboard = () => {
     setCurrentStep
   );
 
-  const data = [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-  ];
+  const handleEditData = async (id: any) => {
+    console.log("id is", id);
+    try {
+      const res = await Service.get(`/hospitals/${id}`);
+      console.log("res in edit", res);
+      setHospitalDetails(res.data?.data);
+      setIsEdit(true);
+      handleShowHospitalModal();
+    } catch (err) {}
+  };
+
   const {
     data: hospitalData,
     error,
@@ -132,6 +120,75 @@ const Dashboard = () => {
     },
   };
 
+  const HospitalColumn = [
+    {
+      accessorKey: "",
+      header: "S.N.",
+      cell: ({ row }: { row: any }) => {
+        return <p>{row.index + 1}</p>;
+      },
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "address",
+      header: "Address",
+    },
+    {
+      accessorKey: "phone",
+      header: "Phone Number",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "",
+      header: "Status",
+      cell: ({ row }: { row: any }) => {
+        return (
+          <div className="text-[black] flex justify-center items-center">
+            {" "}
+            {row?.original?.is_active ? (
+              <p className=" items-center bg-tertiary-850 text-tertiary-900  font-semibold rounded-lg px-2 py-2 w-fit ">
+                Active
+              </p>
+            ) : (
+              <p className="bg-warning  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
+                Inactive
+              </p>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      header: "Action",
+      cell: (row: any) => {
+        return (
+          <>
+            <CrudIcon
+              data={row?.cell?.row?.original}
+              url="/hospitals"
+              fetchData={fetchData}
+            >
+              <div
+                className="w-7 h-7 rounded-xl bg-white bg-opacity-50 flex  items-center mr-4"
+                onClick={() => handleEditData(row?.cell?.row?.original?.id)}
+              >
+                <div className="bg-white  p-[6px] rounded-lg border-[1px] border-primary-500  ">
+                  <MdOutlineModeEdit size={22} color="#1D3075" />
+                </div>
+              </div>
+            </CrudIcon>
+          </>
+        );
+      },
+    },
+  ];
+
   return (
     <>
       {loading ? (
@@ -160,19 +217,28 @@ const Dashboard = () => {
                 </p>
               </div>
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger onClick={() => setHospitalDetails({})}>
                   <Button
+                    onClick={() => setHospitalDetails({})}
                     icon={<GoPlus size={26} />}
                     className="w-fit p-4 xl:p-6 bg-primary-500"
                     text="Create New Item"
                   />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className=" w-[170px] mr-5 xl:mr-0  xl:w-[200px]">
-                  <DropdownMenuItem onClick={() => handleShowHospitalModal()}>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setHospitalDetails({});
+                      handleShowHospitalModal();
+                    }}
+                  >
                     Create Hospital
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => handleShowHospitalUserModal()}
+                    onClick={() => {
+                      handleShowHospitalUserModal();
+                      setHospitalDetails({});
+                    }}
                   >
                     Create Doctor/Nurse
                   </DropdownMenuItem>
@@ -263,12 +329,12 @@ const Dashboard = () => {
                 Hospital List ({hospitalData?.data?.count})
               </p>
             </div>
-            {/* {hospitalData?.data?.results ? (
+            {hospitalData?.data?.results ? (
               <DataTable
-                columns={HospitalColumn(fetchData)}
+                columns={HospitalColumn}
                 data={hospitalData.data.results}
               />
-            ) : null} */}
+            ) : null}
           </div>
         </DashboardLayout>
       )}
