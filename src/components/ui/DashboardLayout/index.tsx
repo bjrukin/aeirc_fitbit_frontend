@@ -36,7 +36,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           <div className=" flex items-center justify-between  px-8">
             <div className="flex space-x-3 items-center py-6 ">
               <img src={Logo} alt="" className="h-[35px] w-[35px]" />
-              <p className="2xl:text-xl font-bold 3xl:p-bold-24 hidden 2xl:block">Healthfit Nepal</p>
+              <p className="2xl:text-xl font-bold 3xl:p-bold-24 hidden 2xl:block">
+                Healthfit Nepal
+              </p>
             </div>
             <motion.div
               className={`bg-black rounded p-2 cursor-pointer hidden  xl:block`}
@@ -61,7 +63,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               className="rounded-full bg-gray-200 text-white p-2"
             />
           </motion.div> */}
-          <div className=" w-full mt-11"> 
+          <div className=" w-full mt-11">
             <SideBar showSideNav={showSideNav} />
           </div>
         </div>
@@ -71,7 +73,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         // animate={{ marginLeft: showSideNav ? "388px" : "80px" }}
         // transition={{ duration: 0.5 }}
         // className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
-        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[250px]  2xl:ml-[340px] 3xl:ml-[388px] `}
+        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[250px]  2xl:ml-[340px]  `}
       >
         <div className="fixed z-10  w-full pr-[100px] lg:pr-[230px] xl:pr-[260px] 2xl:pr-[320px]  3xl:pr-[380px] ">
           <Header />

@@ -56,15 +56,16 @@ const Dashboard = () => {
     setCurrentStep
   );
 
-  const handleEditData = async (id: any) => {
-    console.log("id is", id);
+  const getSingleData = async (id: any) => {
     try {
       const res = await Service.get(`/hospitals/${id}`);
       console.log("res in edit", res);
       setHospitalDetails(res.data?.data);
       setIsEdit(true);
       handleShowHospitalModal();
-    } catch (err) {}
+    } catch (err) {
+      console.log("error while getting single data", err);
+    }
   };
 
   const {
@@ -176,7 +177,7 @@ const Dashboard = () => {
             >
               <div
                 className="w-7 h-7 rounded-xl bg-white bg-opacity-50 flex  items-center mr-4"
-                onClick={() => handleEditData(row?.cell?.row?.original?.id)}
+                onClick={() => getSingleData(row?.cell?.row?.original?.id)}
               >
                 <div className="bg-white  p-[6px] rounded-lg border-[1px] border-primary-500  ">
                   <MdOutlineModeEdit size={22} color="#1D3075" />
