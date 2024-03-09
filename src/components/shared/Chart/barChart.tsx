@@ -91,7 +91,7 @@ export function Overview({ data }: { data: any }) {
             renderCustomBarLabel({ ...props, index: props.index })
           }
         >
-          {data.map((entry, index) => (
+          {data.map((entry: any, index: any) => (
             <Cell
               cursor="pointer"
               fill={index === activeIndex ? "#3E6DF9" : "#D9D9D9"}

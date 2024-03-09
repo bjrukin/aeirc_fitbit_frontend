@@ -1,6 +1,5 @@
 import { RiHashtag } from "react-icons/ri";
 import { Card, CardFooter, CardHeader, CardTitle } from "../../ui/card";
-import { cn } from "../../../lib/utilis";
 
 interface CardProps {
   title: string;
@@ -20,9 +19,7 @@ const DisplayCard: React.FC<CardProps> = ({
   return (
     <>
       <Card
-        className={cn(
-          `w-full  mt-4 lg:mt-4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out bg-[${bgColor}]`
-        )}
+        className={`w-full  mt-4 lg:mt-4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out bg-primary-550 bg-[${bgColor}]`}
       >
         <div className="relative">
           <CardHeader className="">

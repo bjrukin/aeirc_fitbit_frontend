@@ -93,39 +93,37 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   setHospitalDetails,
   isEdit,
 }) => {
-  const initVal: initValProps = hospitalDetails
-    ? hospitalDetails
-    : {
-        website: "",
-        admin_email: "",
-        admin_password: "",
-        image: "",
-        description: "",
-      };
-  console.log("ininital values", initVal);
+  const initVal: initValProps = {
+    website: "",
+    admin_email: "",
+    admin_password: "",
+    image: "",
+    description: "",
+  };
+  console.log("ininital values", hospitalDetails);
   const handleSubmit = async (values: initValProps) => {
-    // const payload = {
-    //   ...hospitalDetails,
-    //   ...values,
-    // };
-    const updatedValues = Object.keys(values).reduce(
-      (acc: any, key: string) => {
-        if (
-          values[key as keyof initValProps] !==
-          initVal[key as keyof initValProps]
-        ) {
-          acc[key] = values[key as keyof initValProps];
-        }
-        return acc;
-      },
-      {}
-    );
-    console.log("updated val", updatedValues);
-
     const payload = {
       ...hospitalDetails,
-      ...updatedValues,
+      ...values,
     };
+    // const updatedValues = Object.keys(values).reduce(
+    //   (acc: any, key: string) => {
+    //     if (
+    //       values[key as keyof initValProps] !==
+    //       initVal[key as keyof initValProps]
+    //     ) {
+    //       acc[key] = values[key as keyof initValProps];
+    //     }
+    //     return acc;
+    //   },
+    //   {}
+    // );
+    // console.log("updated val", updatedValues);
+
+    // const payload = {
+    //   ...hospitalDetails,
+    //   ...updatedValues,
+    // };
     console.log("the payload in additional is", payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {

@@ -138,7 +138,6 @@ export const DefaultSelect = ({
   isMulti = false,
   onChangeCallback,
 }: CustomSelectProps) => {
-  console.log("def", options[defaultValue]);
   const onChange = (selectedOptions: any) => {
     if (selectedOptions === null) {
       form.setFieldValue(field.name, "");
@@ -181,8 +180,7 @@ export const DefaultSelect = ({
         options={options}
         isClearable={true}
         onChange={onChange}
-        defaultValue={options[defaultValue]}
-        // defaultValue={{ label: "PROVINCE NO. 1", value: 1 }}
+        defaultValue={[]}
         isMulti={isMulti}
         classNamePrefix="react-select"
         menuPortalTarget={document.body}

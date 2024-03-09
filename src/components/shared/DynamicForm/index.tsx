@@ -87,7 +87,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         onSubmit={onSubmit}
       >
         {({ isSubmitting, isValid, setFieldValue }) => {
-          console.log("is valid", isValid);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
               <div className="">
@@ -102,8 +101,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             field?.options &&
                               field?.options[
                                 field.options?.findIndex(
-                                  (x) =>
-                                    x.value === initialValues?.province?.rank
+                                  (x) => x.value === initialValues?.province?.id
                                 )
                               ]
                           );
@@ -132,13 +130,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 isMulti={false}
                                 placeholder={field.placeholder}
                                 label={field.label}
-                                defaultValue={
-                                  field?.options &&
-                                  field.options?.findIndex(
-                                    (x) =>
-                                      x.value === initialValues?.province?.rank
-                                  )
-                                }
+                                defaultValue={[]}
                                 onChangeCallback={field.onChange}
                               />
                             </div>

@@ -50,18 +50,15 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   hospitalDetails,
   isEdit,
 }) => {
-  console.log("hospital deta", hospitalDetails);
-  const initVal: initValProps = hospitalDetails
-    ? hospitalDetails
-    : {
-        name: "",
-        phone: null,
-        mnu_vdc: "",
-        email: "",
-        province: "",
-        district: "",
-        address: "",
-      };
+  const initVal: initValProps = {
+    name: "",
+    phone: null,
+    mnu_vdc: "",
+    email: "",
+    province: "",
+    district: "",
+    address: "",
+  };
 
   const {
     provinceOptions,

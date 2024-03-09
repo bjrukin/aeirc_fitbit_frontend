@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import Heading from "../../components/ui/heading";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
@@ -10,11 +10,42 @@ import { IoMdArrowUp } from "react-icons/io";
 import { Button } from "../../components/shared/Button";
 import { CardComponent } from "../../components/shared/CardComponent";
 import LineChart from "../../components/shared/Chart/areaChart";
+import useFetch from "../../hooks/useFetch";
+import CrudIcon from "../../components/shared/CrudIcon";
+import { MdOutlineModeEdit } from "react-icons/md";
+import { DataTable } from "../../components/ui/data-table";
+import Service from "../../setup/Service";
 
 const Hospital = () => {
+  const {
+    data: hospitalData,
+    error,
+    fetchData,
+    loading,
+  } = useFetch("/hospitals");
+
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>({});
+
+  const [hospitalEditData, setHospitalEditData] = useState([]);
+  console.log("hospitalEdit data", hospitalEditData);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getSingleData = async (id: any) => {
+    setIsLoading(true);
+    try {
+      const editRes = await Service.get(`/hospitals/${id}`);
+      const editData = editRes?.data?.data;
+      setHospitalEditData(editData);
+      setIsLoading(false);
+      setShowHospitalModal(true);
+    } catch (err) {
+      setIsLoading(false);
+      console.log("The err is", err);
+    }
+  };
+
   const toggleModal = (
     modalState: boolean,
     setModalState: any,
@@ -66,12 +97,81 @@ const Hospital = () => {
     setShowHospitalModal,
     setCurrentStep
   );
-
+  const HospitalColumn = [
+    {
+      accessorKey: "",
+      header: "S.N.",
+      cell: ({ row }: { row: any }) => {
+        return <p>{row.index + 1}</p>;
+      },
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "address",
+      header: "Address",
+    },
+    {
+      accessorKey: "phone",
+      header: "Phone Number",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "",
+      header: "Status",
+      cell: ({ row }: { row: any }) => {
+        return (
+          <div className="text-[black] flex justify-center items-center">
+            {" "}
+            {row?.original?.is_active ? (
+              <p className=" items-center bg-tertiary-850 text-tertiary-900  font-semibold rounded-lg px-2 py-2 w-fit ">
+                Active
+              </p>
+            ) : (
+              <p className="bg-warning  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
+                Inactive
+              </p>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      header: "Action",
+      cell: (row: any) => {
+        return (
+          <>
+            <CrudIcon
+              data={row?.cell?.row?.original}
+              url="/hospitals"
+              fetchData={fetchData}
+            >
+              <div
+                className="w-7 h-7 rounded-xl bg-white bg-opacity-50 flex  items-center mr-4"
+                onClick={() => getSingleData(row?.cell?.row?.original?.id)}
+              >
+                <div className="bg-white  p-[6px] rounded-lg border-[1px] border-primary-500  ">
+                  <MdOutlineModeEdit size={22} color="#1D3075" />
+                </div>
+              </div>
+            </CrudIcon>
+          </>
+        );
+      },
+    },
+  ];
   const hospitalForms = [
     <HospitalForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      hospitalDetails={hospitalDetails}
+      hospitalDetails={
+        hospitalEditData.length > 0 ? hospitalEditData : hospitalDetails
+      }
       setHospitalDetails={setHospitalDetails}
       onClick={handleShowHospitalModal}
     />,
@@ -79,9 +179,10 @@ const Hospital = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
-      hospitalDetails={hospitalDetails}
-      //   fetchData={fetchData}
-      fetchData={() => {}}
+      hospitalDetails={
+        hospitalEditData.length > 0 ? hospitalEditData : hospitalDetails
+      }
+      fetchData={fetchData}
     />,
   ];
   const modalsConfig = {
@@ -120,7 +221,7 @@ const Hospital = () => {
         }}
       />
       <div className="flex flex-wrap xl:flex-nowrap space-x-4">
-        {cardData?.map((item, index) => {
+        {cardData?.map((item) => {
           return (
             <>
               <DisplayCard
@@ -200,6 +301,17 @@ const Hospital = () => {
           </div>
         </div>
       </div>
+      <div className="flex  items-center justify-between  my-7">
+        <p className="text-2xl font-semibold">
+          Hospital List ({hospitalData?.count})
+        </p>
+      </div>
+      {hospitalData?.data?.results ? (
+        <DataTable
+          columns={HospitalColumn}
+          data={hospitalData?.data?.results}
+        />
+      ) : null}
     </DashboardLayout>
   );
 };
