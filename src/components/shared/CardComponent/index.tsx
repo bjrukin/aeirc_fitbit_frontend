@@ -3,7 +3,7 @@ import { Card, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 interface CardComponentProps {
   bgColor?: string;
   textColor?: string;
-  iconSrc?: string;
+  iconSrc?: any;
   title?: string;
   value?: string;
   chart?: any;

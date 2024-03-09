@@ -23,7 +23,7 @@ export const navItems = [
   },
   {
     id: 2,
-    title: "Staff",
+    title: "Hospital Staff",
     path: "/staff",
     icon: <FaRegHeart size={26} />,
     role: ["admin"],
@@ -37,14 +37,14 @@ export const navItems = [
   },
   {
     id: 4,
-    title: "Users",
+    title: "Watch Users",
     path: "/users",
     icon: <IoBedOutline size={26} />,
     role: ["admin"],
   },
   {
     id: 5,
-    title: "Reports",
+    title: "User Reports",
     path: "/exercise",
     icon: <FaWalking size={26} />,
     role: ["admin"],

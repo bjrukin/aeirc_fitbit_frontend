@@ -7,6 +7,8 @@ import { Progress } from "../../ui/progress";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import Step from "../Step";
+import ImageUploadWithPreview from "../../ui/image-upload-with-preview";
+import UploadImage from "../../ui/upload-image";
 
 interface FieldProps {
   name: string;
@@ -46,7 +48,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   totalStep,
   data,
 }) => {
-  console.log("The inital values in dynamic form is", initialValues);
+  const [previewImage, setPreviewImage] = useState<any>("");
+  const [isHidden, setIsHidden] = useState(false);
   const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
     <div className="bg-white relative overflow-auto flex-1 rounded-lg p-5 px-11 ">
@@ -83,7 +86,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         validationSchema={formValidation}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, isValid }) => {
+        {({ isSubmitting, isValid, setFieldValue }) => {
           console.log("is valid", isValid);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
@@ -141,14 +144,18 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             </div>
                           ) : field.type === "image" ? (
                             <div className={`w-full mt-10`}>
-                              <input
-                                type="file"
-                                name="image"
-                                required
-                                accept="image/*"
-                                onChange={(e: any) => {
-                                  let file = e?.target?.files[0];
-                                }}
+                              <ImageUploadWithPreview
+                                name={field.name}
+                                label={"Upload Hospital Logo"}
+                                previewImage={previewImage}
+                                setFieldValue={setFieldValue}
+                                setPreviewImage={setPreviewImage}
+                              />
+                              <img
+                                src={previewImage || ""}
+                                alt=""
+                                className=""
+                                style={{ width: "200px", marginTop: "10px" }}
                               />
                             </div>
                           ) : (

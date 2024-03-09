@@ -37,11 +37,11 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
               >
                 <motion.div
                   className={
-                    " py-3  2xl:py-4 3xl:py-6 px-6 w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex space-x-3 cursor-pointer "
+                    " py-3  2xl:py-4 3xl:py-6 px-6 w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
                   }
                 >
                   {showSideNav ? (
-                    <p>{icon}</p>
+                    <p className="">{icon}</p>
                   ) : (
                     <ToolTip content={title}>{icon}</ToolTip>
                   )}

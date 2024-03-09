@@ -120,13 +120,12 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       },
       {}
     );
-    console.log("updated val",updatedValues)
+    console.log("updated val", updatedValues);
 
     const payload = {
       ...hospitalDetails,
       ...updatedValues,
     };
-    console.log("values", values);
     console.log("the payload in additional is", payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {
@@ -165,7 +164,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-full">
+    <div className="flex space-x-4  h-[800px] lg:h-[570px] 2xl:h-[700px] overflow-auto">
       <Formheader
         title={"Create A New Hospital"}
         currentStep={currentStep}

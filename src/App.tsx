@@ -11,6 +11,7 @@ import ForgetPassword from "./pages/Auth/forget-password";
 import ResetPassword from "./pages/Auth/reset-password";
 import ChangePassword from "./pages/Auth/change-password";
 import Dashboard from "./pages/Dashboard";
+import Hospital from "./pages/Hospital";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
@@ -50,11 +51,12 @@ function App() {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        {token && ( 
+        {token && (
           <>
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/hospital" element={<Hospital />} />
             </Route>
             <Route path="*" element={<Error />} />
           </>

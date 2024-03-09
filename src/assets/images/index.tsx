@@ -8,3 +8,8 @@ export { default as Sethescope } from "./sethescope.png";
 export { default as Watch } from "./watch.png";
 export { default as Delete } from "./delete.png";
 export { default as Edit } from "./edit.png";
+export { default as UserReports } from "./userReports.svg";
+export { default as Dashboard } from "./dashboard.svg";
+export { default as People } from "./people.svg";
+export { default as HospitalSign } from "./hospitalSign.svg";
+export { default as hospitalStaff } from "./hospitalStaff.svg";

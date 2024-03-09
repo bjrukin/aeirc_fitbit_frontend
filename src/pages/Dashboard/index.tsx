@@ -25,6 +25,7 @@ import { DataTable } from "../../components/ui/data-table";
 import CrudIcon from "../../components/shared/CrudIcon";
 import { MdOutlineModeEdit } from "react-icons/md";
 import Service from "../../setup/Service";
+import Heading from "../../components/ui/heading";
 
 const Dashboard = () => {
   const [showHospitalModal, setShowHospitalModal] = useState(false);
@@ -190,6 +191,16 @@ const Dashboard = () => {
     },
   ];
 
+  const data = [
+    { name: "Sun", total: 6000 },
+    { name: "Mon", total: 2575 },
+    { name: "Tue", total: 8000 },
+    { name: "Wed", total: 5000 },
+    { name: "Thu", total: 4000 },
+    { name: "Fri", total: 6000 },
+    { name: "Sat", total: 7000 },
+  ];
+
   return (
     <>
       {loading ? (
@@ -277,7 +288,7 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div className="mt-8">
-                  <Overview />
+                  <Overview data={data} />
                 </div>
               </div>
 

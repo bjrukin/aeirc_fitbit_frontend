@@ -11,17 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-const data = [
-  { name: "Sun", total: 6000 },
-  { name: "Mon", total: 2575 },
-  { name: "Tue", total: 8000 },
-  { name: "Wed", total: 5000 },
-  { name: "Thu", total: 4000 },
-  { name: "Fri", total: 6000 },
-  { name: "Sat", total: 7000 },
-];
-
-export function Overview() {
+export function Overview({ data }: { data: any }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleMouseOver = (data: any, index: any) => {
@@ -90,7 +80,7 @@ export function Overview() {
           tickLine={false}
           axisLine={true}
           padding={{ bottom: 10, top: 0 }}
-          tickFormatter={(value) => `${value / 1000}k`}
+          tickFormatter={(value) => `${value}`}
         />
 
         <Bar
