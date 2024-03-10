@@ -26,7 +26,7 @@ interface DynamicFormProps {
   formFields: FieldProps[][];
   formValidation: any;
   initialValues: any;
-  onSubmit: (values: any) => void;
+  onSubmit:any;
   submitButtonText: string;
   title: string;
   onCrossClick: any;
