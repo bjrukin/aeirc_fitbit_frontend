@@ -168,14 +168,14 @@ export function DataTable<TData, TValue>({
             </div>
             <div className="flex items-center justify-end space-x-4 py-4  ">
               <button
-                className="text-white p-2 rounded bg-secondary-500 cursor-pointer"
+                className="text-white p-2 bg-secondary-500 cursor-pointer"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
                 <FaChevronLeft className="h-5 w-5" />{" "}
               </button>
               <button
-                className="text-white p-2 rounded bg-secondary-500 cursor-pointer"
+                className="text-white p-2 bg-secondary-500 cursor-pointer"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >

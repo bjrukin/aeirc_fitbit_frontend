@@ -93,21 +93,26 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   setHospitalDetails,
   isEdit,
 }) => {
-  const initVal: initValProps = {
-    website: "",
-    admin_email: "",
-    admin_password: "",
-    image: "",
-    description: "",
-  };
-  console.log("ininital values", hospitalDetails);
+  const initVal: initValProps = hospitalDetails
+    ? hospitalDetails
+    : {
+        website: "",
+        admin_email: "",
+        admin_password: "",
+        image: "",
+        description: "",
+      };
   const handleSubmit = async (values: initValProps) => {
     const payload = {
       ...hospitalDetails,
       ...values,
+      province: hospitalDetails?.province?.value,
+      district: hospitalDetails?.district?.value,
+      mnu_vdc: hospitalDetails?.mnu_vdc?.value,
     };
+    console.log("the paylaod of submit are", payload);
     // const updatedValues = Object.keys(values).reduce(
-    //   (acc: any, key: string) => {
+    //   (acc: any, key: string) =ince?> {
     //     if (
     //       values[key as keyof initValProps] !==
     //       initVal[key as keyof initValProps]
@@ -118,13 +123,11 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
     //   },
     //   {}
     // );
-    // console.log("updated val", updatedValues);
 
     // const payload = {
     //   ...hospitalDetails,
     //   ...updatedValues,
     // };
-    console.log("the payload in additional is", payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
@@ -148,7 +151,6 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
           },
         });
       }
-      console.log("The res is", res);
 
       if (onClick) {
         onClick();
@@ -156,7 +158,6 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       fetchData();
       toastAlert("success", res?.data?.message);
     } catch (err) {
-      console.log("err while adding hospital detail", err);
       toastAlert("error", "Error While Submitting Form");
     }
   };

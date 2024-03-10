@@ -2,8 +2,8 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import { HospitalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
-import { findOptionValue } from "../../../lib/utilis";
 import useLocationData from "../../../hooks/useLocationData";
+import { findLabelValuePair } from "../../../lib/utilis";
 interface initValProps {
   name: string;
   address: string;
@@ -50,16 +50,26 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   hospitalDetails,
   isEdit,
 }) => {
-  const initVal: initValProps = {
-    name: "",
-    phone: null,
-    mnu_vdc: "",
-    email: "",
-    province: "",
-    district: "",
-    address: "",
-  };
-
+  const initVal: initValProps = hospitalDetails
+    ? {
+        name: hospitalDetails?.name,
+        phone: hospitalDetails?.phone,
+        mnu_vdc: findLabelValuePair(hospitalDetails?.mnu_vdc),
+        email: hospitalDetails?.email,
+        province: findLabelValuePair(hospitalDetails?.province),
+        district: findLabelValuePair(hospitalDetails?.district),
+        address: hospitalDetails?.address,
+      }
+    : {
+        name: "",
+        phone: null,
+        mnu_vdc: "",
+        email: "",
+        province: "",
+        district: "",
+        address: "",
+      };
+      
   const {
     provinceOptions,
     districtOptions,
@@ -143,14 +153,14 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
       // const province = findOptionValue(provinceOptions, values?.province);
       // const district = findOptionValue(districtOptions, values?.district);
       // const mnu_vdc = findOptionValue(municiplaityOptions, values?.mnu_vdc);
-      const payload = {
-        ...values,
-        province: values?.province?.value,
-        district: values?.province?.value,
-        mnu_vdc: values?.mnu_vdc?.value,
-      };
-      console.log("payload  in hospital form are", payload);
-      setHospitalDetails(payload);
+      // const payload = {
+      //   ...values,
+      //   province: values?.province?.value,
+      //   district: values?.province?.value,
+      //   mnu_vdc: values?.mnu_vdc?.value,
+      // };
+      // console.log("payload  in hospital form are", payload);
+      setHospitalDetails(values);
       setCurrentStep(currentStep + 1);
     } catch (err) {
       console.log("err while adding hospital detail");

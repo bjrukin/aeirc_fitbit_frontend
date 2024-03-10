@@ -123,6 +123,7 @@ interface CustomSelectProps extends FieldProps {
   label?: string;
   editDiscount: boolean;
   name: string;
+  value?: any;
   defaultValue: any;
   onChangeCallback?: (selectedOption: any) => void;
 }
@@ -133,6 +134,7 @@ export const DefaultSelect = ({
   field,
   form,
   options,
+  value,
   label,
   defaultValue,
   isMulti = false,
@@ -180,7 +182,7 @@ export const DefaultSelect = ({
         options={options}
         isClearable={true}
         onChange={onChange}
-        defaultValue={[]}
+        value={value}
         isMulti={isMulti}
         classNamePrefix="react-select"
         menuPortalTarget={document.body}

@@ -24,7 +24,6 @@ interface IProps {
 }
 
 const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
-  const dispatch = useDispatch();
   const [deleteContent, setDeleteContent] = React.useState<any>("");
   const [showDeleteModal, setShowDeleteModal] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
@@ -47,15 +46,15 @@ const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
   };
   return (
     <>
-      <div className="flex items-center space-x-4">
+      <div className="ml-4 flex items-center ">
         {children}
         <div
-          className="ml-4 w-7 h-7 rounded-lg bg-white bg-opacity-50 flex items-center justify-center"
+          className="flex items-center justify-center"
           onClick={() => handleDelete(data)}
         >
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <div className="bg-white p-[6px] rounded-lg border-[1px] border-warning">
+              <div className="">
                 <FaRegTrashCan size={22} color="red" />
               </div>
             </AlertDialogTrigger>

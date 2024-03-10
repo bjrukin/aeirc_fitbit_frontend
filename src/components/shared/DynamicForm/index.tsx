@@ -86,7 +86,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         validationSchema={formValidation}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, isValid, setFieldValue }) => {
+        {({ isSubmitting, isValid, setFieldValue, values }) => {
+          console.log("The value in form  aare", values);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
               <div className="">
@@ -95,16 +96,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     <>
                       <div key={index} className="flex w-full space-x-5">
                         {fieldGroup.map((field, index) => {
-                          console.log(
-                            "option is",
-                            field?.options,
-                            field?.options &&
-                              field?.options[
-                                field.options?.findIndex(
-                                  (x) => x.value === initialValues?.province?.id
-                                )
-                              ]
-                          );
                           const widthClass =
                             fieldGroup.length === 1 ? "w-1/2" : "w-full";
                           return field.type === "input" ? (
@@ -130,7 +121,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 isMulti={false}
                                 placeholder={field.placeholder}
                                 label={field.label}
-                                defaultValue={[]}
+                                value={values[field?.name]}
                                 onChangeCallback={field.onChange}
                               />
                             </div>

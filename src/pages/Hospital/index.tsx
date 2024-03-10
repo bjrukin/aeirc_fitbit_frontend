@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import Heading from "../../components/ui/heading";
-import HospitalForm from "../../components/forms/Hospital/hospital-form";
 import AdditionalDetailForm from "../../components/forms/Hospital/additional-detail-form";
 import Modal from "../../components/shared/Modal";
 import DisplayCard from "../../components/shared/CardComponent/display-card";
@@ -14,7 +13,7 @@ import useFetch from "../../hooks/useFetch";
 import CrudIcon from "../../components/shared/CrudIcon";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { DataTable } from "../../components/ui/data-table";
-import Service from "../../setup/Service";
+import HospitalForm from "../../components/forms/Hospital/hospital-form";
 
 const Hospital = () => {
   const {
@@ -23,27 +22,22 @@ const Hospital = () => {
     fetchData,
     loading,
   } = useFetch("/hospitals");
+  console.log("The hospital data", hospitalData);
 
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>({});
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
-  const [hospitalEditData, setHospitalEditData] = useState([]);
-  console.log("hospitalEdit data", hospitalEditData);
-  const [isLoading, setIsLoading] = useState(false);
+  console.log("edit values are", editData);
 
-  const getSingleData = async (id: any) => {
-    setIsLoading(true);
-    try {
-      const editRes = await Service.get(`/hospitals/${id}`);
-      const editData = editRes?.data?.data;
-      setHospitalEditData(editData);
-      setIsLoading(false);
-      setShowHospitalModal(true);
-    } catch (err) {
-      setIsLoading(false);
-      console.log("The err is", err);
-    }
+  const handleEditData = (data: any) => {
+    setEditId(data?.id);
+    setEditData(data);
+    setIsEdit(true);
+    handleShowHospitalModal();
   };
 
   const toggleModal = (
@@ -133,7 +127,7 @@ const Hospital = () => {
                 Active
               </p>
             ) : (
-              <p className="bg-warning  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
+              <p className="bg-[#EF4444]  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
                 Inactive
               </p>
             )}
@@ -152,10 +146,10 @@ const Hospital = () => {
               fetchData={fetchData}
             >
               <div
-                className="w-7 h-7 rounded-xl bg-white bg-opacity-50 flex  items-center mr-4"
-                onClick={() => getSingleData(row?.cell?.row?.original?.id)}
+                className="flex  items-center mr-4"
+                onClick={() => handleEditData(row?.cell?.row?.original)}
               >
-                <div className="bg-white  p-[6px] rounded-lg border-[1px] border-primary-500  ">
+                <div className="">
                   <MdOutlineModeEdit size={22} color="#1D3075" />
                 </div>
               </div>
@@ -169,9 +163,7 @@ const Hospital = () => {
     <HospitalForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      hospitalDetails={
-        hospitalEditData.length > 0 ? hospitalEditData : hospitalDetails
-      }
+      hospitalDetails={editData ? editData : hospitalDetails}
       setHospitalDetails={setHospitalDetails}
       onClick={handleShowHospitalModal}
     />,
@@ -179,9 +171,7 @@ const Hospital = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
-      hospitalDetails={
-        hospitalEditData.length > 0 ? hospitalEditData : hospitalDetails
-      }
+      hospitalDetails={editData ? editData : hospitalDetails}
       fetchData={fetchData}
     />,
   ];
@@ -216,7 +206,7 @@ const Hospital = () => {
         mainText={"Hospital Dashboard"}
         btnText={"Create Hospital"}
         onClick={() => {
-          //   setHospitalDetails({});
+          setEditData(null);
           handleShowHospitalModal();
         }}
       />
