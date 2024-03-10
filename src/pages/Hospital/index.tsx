@@ -27,6 +27,7 @@ const Hospital = () => {
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>({});
+  console.log("THe hospital detail", hospitalDetails);
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -171,7 +172,7 @@ const Hospital = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
-      hospitalDetails={editData ? editData : hospitalDetails}
+      hospitalDetails={hospitalDetails}
       fetchData={fetchData}
     />,
   ];

@@ -102,10 +102,15 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         image: "",
         description: "",
       };
-  const handleSubmit = async (values: initValProps) => {
-    const payload = {
-      ...hospitalDetails,
+  console.log("The inital val add", initVal, hospitalDetails);
+  const handleSubmit = async (
+    values: initValProps,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    console.log("the values in add are", values);
+    const payload: any = {
       ...values,
+      hospitalDetails,
       province: hospitalDetails?.province?.value,
       district: hospitalDetails?.district?.value,
       mnu_vdc: hospitalDetails?.mnu_vdc?.value,
@@ -140,20 +145,24 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
           payload,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
             },
           }
         );
+        resetForm();
       } else {
         res = await Service.post("/hospitals", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
+        resetForm();
       }
+      console.log("edit res is", res);
 
       if (onClick) {
         onClick();
+        resetForm();
       }
       fetchData();
       toastAlert("success", res?.data?.message);

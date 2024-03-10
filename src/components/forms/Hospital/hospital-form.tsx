@@ -50,16 +50,9 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   hospitalDetails,
   isEdit,
 }) => {
+  console.log("the ini in hospital", hospitalDetails);
   const initVal: initValProps = hospitalDetails
-    ? {
-        name: hospitalDetails?.name,
-        phone: hospitalDetails?.phone,
-        mnu_vdc: findLabelValuePair(hospitalDetails?.mnu_vdc),
-        email: hospitalDetails?.email,
-        province: findLabelValuePair(hospitalDetails?.province),
-        district: findLabelValuePair(hospitalDetails?.district),
-        address: hospitalDetails?.address,
-      }
+    ? hospitalDetails
     : {
         name: "",
         phone: null,
@@ -69,7 +62,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         district: "",
         address: "",
       };
-      
+
   const {
     provinceOptions,
     districtOptions,
@@ -148,7 +141,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   ];
 
   const handleSubmit = async (values: initValProps) => {
-    console.log("the values are", values);
+    console.log("the hospital values are", values);
     try {
       // const province = findOptionValue(provinceOptions, values?.province);
       // const district = findOptionValue(districtOptions, values?.district);
@@ -160,7 +153,11 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
       //   mnu_vdc: values?.mnu_vdc?.value,
       // };
       // console.log("payload  in hospital form are", payload);
-      setHospitalDetails(values);
+      // setHospitalDetails(values);
+      setHospitalDetails((prevValues: any) => ({
+        ...prevValues,
+        ...values,
+      }));
       setCurrentStep(currentStep + 1);
     } catch (err) {
       console.log("err while adding hospital detail");
