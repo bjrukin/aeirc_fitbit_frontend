@@ -50,26 +50,39 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   hospitalDetails,
   isEdit,
 }) => {
-  console.log("the ini in hospital", hospitalDetails);
-  const initVal: initValProps = hospitalDetails
-    ? hospitalDetails
-    : {
-        name: "",
-        phone: null,
-        mnu_vdc: "",
-        email: "",
-        province: "",
-        district: "",
-        address: "",
-      };
-
+  const initVal: initValProps =
+    hospitalDetails && isEdit
+      ? {
+          name: hospitalDetails?.name,
+          phone: hospitalDetails?.phone,
+          mnu_vdc: findLabelValuePair(hospitalDetails?.mnu_vdc),
+          email: hospitalDetails?.email,
+          province: findLabelValuePair(hospitalDetails?.province),
+          district: findLabelValuePair(hospitalDetails?.district),
+          address: hospitalDetails?.address,
+        }
+      : hospitalDetails
+      ? hospitalDetails
+      : {
+          name: "",
+          phone: null,
+          mnu_vdc: "",
+          email: "",
+          province: "",
+          district: "",
+          address: "",
+        };
   const {
     provinceOptions,
     districtOptions,
+    selectedDistrict,
     municiplaityOptions,
     handleProvinceChange,
     handleDistrictChange,
+    selectedMnu,
+    handleMunicipalityChange,
   } = useLocationData();
+  console.log("The selected district is", selectedDistrict);
 
   const HospitalFormField = [
     [
@@ -118,6 +131,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         required: true,
         options: districtOptions,
         onChange: handleDistrictChange,
+        value: selectedDistrict,
       },
       {
         name: "mnu_vdc",
@@ -125,7 +139,9 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         label: "Municipality/VDC",
         placeholder: "Enter Hospital Ward",
         required: true,
+        onChange: handleMunicipalityChange,
         options: municiplaityOptions,
+        value: selectedMnu,
       },
     ],
     [
@@ -141,27 +157,20 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   ];
 
   const handleSubmit = async (values: initValProps) => {
-    console.log("the hospital values are", values);
     try {
-      // const province = findOptionValue(provinceOptions, values?.province);
-      // const district = findOptionValue(districtOptions, values?.district);
-      // const mnu_vdc = findOptionValue(municiplaityOptions, values?.mnu_vdc);
-      // const payload = {
-      //   ...values,
-      //   province: values?.province?.value,
-      //   district: values?.province?.value,
-      //   mnu_vdc: values?.mnu_vdc?.value,
-      // };
-      // console.log("payload  in hospital form are", payload);
-      // setHospitalDetails(values);
-      setHospitalDetails((prevValues: any) => ({
-        ...prevValues,
-        ...values,
-      }));
+      if (isEdit) {
+        setHospitalDetails(() => ({
+          ...hospitalDetails,
+          ...values,
+        }));
+      } else {
+        setHospitalDetails((prevValues: any) => ({
+          ...prevValues,
+          ...values,
+        }));
+      }
       setCurrentStep(currentStep + 1);
-    } catch (err) {
-      console.log("err while adding hospital detail");
-    }
+    } catch (err) {}
   };
 
   return (

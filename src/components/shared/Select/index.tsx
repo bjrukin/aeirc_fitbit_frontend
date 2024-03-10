@@ -151,6 +151,11 @@ export const DefaultSelect = ({
           : (selectedOptions as Option)
       );
     }
+
+    if (field.name === "province") {
+      form.setFieldValue("district", null);
+      form.setFieldValue("mnu_vdc", null);
+    }
     if (onChangeCallback) {
       onChangeCallback(selectedOptions);
     }

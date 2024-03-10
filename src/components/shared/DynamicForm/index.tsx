@@ -19,6 +19,7 @@ interface FieldProps {
   required: boolean;
   options?: { label: string; value: string }[];
   onChange?: any;
+  value?: any;
 }
 
 interface DynamicFormProps {
@@ -26,7 +27,7 @@ interface DynamicFormProps {
   formFields: FieldProps[][];
   formValidation: any;
   initialValues: any;
-  onSubmit:any;
+  onSubmit: any;
   submitButtonText: string;
   title: string;
   onCrossClick: any;
@@ -87,7 +88,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         onSubmit={onSubmit}
       >
         {({ isSubmitting, isValid, setFieldValue, values }) => {
-          console.log("The value in form  aare", values);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
               <div className="">
@@ -96,6 +96,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     <>
                       <div key={index} className="flex w-full space-x-5">
                         {fieldGroup.map((field, index) => {
+                          console.log("field value is", field?.value);
                           const widthClass =
                             fieldGroup.length === 1 ? "w-1/2" : "w-full";
                           return field.type === "input" ? (
@@ -121,7 +122,11 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 isMulti={false}
                                 placeholder={field.placeholder}
                                 label={field.label}
-                                value={values[field?.name]}
+                                value={
+                                  field?.value
+                                    ? field?.value
+                                    : values[field?.name]
+                                }
                                 onChangeCallback={field.onChange}
                               />
                             </div>

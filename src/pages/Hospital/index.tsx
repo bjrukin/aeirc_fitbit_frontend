@@ -22,17 +22,14 @@ const Hospital = () => {
     fetchData,
     loading,
   } = useFetch("/hospitals");
-  console.log("The hospital data", hospitalData);
 
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>({});
-  console.log("THe hospital detail", hospitalDetails);
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
-  console.log("edit values are", editData);
 
   const handleEditData = (data: any) => {
     setEditId(data?.id);
@@ -164,9 +161,10 @@ const Hospital = () => {
     <HospitalForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      hospitalDetails={editData ? editData : hospitalDetails}
+      hospitalDetails={editData && isEdit ? editData : hospitalDetails}
       setHospitalDetails={setHospitalDetails}
       onClick={handleShowHospitalModal}
+      isEdit={isEdit}
     />,
     <AdditionalDetailForm
       currentStep={currentStep}

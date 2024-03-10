@@ -102,12 +102,10 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         image: "",
         description: "",
       };
-  console.log("The inital val add", initVal, hospitalDetails);
   const handleSubmit = async (
     values: initValProps,
     { resetForm }: { resetForm: () => void }
   ) => {
-    console.log("the values in add are", values);
     const payload: any = {
       ...values,
       hospitalDetails,
@@ -115,7 +113,6 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       district: hospitalDetails?.district?.value,
       mnu_vdc: hospitalDetails?.mnu_vdc?.value,
     };
-    console.log("the paylaod of submit are", payload);
     // const updatedValues = Object.keys(values).reduce(
     //   (acc: any, key: string) =ince?> {
     //     if (
@@ -158,7 +155,6 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         });
         resetForm();
       }
-      console.log("edit res is", res);
 
       if (onClick) {
         onClick();

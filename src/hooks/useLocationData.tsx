@@ -3,8 +3,8 @@ import useFetch from "./useFetch";
 
 const useLocationData = () => {
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
-  console.log("selected province", selectedProvince);
   const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
+  const [selectedMnu, setSelectedMnu] = useState<any>(null);
 
   const { data: provinceData } = useFetch("/provinces");
   const provinceOptions = provinceData?.map((province: any) => ({
@@ -15,7 +15,6 @@ const useLocationData = () => {
   const { data: districtData } = useFetch(
     `/districts?province=${selectedProvince?.value}`
   );
-  console.log("district data", districtData);
   const districtOptions = districtData?.map((district: any) => ({
     label: district.name,
     value: district?.id,
@@ -23,11 +22,16 @@ const useLocationData = () => {
 
   const handleProvinceChange = (value: any) => {
     setSelectedProvince(value);
-    setSelectedDistrict(null);
+    setSelectedDistrict("");
+    setSelectedMnu("");
   };
 
   const handleDistrictChange = (value: any) => {
     setSelectedDistrict(value);
+  };
+
+  const handleMunicipalityChange = (value: any) => {
+    setSelectedMnu(value);
   };
 
   const { data: municipalityData } = useFetch(
@@ -46,6 +50,8 @@ const useLocationData = () => {
     municiplaityOptions,
     handleProvinceChange,
     handleDistrictChange,
+    handleMunicipalityChange,
+    selectedMnu,
   };
 };
 
