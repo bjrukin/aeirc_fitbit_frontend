@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ColumnDef,
   flexRender,
@@ -38,6 +36,7 @@ import {
 import { IoFilterOutline } from "react-icons/io5";
 import NoData from "./no-result";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -48,6 +47,15 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  // const location = useLocation();
+  // const navigate = useNavigate();
+
+  // const handleSearch = (e: any) => {
+  //   e.preventDefault();
+  //   const params = new URLSearchParams();
+  //   params.append("q", e.target.value);
+  //   navigate(`${location.pathname}?${params.toString()}`);
+  // };
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -78,9 +86,10 @@ export function DataTable<TData, TValue>({
             type="text"
             placeholder="Search Data"
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event: any) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
+            onChange={(event: any) => {
+              table.getColumn("name")?.setFilterValue(event.target.value);
+              // handleSearch(event);
+            }}
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

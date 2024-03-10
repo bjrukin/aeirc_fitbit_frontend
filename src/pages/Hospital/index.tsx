@@ -14,14 +14,24 @@ import CrudIcon from "../../components/shared/CrudIcon";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { DataTable } from "../../components/ui/data-table";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
+import { useLocation, useSearchParams } from "react-router-dom";
 
-const Hospital = () => {
+const Hospital = ({ searchParams }: { searchParams: any }) => {
+  // const [params] = useSearchParams();
+  // const searchString = params.get("q");
+  // console.log("q valuie", typeof searchString, searchString);
+  // const {
+  // data: hospitalData,
+  // error,
+  // fetchData,
+  // loading,
+  // } = useFetch(`/hospitals?${searchString}`);
   const {
     data: hospitalData,
     error,
     fetchData,
     loading,
-  } = useFetch("/hospitals");
+  } = useFetch(`/hospitals`);
 
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
@@ -29,7 +39,6 @@ const Hospital = () => {
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-
 
   const handleEditData = (data: any) => {
     setEditId(data?.id);
@@ -293,7 +302,7 @@ const Hospital = () => {
       </div>
       <div className="flex  items-center justify-between  my-7">
         <p className="text-2xl font-semibold">
-          Hospital List ({hospitalData?.count})
+          Hospital List ({hospitalData?.data?.count})
         </p>
       </div>
       {hospitalData?.data?.results ? (
