@@ -207,6 +207,7 @@ const Hospital = () => {
         mainText={"Hospital Dashboard"}
         btnText={"Create Hospital"}
         onClick={() => {
+          setHospitalDetails(null);
           setEditData(null);
           handleShowHospitalModal();
         }}

@@ -23,6 +23,7 @@ const useLocationData = () => {
 
   const handleProvinceChange = (value: any) => {
     setSelectedProvince(value);
+    setSelectedDistrict(null);
   };
 
   const handleDistrictChange = (value: any) => {
