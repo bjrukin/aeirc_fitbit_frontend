@@ -8,7 +8,6 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import Step from "../Step";
 import ImageUploadWithPreview from "../../ui/image-upload-with-preview";
-import UploadImage from "../../ui/upload-image";
 
 interface FieldProps {
   name: string;
@@ -20,6 +19,7 @@ interface FieldProps {
   options?: { label: string; value: string }[];
   onChange?: any;
   value?: any;
+  disabled?: boolean;
 }
 
 interface DynamicFormProps {
@@ -96,7 +96,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     <>
                       <div key={index} className="flex w-full space-x-5">
                         {fieldGroup.map((field, index) => {
-                          console.log("field value is", field?.value);
+                          console.log("field value is", field?.disabled);
                           const widthClass =
                             fieldGroup.length === 1 ? "w-1/2" : "w-full";
                           return field.type === "input" ? (
@@ -120,6 +120,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 options={field.options}
                                 component={DefaultSelect}
                                 isMulti={false}
+                                disabled={field?.disabled}
                                 placeholder={field.placeholder}
                                 label={field.label}
                                 value={

@@ -18,6 +18,8 @@ export const customStyles = {
       height: "44px",
       fontSize: "16px",
       boxSizing: "content-box",
+      backgroundColor: state.isDisabled ? "#D9D9D9" : "",
+      cursor: state.isDisabled ? "not-allowed !important" : "",
     };
   },
   indicatorSeparator: () => ({

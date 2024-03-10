@@ -122,6 +122,7 @@ interface CustomSelectProps extends FieldProps {
   placeholder?: string;
   label?: string;
   editDiscount: boolean;
+  disabled: boolean;
   name: string;
   value?: any;
   defaultValue: any;
@@ -137,6 +138,7 @@ export const DefaultSelect = ({
   value,
   label,
   defaultValue,
+  disabled,
   isMulti = false,
   onChangeCallback,
 }: CustomSelectProps) => {
@@ -186,6 +188,7 @@ export const DefaultSelect = ({
         placeholder={placeholder}
         options={options}
         isClearable={true}
+        isDisabled={disabled}
         onChange={onChange}
         value={value}
         isMulti={isMulti}

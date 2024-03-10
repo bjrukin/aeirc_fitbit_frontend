@@ -78,6 +78,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     selectedDistrict,
     municiplaityOptions,
     handleProvinceChange,
+    selectedProvince,
     handleDistrictChange,
     selectedMnu,
     handleMunicipalityChange,
@@ -132,6 +133,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         options: districtOptions,
         onChange: handleDistrictChange,
         value: selectedDistrict,
+        disabled: !selectedProvince,
       },
       {
         name: "mnu_vdc",
@@ -142,6 +144,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
         onChange: handleMunicipalityChange,
         options: municiplaityOptions,
         value: selectedMnu,
+        disabled: !selectedProvince || !selectedDistrict,
       },
     ],
     [
