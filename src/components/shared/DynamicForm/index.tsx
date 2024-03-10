@@ -96,7 +96,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     <>
                       <div key={index} className="flex w-full space-x-5">
                         {fieldGroup.map((field, index) => {
-                          console.log("field value is", field?.disabled);
                           const widthClass =
                             fieldGroup.length === 1 ? "w-1/2" : "w-full";
                           return field.type === "input" ? (
@@ -138,13 +137,17 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                 label={"Upload Hospital Logo"}
                                 previewImage={previewImage}
                                 setFieldValue={setFieldValue}
+                                imgUrl={values[field?.name]}
                                 setPreviewImage={setPreviewImage}
                               />
                               <img
-                                src={previewImage || ""}
+                                src={previewImage || null}
                                 alt=""
                                 className=""
-                                style={{ width: "200px", marginTop: "10px" }}
+                                style={{
+                                  width: "200px",
+                                  marginTop: "10px",
+                                }}
                               />
                             </div>
                           ) : (

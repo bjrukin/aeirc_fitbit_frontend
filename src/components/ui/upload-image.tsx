@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsDownload } from "react-icons/bs";
 import { IoIosClose } from "react-icons/io";
 
@@ -10,6 +10,7 @@ interface IProps {
   previewImage?: any;
   setFieldValue?: any;
   setPreviewImage?: any;
+  imgUrl?: string;
 }
 
 const UploadImage: React.FC<IProps> = ({
@@ -18,10 +19,14 @@ const UploadImage: React.FC<IProps> = ({
   previewImage,
   setPreviewImage,
   setFieldValue,
+  imgUrl,
 }) => {
   const fileRef = React.useRef<any>(null);
   const [imageSelected, setImageSelected] = useState(false);
 
+  useEffect(() => {
+    setImageSelected(!!(imgUrl || previewImage));
+  }, [imgUrl, previewImage]);
   return (
     <div className="mb-4 relative">
       <label className="font-bold text-lg">{label}</label>
@@ -62,6 +67,9 @@ const UploadImage: React.FC<IProps> = ({
           onClick={() => {
             setPreviewImage(null);
             setImageSelected(false);
+            if (fileRef.current) {
+              fileRef.current.value = "";
+            }
           }}
         />
       )}

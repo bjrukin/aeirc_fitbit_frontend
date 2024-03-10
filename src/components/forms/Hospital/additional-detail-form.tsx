@@ -9,7 +9,7 @@ interface initValProps {
   admin_email: string;
   admin_password: string;
   description: string;
-  image: string;
+  logo: string;
 }
 
 interface AdditionalDetailProps {
@@ -61,7 +61,7 @@ export const AdditionalDetailField = [
   ],
   [
     {
-      name: "image",
+      name: "logo",
       type: "image",
       label: "Upload Hospital Logo",
       placeholder: "Select Hospital Logo",
@@ -81,7 +81,7 @@ const FORM_VALIDATION = Yup.object().shape({
   admin_email: Yup.string()
     .email("*Please enter a valid email address")
     .required("*Email is required"),
-  image: Yup.mixed().notRequired(),
+  logo: Yup.mixed().notRequired(),
 });
 
 const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
@@ -99,9 +99,10 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         website: "",
         admin_email: "",
         admin_password: "",
-        image: "",
+        logo: "",
         description: "",
       };
+  console.log("The inital values in additonal form is", initVal);
   const handleSubmit = async (
     values: initValProps,
     { resetForm }: { resetForm: () => void }
@@ -155,6 +156,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         });
         resetForm();
       }
+      console.log("The res is", res);
 
       if (onClick) {
         onClick();

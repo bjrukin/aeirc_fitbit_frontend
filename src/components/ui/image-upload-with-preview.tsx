@@ -6,6 +6,7 @@ interface IProps {
   setPreviewImage: any;
   setFieldValue: any;
   label?: string;
+  imgUrl?: string;
   name?: any;
   // setRemoveImage?: any;
   isHidden?: any;
@@ -17,6 +18,7 @@ const ImageUploadWithPreview: React.FC<IProps> = ({
   setPreviewImage,
   setFieldValue,
   label,
+  imgUrl,
   name,
   // setRemoveImage,
 }) => {
@@ -27,6 +29,7 @@ const ImageUploadWithPreview: React.FC<IProps> = ({
         label={label}
         previewImage={previewImage}
         setFieldValue={setFieldValue}
+        imgUrl={imgUrl}
         setPreviewImage={setPreviewImage}
       />
     </>
