@@ -119,7 +119,6 @@ const MedicalPersonAddressDetailForm: React.FC<
   };
 
   const handleSubmit = async (values: initValProps) => {
-    console.log("the values are", values);
     try {
     } catch (err) {
       console.log("err while adding medical person detail");

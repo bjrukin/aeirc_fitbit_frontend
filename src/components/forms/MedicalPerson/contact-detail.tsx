@@ -2,29 +2,31 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
-  contact: any;
+  phone: any;
   email: string;
-  citizenship: any;
-  nid: any;
-  nmc: any;
-  emergencyContact: any;
-  insuranceNumber: any;
+  citizenship_number: any;
+  nid_number: any;
+  // nmc: any;
+  emergency_contact_number: any;
+  insurance_number: any;
 }
 
-interface ContactDetailFormProps {
+interface phoneDetailFormProps {
   onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
 }
 
-export const ContactDetailFormField = [
+export const phoneDetailFormField = [
   [
     {
-      name: "contact",
+      name: "phone",
       type: "input",
-      label: "Contact Number",
-      placeholder: "Enter Contact Number",
+      label: "phone Number",
+      placeholder: "Enter phone Number",
       required: true,
       inputType: "number",
     },
@@ -39,7 +41,7 @@ export const ContactDetailFormField = [
   ],
   [
     {
-      name: "citizenship",
+      name: "citizenship_number",
       type: "input",
       label: "Citizenship Number",
       placeholder: "Enter Citizenship Number",
@@ -47,7 +49,7 @@ export const ContactDetailFormField = [
       inputType: "number",
     },
     {
-      name: "nid",
+      name: "nid_number",
       type: "input",
       label: "NID Number",
       placeholder: "Enter NID Number",
@@ -56,76 +58,95 @@ export const ContactDetailFormField = [
     },
   ],
   [
+    // {
+    //   name: "nmc",
+    //   type: "input",
+    //   label: "Enter Nmc Number",
+    //   placeholder: "Enter Nmc Number",
+    //   required: true,
+    //   inputType: "number",
+    // },
     {
-      name: "nmc",
-      type: "input",
-      label: "Enter Nmc Number",
-      placeholder: "Enter Nmc Number",
-      required: true,
-      inputType: "number",
-    },
-    {
-      name: "emergencyContact",
-      type: "input",
-      label: "Emergency Contact",
-      placeholder: "Enter Emergency Contact",
-      required: true,
-      inputType: "number",
-    },
-  ],
-  [
-    {
-      name: "insuranceNumber",
+      name: "insurance_number",
       type: "input",
       label: "Enter Insurance Number",
       placeholder: "Enter Insurance Number",
       required: true,
       inputType: "number",
     },
+    {
+      name: "emergency_contact_number",
+      type: "input",
+      label: "Emergency phone",
+      placeholder: "Enter Emergency phone",
+      required: true,
+      inputType: "number",
+    },
   ],
+  // [
+  //   {
+  //     name: "insurance_number",
+  //     type: "input",
+  //     label: "Enter Insurance Number",
+  //     placeholder: "Enter Insurance Number",
+  //     required: true,
+  //     inputType: "number",
+  //   },
+  // ],
 ];
 
-const ContactDetailForm: React.FC<ContactDetailFormProps> = ({
+const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
 }) => {
+  const dispatch = useDispatch();
+  const formData = useSelector((state: any) => state.rootReducer?.form);
+  console.log("form Data is", formData);
+
   const FORM_VALIDATION = Yup.object().shape({
-    contact: Yup.number()
-      .required("*Contact is required")
+    phone: Yup.number()
+      .required("*phone is required")
       .test(
         "len",
-        "*Contact number must be exactly 10 digits",
+        "*phone number must be exactly 10 digits",
         (val: any) => val && val.toString().length === 10
       ),
     email: Yup.string()
       .email("*Please enter  valid email address")
       .required("Email is required"),
-    citizenship: Yup.string().required("*Citizenship number is required"),
-    nid: Yup.string().required("*NID number is required"),
-    nmc: Yup.string().required("*NMC number is required"),
-    emergencyContact: Yup.number()
-      .required("*Emergency Contact is required")
+    citizenship_number: Yup.string().required(
+      "*citizenship_number number is required"
+    ),
+    nid_number: Yup.string().required("*nid_number number is required"),
+    // nmc: Yup.string().required("*NMC number is required"),
+    emergency_contact_number: Yup.number()
+      .required("*Emergency phone is required")
       .test(
         "len",
-        "*Contact number must be exactly 10 digits",
+        "*phone number must be exactly 10 digits",
         (val: any) => val && val.toString().length === 10
       ),
-    insuranceNumber: Yup.string().required("*Insurance number is required"),
+    insurance_number: Yup.string().required("*Insurance number is required"),
   });
-  const initVal: initValProps = {
-    contact: "",
-    email: "",
-    citizenship: "",
-    nid: "",
-    nmc: "",
-    emergencyContact: "",
-    insuranceNumber: "",
-  };
+  const initVal: initValProps = formData
+    ? formData
+    : {
+        phone: "",
+        email: "",
+        citizenship_number: "",
+        nid_number: "",
+        // nmc: "",
+        emergency_contact_number: "",
+        insurance_number: "",
+      };
 
   const handleSubmit = async (values: initValProps) => {
-    console.log("the values are", values);
     try {
+      dispatch(updateFormData(values));
+      if (currentStep != undefined) {
+        setCurrentStep(currentStep + 1);
+      }
     } catch (err) {
       console.log("err while adding medical person detail");
     }
@@ -139,8 +160,8 @@ const ContactDetailForm: React.FC<ContactDetailFormProps> = ({
         data={MedicalPersonalFormStep}
       />
       <DynamicForm
-        title={"Contact And Id Details"}
-        formFields={ContactDetailFormField}
+        title={"phone And Id Details"}
+        formFields={phoneDetailFormField}
         formValidation={FORM_VALIDATION}
         onClick={() => setCurrentStep(currentStep - 1)}
         onCrossClick={onClick}
@@ -154,4 +175,4 @@ const ContactDetailForm: React.FC<ContactDetailFormProps> = ({
   );
 };
 
-export default ContactDetailForm;
+export default phoneDetailForm;

@@ -8,6 +8,7 @@ import PersonalDetailForm from "../../components/forms/MedicalPerson/personal-de
 import { useState } from "react";
 import Modal from "../../components/shared/Modal";
 import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
+import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
 
 const Doctor = () => {
   const [showUserModal, setShowUserModal] = useState(false);
@@ -57,6 +58,14 @@ const Doctor = () => {
       //   isEdit={isEdit}
     />,
     <ContactDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
+      //   setHospitalDetails={setHospitalDetails}
+      onClick={handleShowUserModal}
+      //   isEdit={isEdit}
+    />,
+    <MedicalPersonAddressDetailForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}

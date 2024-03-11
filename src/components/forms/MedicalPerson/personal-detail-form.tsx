@@ -94,7 +94,6 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   setCurrentStep,
 }) => {
   const formData = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data is", formData);
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     first_name: Yup.string()
@@ -133,7 +132,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
         setCurrentStep(currentStep + 1);
       }
     } catch (err) {
-      console.log("err while adding medical person detail");
+      console.log("err while adding personal  detail", err);
     }
   };
 
