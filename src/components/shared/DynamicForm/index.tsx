@@ -23,7 +23,7 @@ interface FieldProps {
 }
 
 interface DynamicFormProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement | SVGElement>;
+  onClick?: () => void;
   formFields: FieldProps[][];
   formValidation: any;
   initialValues: any;

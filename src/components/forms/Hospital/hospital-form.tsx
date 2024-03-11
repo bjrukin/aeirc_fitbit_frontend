@@ -4,6 +4,11 @@ import { HospitalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import useLocationData from "../../../hooks/useLocationData";
 import { findLabelValuePair } from "../../../lib/utilis";
+
+interface LabelValuePair {
+  label?: string;
+  value: string | number;
+}
 interface initValProps {
   name: string;
   address: string;
@@ -14,13 +19,31 @@ interface initValProps {
   mnu_vdc: any;
 }
 
+interface HospitalDetails {
+  address: string;
+  description: string;
+  district: any;
+  district_data: any;
+  email: string;
+  id: string;
+  is_active: boolean;
+  logo: string;
+  mnu_vdc: any;
+  mnu_vdc_data: any;
+  name: string;
+  phone: any;
+  province: any;
+  province_data: any;
+  website: string;
+}
+
 interface HospitalFormProps {
-  onClick?: any;
-  currentStep?: any;
+  onClick?: () => void;
+  currentStep?: number;
   setCurrentStep?: any;
-  hospitalDetails?: any;
+  hospitalDetails?: HospitalDetails;
   setHospitalDetails?: any;
-  isEdit?: any;
+  isEdit?: boolean;
 }
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -83,7 +106,6 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     selectedMnu,
     handleMunicipalityChange,
   } = useLocationData();
-  console.log("The selected district is", selectedDistrict);
 
   const HospitalFormField = [
     [
@@ -172,7 +194,9 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
           ...values,
         }));
       }
-      setCurrentStep(currentStep + 1);
+      if (currentStep != undefined) {
+        setCurrentStep(currentStep + 1);
+      }
     } catch (err) {}
   };
 
