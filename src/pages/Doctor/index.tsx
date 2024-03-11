@@ -9,10 +9,14 @@ import { useState } from "react";
 import Modal from "../../components/shared/Modal";
 import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
 import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
+import { useDispatch } from "react-redux";
+import { resetFormData } from "../../redux/slice/form/formSlice";
 
 const Doctor = () => {
+  const dispatch = useDispatch();
   const [showUserModal, setShowUserModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<any>(0);
+  const [currentStep, setCurrentStep] = useState<any>(2);
+  console.log("The current step are", currentStep);
   const cardData = [
     {
       id: 1,
@@ -39,7 +43,7 @@ const Doctor = () => {
   ) => {
     return () => {
       setModalState(!modalState);
-      setCurrentStep(0);
+      // setCurrentStep(0);
     };
   };
 
@@ -98,6 +102,7 @@ const Doctor = () => {
         mainText={"Doctor Details"}
         btnText={"Add Doctor"}
         onClick={() => {
+          dispatch(resetFormData());
           //   setHospitalDetails(null);
           //   setEditData(null);
           handleShowUserModal();

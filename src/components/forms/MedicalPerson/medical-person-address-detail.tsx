@@ -19,101 +19,17 @@ interface MedicalPersonAddressDetailFormProps {
   currentStep?: any;
   setCurrentStep?: any;
 }
-// const {
-//   provinceOptions,
-//   districtOptions,
-//   selectedDistrict,
-//   municiplaityOptions,
-//   handleProvinceChange,
-//   selectedProvince,
-//   handleDistrictChange,
-//   selectedMnu,
-//   handleMunicipalityChange,
-// } = useLocationData();
-
-export const MedicalPersonAddressDetailFormField = [
-  [
-    {
-      name: "maritalStatus",
-      type: "select",
-      label: "Marital Status",
-      placeholder: "Select Marital Status",
-      required: true,
-    },
-    {
-      name: "tempProvince",
-      type: "select",
-      label: "Temporary Province",
-      placeholder: "Enter Temporary Province",
-      required: true,
-      options: [{ label: "aaa", value: "asdasd" }],
-    },
-  ],
-  [
-    {
-      name: "tempDistrict",
-      type: "select",
-      label: "Temporary District",
-      placeholder: "Enter Temporary District",
-      required: true,
-      options: [{ label: "aaa", value: "asdasd" }],
-    },
-    {
-      name: "permananentAddress",
-      type: "input",
-      label: "Permanent Address",
-      placeholder: "Enter Permanent Address",
-      required: true,
-    },
-  ],
-  [
-    {
-      name: "permananetProvince",
-      type: "select",
-      label: "Permanent Province",
-      placeholder: "Enter Permanent Province",
-      required: true,
-      options: [{ label: "aaa", value: "asdasd" }],
-    },
-    {
-      name: "permananetDistrict",
-      type: "select",
-      label: "Permanent District",
-      placeholder: "Enter Permanent District",
-      required: true,
-      options: [{ label: "aaa", value: "asdasd" }],
-    },
-  ],
-  [
-    {
-      name: "username",
-      type: "input",
-      label: "Username",
-      placeholder: "Enter Username",
-      required: true,
-      inputType: "text",
-    },
-    {
-      name: "password",
-      type: "input",
-      label: "Password",
-      placeholder: "Enter Password",
-      required: true,
-      inputType: "text",
-    },
-  ],
-];
 
 const MedicalPersonAddressDetailForm: React.FC<
   MedicalPersonAddressDetailFormProps
 > = ({ onClick, currentStep, setCurrentStep }) => {
   const FORM_VALIDATION = Yup.object().shape({
     maritalStatus: Yup.string().required("Marital status is required"),
-    tempProvince: Yup.string().required("Temporary province is required"),
-    tempDistrict: Yup.string().required("Temporary district is required"),
+    tempProvince: Yup.mixed().required("Temporary province is required"),
+    tempDistrict: Yup.mixed().required("Temporary district is required"),
     permananentAddress: Yup.string().required("Permanent address is required"),
-    permananetProvince: Yup.string().required("Permanent province is required"),
-    permananetDistrict: Yup.string().required("Permanent district is required"),
+    permananetProvince: Yup.mixed().required("Permanent province is required"),
+    permananetDistrict: Yup.mixed().required("Permanent district is required"),
     username: Yup.string().required("Username is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
@@ -130,10 +46,100 @@ const MedicalPersonAddressDetailForm: React.FC<
     password: "",
   };
 
+  const {
+    provinceOptions,
+    districtOptions,
+    selectedDistrict,
+    handleProvinceChange,
+    selectedProvince,
+    handleDistrictChange,
+  } = useLocationData();
+
+  const MedicalPersonAddressDetailFormField = [
+    [
+      {
+        name: "maritalStatus",
+        type: "toggle",
+        label: "Marital Status",
+        placeholder: "Select Marital Status",
+        required: true,
+      },
+      {
+        name: "tempProvince",
+        type: "select",
+        label: "Temporary Province",
+        placeholder: "Enter Temporary Province",
+        required: true,
+        options: provinceOptions,
+        onChange: handleProvinceChange,
+      },
+    ],
+    [
+      {
+        name: "tempDistrict",
+        type: "select",
+        label: "Temporary District",
+        placeholder: "Enter Temporary District",
+        required: true,
+        options: districtOptions,
+        onChange: handleDistrictChange,
+        value: selectedDistrict,
+        disabled: !selectedProvince,
+      },
+      {
+        name: "permananentAddress",
+        type: "input",
+        label: "Permanent Address",
+        placeholder: "Enter Permanent Address",
+        required: true,
+      },
+    ],
+    [
+      {
+        name: "permananetProvince",
+        type: "select",
+        label: "Permanent Province",
+        placeholder: "Enter Permanent Province",
+        required: true,
+        options: provinceOptions,
+        onChange: handleProvinceChange,
+      },
+      {
+        name: "permananetDistrict",
+        type: "select",
+        label: "Permanent District",
+        placeholder: "Enter Permanent District",
+        required: true,
+        options: districtOptions,
+        onChange: handleDistrictChange,
+        value: selectedDistrict,
+        disabled: !selectedProvince,
+      },
+    ],
+    [
+      {
+        name: "username",
+        type: "input",
+        label: "Username",
+        placeholder: "Enter Username",
+        required: true,
+        inputType: "text",
+      },
+      {
+        name: "password",
+        type: "input",
+        label: "Password",
+        placeholder: "Enter Password",
+        required: true,
+        inputType: "text",
+      },
+    ],
+  ];
   const handleSubmit = async (values: initValProps) => {
+    console.log("The submitted values   of medixal person are", values);
     try {
     } catch (err) {
-      console.log("err while adding medical person detail");
+      console.log("err while adding medical person detail", err);
     }
   };
 
@@ -153,6 +159,8 @@ const MedicalPersonAddressDetailForm: React.FC<
         initialValues={initVal}
         onSubmit={handleSubmit}
         submitButtonText="Create Medical Personal"
+        currentStep={currentStep}
+        totalStep={MedicalPersonalFormStep.length}
       />
     </div>
   );

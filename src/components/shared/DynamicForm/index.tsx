@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import Step from "../Step";
 import ImageUploadWithPreview from "../../ui/image-upload-with-preview";
+import { ToggleGroup, ToggleGroupItem } from "../../ui/toggle-group";
 
 interface FieldProps {
   name: string;
@@ -88,7 +89,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
         validationSchema={formValidation}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, isValid, setFieldValue, values }) => {
+        {({
+          isSubmitting,
+          isValid,
+          setFieldValue,
+          values,
+          errors,
+          touched,
+        }) => {
+          console.log("errors", errors);
           return (
             <Form className=" flex flex-col justify-between min-h-[570px]">
               <div className="">
@@ -150,6 +159,54 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                                   marginTop: "10px",
                                 }}
                               />
+                            </div>
+                          ) : field?.type === "toggle" ? (
+                            <div className={`${widthClass} mt-8 `}>
+                              <div className="mb-4">
+                                <label
+                                  className={`text-lg font-medium ${
+                                    errors[field.name] &&
+                                    touched[field.name] &&
+                                    "text-warning"
+                                  }`}
+                                >
+                                  {field?.label}
+                                  <span className="text-warning">*</span>
+                                </label>
+                              </div>
+                              <Field name={field?.name}>
+                                {({ field }: { field: any }) => (
+                                  <ToggleGroup
+                                    name={field?.name}
+                                    type="single"
+                                    className="flex justify-start space-x-4"
+                                    value={field.value}
+                                    onValueChange={(value) => {
+                                      setFieldValue(field.name, value);
+                                      console.log("changed vaue", value);
+                                    }}
+                                  >
+                                    <ToggleGroupItem
+                                      className="border-[1px] border-black text-black px-5 py-1 text-base"
+                                      value={"married"}
+                                    >
+                                      Married
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                      className="border-[1px] border-black text-black px-5 py-1 text-base"
+                                      value={"unmarried"}
+                                    >
+                                      Unmarried
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                      className="border-[1px] border-black text-black px-5 py-1 text-base"
+                                      value={"wont'tell"}
+                                    >
+                                      Wont'Tell
+                                    </ToggleGroupItem>
+                                  </ToggleGroup>
+                                )}
+                              </Field>
                             </div>
                           ) : (
                             <div className={`w-full mt-10`}>

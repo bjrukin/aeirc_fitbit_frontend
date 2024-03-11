@@ -116,7 +116,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       district: formValues?.district?.value,
       mnu_vdc: formValues?.mnu_vdc?.value,
     };
-    console.log("The payload are",typeof payload?.logo,payload.logo, payload);
+    console.log("The payload are", typeof payload?.logo, payload.logo, payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
@@ -126,10 +126,9 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
       if (formValues?.isEdit) {
         res = await Service.patch(`/hospitals/${formValues?.id}`, formData, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         });
-        resetForm();
       } else {
         res = await Service.post("/hospitals", formData, {
           headers: {
