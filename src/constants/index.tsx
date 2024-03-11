@@ -1,17 +1,8 @@
-import { FaHome } from "react-icons/fa";
-import { IoPersonSharp } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
-import { IoMdMailUnread } from "react-icons/io";
 import { RxDashboard } from "react-icons/rx";
 import { FaRegHeart } from "react-icons/fa";
 import { FiActivity } from "react-icons/fi";
 import { IoBedOutline } from "react-icons/io5";
 import { FaWalking } from "react-icons/fa";
-import { MdTrendingUp } from "react-icons/md";
-import { MdDataSaverOn } from "react-icons/md";
-import { IoClipboardOutline } from "react-icons/io5";
-import { FaCircle } from "react-icons/fa6";
 
 export const navItems = [
   {
@@ -24,9 +15,23 @@ export const navItems = [
   {
     id: 2,
     title: "Hospital Staff",
-    path: "/staff",
     icon: <FaRegHeart size={26} />,
     role: ["admin"],
+    hasChild: true,
+    child: [
+      {
+        id: 10,
+        title: "Doctor",
+        path: "/doctor",
+        role: ["admin"],
+      },
+      {
+        id: 11,
+        title: "Nurse",
+        path: "/nurse",
+        role: ["admin"],
+      },
+    ],
   },
   {
     id: 3,

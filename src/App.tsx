@@ -12,12 +12,11 @@ import ResetPassword from "./pages/Auth/reset-password";
 import ChangePassword from "./pages/Auth/change-password";
 import Dashboard from "./pages/Dashboard";
 import Hospital from "./pages/Hospital";
+import Doctor from "./pages/Doctor";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
   const token = JSON.parse(unParsedToken);
-  console.log("The token is", token);
-  console.log("The path name is", location.pathname);
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector(
     (state: any) => state.rootReducer.login
@@ -57,6 +56,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/hospital" element={<Hospital />} />
+              <Route path="/doctor" element={<Doctor />} />
             </Route>
             <Route path="*" element={<Error />} />
           </>

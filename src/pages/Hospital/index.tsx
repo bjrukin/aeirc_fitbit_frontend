@@ -8,15 +8,14 @@ import { Overview } from "../../components/shared/Chart/barChart";
 import { IoMdArrowUp } from "react-icons/io";
 import { Button } from "../../components/shared/Button";
 import { CardComponent } from "../../components/shared/CardComponent";
-import LineChart from "../../components/shared/Chart/areaChart";
 import useFetch from "../../hooks/useFetch";
 import CrudIcon from "../../components/shared/CrudIcon";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { DataTable } from "../../components/ui/data-table";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
-import { useLocation, useSearchParams } from "react-router-dom";
+import SimpleAreaChart from "../../components/shared/Chart/areaChart";
 
-const Hospital = ({ searchParams }: { searchParams: any }) => {
+const Hospital = () => {
   // const [params] = useSearchParams();
   // const searchString = params.get("q");
   // console.log("q valuie", typeof searchString, searchString);
@@ -294,7 +293,7 @@ const Hospital = ({ searchParams }: { searchParams: any }) => {
                 value="2000"
                 increase="20"
                 isFullWidth
-                chart={<LineChart />}
+                chart={<SimpleAreaChart />}
               />
             </div>
           </div>

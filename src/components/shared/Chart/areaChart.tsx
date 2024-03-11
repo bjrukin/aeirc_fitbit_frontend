@@ -32,7 +32,7 @@ const data = [
   },
 ];
 
-const LineChart = () => {
+const SimpleAreaChart = () => {
   return (
     <div style={{ width: "50%", height: "150px" }}>
       <ResponsiveContainer>
@@ -56,7 +56,6 @@ const LineChart = () => {
             type="monotone"
             dataKey="total"
             stroke="none"
-            // stroke="#01C98E"
             fill="url(#colorUv)"
           />
         </AreaChart>
@@ -65,4 +64,4 @@ const LineChart = () => {
   );
 };
 
-export default LineChart;
+export default SimpleAreaChart;
