@@ -102,7 +102,7 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
 }) => {
   const dispatch = useDispatch();
   const formData = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data is", formData);
+  console.log("form Data in contact detail is", formData);
 
   const FORM_VALIDATION = Yup.object().shape({
     phone: Yup.number()

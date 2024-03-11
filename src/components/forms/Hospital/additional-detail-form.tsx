@@ -4,6 +4,8 @@ import DynamicForm from "../../shared/DynamicForm";
 import { HospitalFormStep } from "../../../constants";
 import Service from "../../../setup/Service";
 import { toastAlert } from "../../../lib/toastAlert";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
   website: string;
   admin_email: string;
@@ -16,8 +18,8 @@ interface AdditionalDetailProps {
   onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
-  hospitalDetails?: any;
-  setHospitalDetails?: any;
+  // hospitalDetails?: any;
+  // setHospitalDetails?: any;
   fetchData?: any;
   isEdit?: any;
 }
@@ -88,13 +90,15 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
-  hospitalDetails,
+  // hospitalDetails,
   fetchData,
-  setHospitalDetails,
+  // setHospitalDetails,
   isEdit,
 }) => {
-  const initVal: initValProps = hospitalDetails
-    ? hospitalDetails
+  const dispatch = useDispatch();
+  const formValues: any = useSelector((state: any) => state.rootReducer.form);
+  const initVal: initValProps = formValues
+    ? formValues
     : {
         website: "",
         admin_email: "",
@@ -102,51 +106,29 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         logo: "",
         description: "",
       };
-  console.log("The inital values in additonal form is", initVal);
   const handleSubmit = async (
     values: initValProps,
     { resetForm }: { resetForm: () => void }
   ) => {
     const payload: any = {
       ...values,
-      hospitalDetails,
-      province: hospitalDetails?.province?.value,
-      district: hospitalDetails?.district?.value,
-      mnu_vdc: hospitalDetails?.mnu_vdc?.value,
+      province: formValues?.province?.value,
+      district: formValues?.district?.value,
+      mnu_vdc: formValues?.mnu_vdc?.value,
     };
-    // const updatedValues = Object.keys(values).reduce(
-    //   (acc: any, key: string) =ince?> {
-    //     if (
-    //       values[key as keyof initValProps] !==
-    //       initVal[key as keyof initValProps]
-    //     ) {
-    //       acc[key] = values[key as keyof initValProps];
-    //     }
-    //     return acc;
-    //   },
-    //   {}
-    // );
-
-    // const payload = {
-    //   ...hospitalDetails,
-    //   ...updatedValues,
-    // };
+    console.log("The payload are",typeof payload?.logo,payload.logo, payload);
     const formData = new FormData();
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
     try {
       let res;
-      if (isEdit) {
-        res = await Service.patch(
-          `/hospitals/${hospitalDetails?.id}`,
-          payload,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      if (formValues?.isEdit) {
+        res = await Service.patch(`/hospitals/${formValues?.id}`, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         resetForm();
       } else {
         res = await Service.post("/hospitals", formData, {
@@ -183,7 +165,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
         onCrossClick={onClick}
         onClick={() => {
           setCurrentStep(currentStep - 1);
-          setHospitalDetails(hospitalDetails);
+          // dispatch(updateFormData(formValues));
         }}
         initialValues={initVal}
         onSubmit={handleSubmit}

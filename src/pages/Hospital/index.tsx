@@ -14,6 +14,11 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import { DataTable } from "../../components/ui/data-table";
 import HospitalForm from "../../components/forms/Hospital/hospital-form";
 import SimpleAreaChart from "../../components/shared/Chart/areaChart";
+import { useDispatch } from "react-redux";
+import {
+  resetFormData,
+  updateEditData,
+} from "../../redux/slice/form/formSlice";
 
 const Hospital = () => {
   // const [params] = useSearchParams();
@@ -31,7 +36,7 @@ const Hospital = () => {
     fetchData,
     loading,
   } = useFetch(`/hospitals`);
-
+  const dispatch = useDispatch();
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   const [hospitalDetails, setHospitalDetails] = useState<any>({});
@@ -40,6 +45,7 @@ const Hospital = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleEditData = (data: any) => {
+    dispatch(updateEditData(data));
     setEditId(data?.id);
     setEditData(data);
     setIsEdit(true);
@@ -169,8 +175,8 @@ const Hospital = () => {
     <HospitalForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      hospitalDetails={editData && isEdit ? editData : hospitalDetails}
-      setHospitalDetails={setHospitalDetails}
+      // hospitalDetails={editData && isEdit ? editData : hospitalDetails}
+      // setHospitalDetails={setHospitalDetails}
       onClick={handleShowHospitalModal}
       isEdit={isEdit}
     />,
@@ -178,7 +184,7 @@ const Hospital = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
-      hospitalDetails={hospitalDetails}
+      // hospitalDetails={hospitalDetails}
       fetchData={fetchData}
     />,
   ];
@@ -213,6 +219,7 @@ const Hospital = () => {
         mainText={"Hospital Dashboard"}
         btnText={"Create Hospital"}
         onClick={() => {
+          dispatch(resetFormData());
           setHospitalDetails(null);
           setEditData(null);
           handleShowHospitalModal();

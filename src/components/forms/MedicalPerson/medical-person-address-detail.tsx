@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
+import useLocationData from "../../../hooks/useLocationData";
 interface initValProps {
   maritalStatus: string;
   tempProvince: string;
@@ -18,6 +19,17 @@ interface MedicalPersonAddressDetailFormProps {
   currentStep?: any;
   setCurrentStep?: any;
 }
+// const {
+//   provinceOptions,
+//   districtOptions,
+//   selectedDistrict,
+//   municiplaityOptions,
+//   handleProvinceChange,
+//   selectedProvince,
+//   handleDistrictChange,
+//   selectedMnu,
+//   handleMunicipalityChange,
+// } = useLocationData();
 
 export const MedicalPersonAddressDetailFormField = [
   [
@@ -79,7 +91,7 @@ export const MedicalPersonAddressDetailFormField = [
       label: "Username",
       placeholder: "Enter Username",
       required: true,
-      inputType:"text",
+      inputType: "text",
     },
     {
       name: "password",
@@ -87,7 +99,7 @@ export const MedicalPersonAddressDetailFormField = [
       label: "Password",
       placeholder: "Enter Password",
       required: true,
-      inputType:"text",
+      inputType: "text",
     },
   ],
 ];

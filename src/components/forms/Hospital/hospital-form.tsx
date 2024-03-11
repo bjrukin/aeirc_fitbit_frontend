@@ -4,6 +4,8 @@ import { HospitalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import useLocationData from "../../../hooks/useLocationData";
 import { findLabelValuePair } from "../../../lib/utilis";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFormData } from "../../../redux/slice/form/formSlice";
 
 interface LabelValuePair {
   label?: string;
@@ -19,30 +21,10 @@ interface initValProps {
   mnu_vdc: any;
 }
 
-interface HospitalDetails {
-  address: string;
-  description: string;
-  district: any;
-  district_data: any;
-  email: string;
-  id: string;
-  is_active: boolean;
-  logo: string;
-  mnu_vdc: any;
-  mnu_vdc_data: any;
-  name: string;
-  phone: any;
-  province: any;
-  province_data: any;
-  website: string;
-}
-
 interface HospitalFormProps {
   onClick?: () => void;
   currentStep?: number;
   setCurrentStep?: any;
-  hospitalDetails?: HospitalDetails;
-  setHospitalDetails?: any;
   isEdit?: boolean;
 }
 
@@ -69,23 +51,29 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
-  setHospitalDetails,
-  hospitalDetails,
   isEdit,
 }) => {
+  const dispatch = useDispatch();
+  const formValues = useSelector((state: any) => state.rootReducer.form);
   const initVal: initValProps =
-    hospitalDetails && isEdit
+    formValues && formValues?.isEdit
       ? {
-          name: hospitalDetails?.name,
-          phone: hospitalDetails?.phone,
-          mnu_vdc: findLabelValuePair(hospitalDetails?.mnu_vdc),
-          email: hospitalDetails?.email,
-          province: findLabelValuePair(hospitalDetails?.province),
-          district: findLabelValuePair(hospitalDetails?.district),
-          address: hospitalDetails?.address,
+          name: formValues?.name,
+          phone: formValues?.phone,
+          mnu_vdc: formValues?.mnu_vdc.label
+            ? formValues?.mnu_vdc
+            : findLabelValuePair(formValues?.mnu_vdc),
+          email: formValues?.email,
+          province: formValues?.province.label
+            ? formValues?.province
+            : findLabelValuePair(formValues?.province),
+          district: formValues?.district.label
+            ? formValues?.district
+            : findLabelValuePair(formValues?.district),
+          address: formValues?.address,
         }
-      : hospitalDetails
-      ? hospitalDetails
+      : formValues && !isEdit
+      ? formValues
       : {
           name: "",
           phone: null,
@@ -181,25 +169,36 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     ],
   ];
 
+  // const handleSubmit = async (values: initValProps) => {
+  //   try {
+  //     if (isEdit) {
+  //       setHospitalDetails(() => ({
+  //         ...hospitalDetails,
+  //         ...values,
+  //       }));
+  //     } else {
+  //       setHospitalDetails((prevValues: any) => ({
+  //         ...prevValues,
+  //         ...values,
+  //       }));
+  //     }
+  //     if (currentStep != undefined) {
+  //       setCurrentStep(currentStep + 1);
+  //     }
+  //   } catch (err) {}
+  // };
+
   const handleSubmit = async (values: initValProps) => {
+    console.log("The submitted are", values);
     try {
-      if (isEdit) {
-        setHospitalDetails(() => ({
-          ...hospitalDetails,
-          ...values,
-        }));
-      } else {
-        setHospitalDetails((prevValues: any) => ({
-          ...prevValues,
-          ...values,
-        }));
-      }
+      dispatch(updateFormData(values));
       if (currentStep != undefined) {
         setCurrentStep(currentStep + 1);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log("err while adding personal  detail", err);
+    }
   };
-
   return (
     <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[570px] 2xl:h-[700px] overflow-auto  ">
       <Formheader

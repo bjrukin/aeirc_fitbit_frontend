@@ -55,7 +55,7 @@ const Doctor = () => {
       //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
       //   setHospitalDetails={setHospitalDetails}
       onClick={handleShowUserModal}
-      //   isEdit={isEdit}
+      // isEdit={isEdit}
     />,
     <ContactDetailForm
       currentStep={currentStep}
@@ -70,8 +70,9 @@ const Doctor = () => {
       setCurrentStep={setCurrentStep}
       //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
       //   setHospitalDetails={setHospitalDetails}
-      onClick={handleShowUserModal}
       //   isEdit={isEdit}
+      onClick={handleShowUserModal}
+      // fetchData={fetchData}
     />,
   ];
 

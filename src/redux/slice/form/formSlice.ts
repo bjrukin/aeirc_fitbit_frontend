@@ -13,22 +13,16 @@ const formSlice = createSlice({
     updateFormData: (state, action: PayloadAction<any>) => {
       return { ...state, ...action.payload };
     },
+    resetFormData: () => {
+      return initialState;
+    },
+    updateEditData: (state, action: PayloadAction<any>) => {
+      return { ...state, ...action.payload, isEdit: true };
+    },
   },
-  // reducers: {
-  //   updateFormData: (state, action) => {
-  //     return action.payload;
-  //   },
-  // },
-  // reducers: {
-  //   updateFormData: (state, action) => {
-  //     const updatedFormData = action.payload;
-  //     const newState: any = { ...state };
-  //     newState.formDataHistory.push(updatedFormData);
-  //     return newState;
-  //   },
-  // },
 });
 
 export default formSlice.reducer;
 
-export const { updateFormData } = formSlice.actions;
+export const { updateFormData, updateEditData, resetFormData } =
+  formSlice.actions;

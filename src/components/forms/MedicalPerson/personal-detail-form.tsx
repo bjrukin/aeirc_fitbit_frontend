@@ -17,6 +17,7 @@ interface PersonalDetailFormProps {
   onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
+  isEdit?: boolean;
 }
 
 export const PersonalDetailFormField = [
@@ -92,6 +93,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
+  isEdit,
 }) => {
   const formData = useSelector((state: any) => state.rootReducer?.form);
   const dispatch = useDispatch();
