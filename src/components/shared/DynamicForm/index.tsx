@@ -4,7 +4,7 @@ import Input from "../Input";
 import { Button } from "../Button";
 import { DefaultSelect } from "../Select";
 import { Progress } from "../../ui/progress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import Step from "../Step";
 import ImageUploadWithPreview from "../../ui/image-upload-with-preview";
@@ -51,6 +51,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 }) => {
   const [previewImage, setPreviewImage] = useState<any>("");
   const [isHidden, setIsHidden] = useState(false);
+
   const progressValue = ((currentStep + 1) / totalStep) * 100;
   return (
     <div className="bg-white relative overflow-auto flex-1 rounded-lg p-5 px-11 ">

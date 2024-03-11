@@ -4,8 +4,14 @@ import Heading from "../../components/ui/heading";
 import { SimpleLineChart } from "../../components/shared/Chart/linechart";
 import { Button } from "../../components/shared/Button";
 import DisplayCard from "../../components/shared/CardComponent/display-card";
+import PersonalDetailForm from "../../components/forms/MedicalPerson/personal-detail-form";
+import { useState } from "react";
+import Modal from "../../components/shared/Modal";
+import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
 
 const Doctor = () => {
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState<any>(0);
   const cardData = [
     {
       id: 1,
@@ -24,15 +30,67 @@ const Doctor = () => {
       bgColor: "white",
     },
   ];
+
+  const toggleModal = (
+    modalState: boolean,
+    setModalState: any,
+    setCurrentStep: any
+  ) => {
+    return () => {
+      setModalState(!modalState);
+      setCurrentStep(0);
+    };
+  };
+
+  const handleShowUserModal = toggleModal(
+    showUserModal,
+    setShowUserModal,
+    setCurrentStep
+  );
+  const UserForms = [
+    <PersonalDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
+      //   setHospitalDetails={setHospitalDetails}
+      onClick={handleShowUserModal}
+      //   isEdit={isEdit}
+    />,
+    <ContactDetailForm
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
+      //   setHospitalDetails={setHospitalDetails}
+      onClick={handleShowUserModal}
+      //   isEdit={isEdit}
+    />,
+  ];
+
+  const modalsConfig = {
+    hospital: {
+      showModal: showUserModal,
+      forms: UserForms,
+    },
+  };
+
   return (
     <DashboardLayout>
+      {Object.entries(modalsConfig).map(([key, e]) => {
+        return (
+          e.showModal && (
+            <Modal key={key} isOpen={e.showModal}>
+              {e.forms[currentStep]}
+            </Modal>
+          )
+        );
+      })}
       <Heading
         mainText={"Doctor Details"}
         btnText={"Add Doctor"}
         onClick={() => {
           //   setHospitalDetails(null);
           //   setEditData(null);
-          //   handleShowHospitalModal();
+          handleShowUserModal();
         }}
       />
       <div className="xl:flex space-x-0 mt-5">
@@ -85,7 +143,7 @@ const Doctor = () => {
             <SimpleLineChart />
           </div>
         </div>
-        <div className="flex flex-col space-x-4">
+        <div className="flex flex-col">
           {cardData?.map((item) => {
             return (
               <>

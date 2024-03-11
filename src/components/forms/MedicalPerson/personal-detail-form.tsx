@@ -2,13 +2,15 @@ import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
 import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
-  fname: string;
-  mname: string;
-  lname: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
   gender: string;
-  dateofBirth: Date | null;
-  bloodGroup: string;
+  date_of_birth: Date | null;
+  blood_group: string;
 }
 
 interface PersonalDetailFormProps {
@@ -20,30 +22,30 @@ interface PersonalDetailFormProps {
 export const PersonalDetailFormField = [
   [
     {
-      name: "fname",
+      name: "first_name",
       type: "input",
       label: "First Name",
       placeholder: "Enter First Name",
       required: true,
-      inputType:"text",
+      inputType: "text",
     },
     {
-      name: "mname",
+      name: "middle_name",
       type: "input",
       label: "Middle Name",
       placeholder: "Enter Midlle Name",
       required: false,
-      inputType:"text",
+      inputType: "text",
     },
   ],
   [
     {
-      name: "lname",
+      name: "last_name",
       type: "input",
       label: "Last Name",
       placeholder: "Enter Last Name",
       required: true,
-      inputType:"text",
+      inputType: "text",
     },
     {
       name: "gender",
@@ -60,16 +62,15 @@ export const PersonalDetailFormField = [
   ],
   [
     {
-      name: "dateofBirth",
+      name: "date_of_birth",
       type: "input",
       label: "Date of Birth",
       placeholder: "YYYY-MM-DD",
       required: true,
-      inputType:"date",
-
+      inputType: "date",
     },
     {
-      name: "bloodGroup",
+      name: "blood_group",
       type: "select",
       label: "Blood Group",
       options: [
@@ -83,40 +84,54 @@ export const PersonalDetailFormField = [
         { value: "O-", label: "O-" },
       ],
       required: true,
-    }
+    },
   ],
 ];
 
 const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   onClick,
   currentStep,
+  setCurrentStep,
 }) => {
+  const formData = useSelector((state: any) => state.rootReducer?.form);
+  console.log("form Data is", formData);
+  const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
-    name: Yup.string()
+    first_name: Yup.string()
       .min(3, "*First Name must be at least 3 character")
       .required("*First Name is required"),
-    mname: Yup.string().min(3, "*Middle Name must be at least 3 character"),
-    lname: Yup.string()
+    middle_name: Yup.string().min(
+      3,
+      "*Middle Name must be at least 3 character"
+    ),
+    last_name: Yup.string()
       .min(3, "*Last Name must be at least 3 character")
       .required("*Last Name is required"),
-    gender: Yup.string().required("*Gender is required"),
-    bloodGroup: Yup.string().required("*Blood Group is required"),
-    dateOfBirth: Yup.date()
+    gender: Yup.mixed().required("*Gender is required"),
+    blood_group: Yup.mixed().required("*Blood Group is required"),
+    date_of_birth: Yup.date()
       .max(new Date(), "*Date of birth cannot be in the future")
       .required("*Date of birth is required"),
   });
-  const initVal: initValProps = {
-    fname: "",
-    mname: "",
-    lname: "",
-    gender: "",
-    bloodGroup: "",
-    dateofBirth: null,
-  };
+  const initVal: initValProps = formData
+    ? formData
+    : {
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        gender: "",
+        blood_group: "",
+        date_of_birth: null,
+      };
+
+  console.log("The inital values of personal info is", initVal);
 
   const handleSubmit = async (values: initValProps) => {
-    console.log("the values are", values);
     try {
+      dispatch(updateFormData(values));
+      if (currentStep != undefined) {
+        setCurrentStep(currentStep + 1);
+      }
     } catch (err) {
       console.log("err while adding medical person detail");
     }
@@ -134,6 +149,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
         formFields={PersonalDetailFormField}
         formValidation={FORM_VALIDATION}
         onClick={onClick}
+        data={MedicalPersonalFormStep}
         onCrossClick={onClick}
         initialValues={initVal}
         onSubmit={handleSubmit}
