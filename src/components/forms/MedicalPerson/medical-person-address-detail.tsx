@@ -4,7 +4,6 @@ import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import useLocationData from "../../../hooks/useLocationData";
 interface initValProps {
-  maritalStatus: string;
   tempProvince: string;
   tempDistrict: string;
   permananentAddress: string;
@@ -24,7 +23,6 @@ const MedicalPersonAddressDetailForm: React.FC<
   MedicalPersonAddressDetailFormProps
 > = ({ onClick, currentStep, setCurrentStep }) => {
   const FORM_VALIDATION = Yup.object().shape({
-    maritalStatus: Yup.string().required("Marital status is required"),
     tempProvince: Yup.mixed().required("Temporary province is required"),
     tempDistrict: Yup.mixed().required("Temporary district is required"),
     permananentAddress: Yup.string().required("Permanent address is required"),
@@ -36,7 +34,6 @@ const MedicalPersonAddressDetailForm: React.FC<
       .required("Password is required"),
   });
   const initVal: initValProps = {
-    maritalStatus: "",
     tempProvince: "",
     tempDistrict: "",
     permananentAddress: "",
@@ -53,17 +50,13 @@ const MedicalPersonAddressDetailForm: React.FC<
     handleProvinceChange,
     selectedProvince,
     handleDistrictChange,
+    handleMunicipalityChange,
+    municiplaityOptions,
+    selectedMnu,
   } = useLocationData();
 
   const MedicalPersonAddressDetailFormField = [
     [
-      {
-        name: "maritalStatus",
-        type: "toggle",
-        label: "Marital Status",
-        placeholder: "Select Marital Status",
-        required: true,
-      },
       {
         name: "tempProvince",
         type: "select",
@@ -73,8 +66,6 @@ const MedicalPersonAddressDetailForm: React.FC<
         options: provinceOptions,
         onChange: handleProvinceChange,
       },
-    ],
-    [
       {
         name: "tempDistrict",
         type: "select",
@@ -86,11 +77,34 @@ const MedicalPersonAddressDetailForm: React.FC<
         value: selectedDistrict,
         disabled: !selectedProvince,
       },
+    ],
+    [
       {
-        name: "permananentAddress",
+        name: "mnu_vdc",
+        type: "select",
+        label: "Municipality/VDC",
+        placeholder: "Enter Hospital Ward",
+        required: true,
+        onChange: handleMunicipalityChange,
+        options: municiplaityOptions,
+        value: selectedMnu,
+        disabled: !selectedProvince || !selectedDistrict,
+      },
+
+      {
+        name: "tempAddress",
         type: "input",
-        label: "Permanent Address",
-        placeholder: "Enter Permanent Address",
+        label: "Temporary Address",
+        placeholder: "Enter Temporary Address",
+        required: true,
+      },
+    ],
+    [
+      {
+        name: "tempWard",
+        type: "input",
+        label: "Temporary Ward",
+        placeholder: "Enter Temporary Ward",
         required: true,
       },
     ],
@@ -118,20 +132,31 @@ const MedicalPersonAddressDetailForm: React.FC<
     ],
     [
       {
-        name: "username",
-        type: "input",
-        label: "Username",
-        placeholder: "Enter Username",
+        name: "mnu_vdc",
+        type: "select",
+        label: "Municipality/VDC",
+        placeholder: "Enter Hospital Ward",
         required: true,
-        inputType: "text",
+        onChange: handleMunicipalityChange,
+        options: municiplaityOptions,
+        value: selectedMnu,
+        disabled: !selectedProvince || !selectedDistrict,
       },
       {
-        name: "password",
+        name: "permananentAddress",
         type: "input",
-        label: "Password",
-        placeholder: "Enter Password",
+        label: "Permanent Address",
+        placeholder: "Enter Permanent Address",
         required: true,
-        inputType: "text",
+      },
+    ],
+    [
+      {
+        name: "permananentWard",
+        type: "input",
+        label: "Permanent Ward",
+        placeholder: "Enter Permanent Ward",
+        required: true,
       },
     ],
   ];
@@ -144,7 +169,7 @@ const MedicalPersonAddressDetailForm: React.FC<
   };
 
   return (
-    <div className="flex space-x-4 h-full">
+    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[570px] 2xl:h-[700px] overflow-auto  ">
       <Formheader
         title={"Add A New Medical Personal"}
         currentStep={currentStep}

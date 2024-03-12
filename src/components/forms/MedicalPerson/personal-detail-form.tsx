@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
   first_name: string;
+  maritalStatus: string;
   middle_name: string;
   last_name: string;
   gender: string;
@@ -87,6 +88,15 @@ export const PersonalDetailFormField = [
       required: true,
     },
   ],
+  [
+    {
+      name: "maritalStatus",
+      type: "toggle",
+      label: "Marital Status",
+      placeholder: "Select Marital Status",
+      required: true,
+    },
+  ],
 ];
 
 const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
@@ -110,6 +120,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
       .required("*Last Name is required"),
     gender: Yup.mixed().required("*Gender is required"),
     blood_group: Yup.mixed().required("*Blood Group is required"),
+    maritalStatus: Yup.string().required("Marital status is required"),
     date_of_birth: Yup.date()
       .max(new Date(), "*Date of birth cannot be in the future")
       .required("*Date of birth is required"),
@@ -123,6 +134,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
         gender: "",
         blood_group: "",
         date_of_birth: null,
+        maritalStatus: "",
       };
 
   console.log("The inital values of personal info is", initVal);

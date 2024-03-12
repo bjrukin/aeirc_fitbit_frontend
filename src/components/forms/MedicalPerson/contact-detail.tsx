@@ -160,7 +160,7 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
         data={MedicalPersonalFormStep}
       />
       <DynamicForm
-        title={"phone And Id Details"}
+        title={"Phone And Id Details"}
         formFields={phoneDetailFormField}
         formValidation={FORM_VALIDATION}
         onClick={() => setCurrentStep(currentStep - 1)}
