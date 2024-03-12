@@ -9,8 +9,6 @@ interface initValProps {
   permananentAddress: string;
   permananetProvince: string;
   permananetDistrict: string;
-  username: any;
-  password: any;
 }
 
 interface MedicalPersonAddressDetailFormProps {
@@ -28,10 +26,6 @@ const MedicalPersonAddressDetailForm: React.FC<
     permananentAddress: Yup.string().required("Permanent address is required"),
     permananetProvince: Yup.mixed().required("Permanent province is required"),
     permananetDistrict: Yup.mixed().required("Permanent district is required"),
-    username: Yup.string().required("Username is required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
   });
   const initVal: initValProps = {
     tempProvince: "",
@@ -39,8 +33,6 @@ const MedicalPersonAddressDetailForm: React.FC<
     permananentAddress: "",
     permananetProvince: "",
     permananetDistrict: "",
-    username: "",
-    password: "",
   };
 
   const {
@@ -161,7 +153,30 @@ const MedicalPersonAddressDetailForm: React.FC<
     ],
   ];
   const handleSubmit = async (values: initValProps) => {
-    console.log("The submitted values   of medixal person are", values);
+    console.log("The submitted values   of medical person are", values);
+    const userAddresses = [];
+
+    // Temporary address object
+    const tempAddress = {
+      province: values.tempProvince,
+      district: values.tempDistrict,
+      address: values.tempAddress,
+      ward: values.tempWard,
+      address_type: "temporary",
+    };
+
+    // Permanent address object
+    const permananentAddress = {
+      province: values.permananetProvince,
+      district: values.permananetDistrict,
+      address: values.permananetAddress,
+      ward: values.permananetWard,
+      address_type: "permanent",
+    };
+
+    userAddresses.push(tempAddress);
+    userAddresses.push(permananentAddress);
+    console.log("user add", userAddresses);
     try {
     } catch (err) {
       console.log("err while adding medical person detail", err);
