@@ -9,7 +9,7 @@ interface initValProps {
   email: string;
   citizenship_number: any;
   nid_number: any;
-  // nmc: any;
+  council_number: any;
   emergency_contact_number: any;
   insurance_number: any;
 }
@@ -58,14 +58,14 @@ export const phoneDetailFormField = [
     },
   ],
   [
-    // {
-    //   name: "nmc",
-    //   type: "input",
-    //   label: "Enter Nmc Number",
-    //   placeholder: "Enter Nmc Number",
-    //   required: true,
-    //   inputType: "number",
-    // },
+    {
+      name: "council_number",
+      type: "input",
+      label: "Enter Nmc Number",
+      placeholder: "Enter Nmc Number",
+      required: true,
+      inputType: "number",
+    },
     {
       name: "insurance_number",
       type: "input",
@@ -74,6 +74,8 @@ export const phoneDetailFormField = [
       required: true,
       inputType: "number",
     },
+  ],
+  [
     {
       name: "emergency_contact_number",
       type: "input",
@@ -119,7 +121,7 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
       "*citizenship_number number is required"
     ),
     nid_number: Yup.string().required("*nid_number number is required"),
-    // nmc: Yup.string().required("*NMC number is required"),
+    council_number: Yup.string().required("*Council number is required"),
     emergency_contact_number: Yup.number()
       .required("*Emergency phone is required")
       .test(
@@ -160,7 +162,7 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
         data={MedicalPersonalFormStep}
       />
       <DynamicForm
-        title={"Phone And Id Details"}
+        title={"Contact And Id Details"}
         formFields={phoneDetailFormField}
         formValidation={FORM_VALIDATION}
         onClick={() => setCurrentStep(currentStep - 1)}

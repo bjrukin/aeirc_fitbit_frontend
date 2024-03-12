@@ -15,7 +15,7 @@ import { resetFormData } from "../../redux/slice/form/formSlice";
 const Doctor = () => {
   const dispatch = useDispatch();
   const [showUserModal, setShowUserModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<any>(2);
+  const [currentStep, setCurrentStep] = useState<any>(0);
   console.log("The current step are", currentStep);
   const cardData = [
     {
