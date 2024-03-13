@@ -11,9 +11,21 @@ import ContactDetailForm from "../../components/forms/MedicalPerson/contact-deta
 import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
 import { useDispatch } from "react-redux";
 import { resetFormData } from "../../redux/slice/form/formSlice";
+import useFetch from "../../hooks/useFetch";
+import { DataTable } from "../../components/ui/data-table";
+import CrudIcon from "../../components/shared/CrudIcon";
+import { MdOutlineModeEdit } from "react-icons/md";
 
 const Doctor = () => {
   const dispatch = useDispatch();
+
+  const {
+    data: doctorsData,
+    error,
+    fetchData,
+    loading,
+  } = useFetch(`/auth/users/list`);
+  console.log("The doctors data are", doctorsData);
   const [showUserModal, setShowUserModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
   console.log("The current step are", currentStep);
@@ -33,6 +45,76 @@ const Doctor = () => {
       increase: 20,
       timeFrame: "In Past Months Week",
       bgColor: "white",
+    },
+  ];
+
+  const DoctorsColumn = [
+    {
+      accessorKey: "",
+      header: "S.N.",
+      cell: ({ row }: { row: any }) => {
+        return <p>{row.index + 1}</p>;
+      },
+    },
+    {
+      accessorKey: "",
+      header: "Full Name",
+      cell: ({ row }: { row: any }) => {
+        return (
+          <p>
+            {row.original?.user_info?.first_name}{" "}
+            {row.original?.user_info?.middle_name}{" "}
+            {row.original?.user_info?.last_name}
+          </p>
+        );
+      },
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "medical_staff_info.council_number",
+      header: "Council Number",
+    },
+    {
+      accessorKey: "medical_staff_info.speciality",
+      header: "Speciality",
+    },
+    {
+      accessorKey: "user_info.citizenship_number",
+      header: "Citizenship Number",
+    },
+    {
+      accessorKey: "user_info.nid_number",
+      header: "Nid Number",
+    },
+    {
+      accessorKey: "user_info.insurance_number",
+      header: "Insurance Number",
+    },
+    {
+      header: "Action",
+      cell: (row: any) => {
+        return (
+          <>
+            <CrudIcon
+              data={row?.cell?.row?.original}
+              url="/hospitals"
+              fetchData={fetchData}
+            >
+              <div
+                className="flex  items-center mr-4"
+                // onClick={() => handleEditData(row?.cell?.row?.original)}
+              >
+                <div className="">
+                  <MdOutlineModeEdit size={22} color="#1D3075" />
+                </div>
+              </div>
+            </CrudIcon>
+          </>
+        );
+      },
     },
   ];
 
@@ -56,25 +138,18 @@ const Doctor = () => {
     <PersonalDetailForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
-      //   setHospitalDetails={setHospitalDetails}
       onClick={handleShowUserModal}
       // isEdit={isEdit}
     />,
     <ContactDetailForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
-      //   setHospitalDetails={setHospitalDetails}
       onClick={handleShowUserModal}
       //   isEdit={isEdit}
     />,
     <MedicalPersonAddressDetailForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      //   hospitalDetails={editData && isEdit ? editData : hospitalDetails}
-      //   setHospitalDetails={setHospitalDetails}
-      //   isEdit={isEdit}
       onClick={handleShowUserModal}
       // fetchData={fetchData}
     />,
@@ -174,7 +249,15 @@ const Doctor = () => {
             );
           })}
         </div>
+      </div>{" "}
+      <div className="flex  items-center justify-between  my-7">
+        <p className="text-2xl font-semibold">
+          Doctors List ({doctorsData?.count})
+        </p>
       </div>
+      {doctorsData?.results ? (
+        <DataTable columns={DoctorsColumn} data={doctorsData?.results} />
+      ) : null}
     </DashboardLayout>
   );
 };

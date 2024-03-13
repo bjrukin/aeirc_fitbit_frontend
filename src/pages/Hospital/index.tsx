@@ -175,8 +175,6 @@ const Hospital = () => {
     <HospitalForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
-      // hospitalDetails={editData && isEdit ? editData : hospitalDetails}
-      // setHospitalDetails={setHospitalDetails}
       onClick={handleShowHospitalModal}
       isEdit={isEdit}
     />,
