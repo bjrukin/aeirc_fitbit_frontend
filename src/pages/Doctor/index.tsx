@@ -10,7 +10,10 @@ import Modal from "../../components/shared/Modal";
 import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
 import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
 import { useDispatch } from "react-redux";
-import { resetFormData } from "../../redux/slice/form/formSlice";
+import {
+  resetFormData,
+  updateEditData,
+} from "../../redux/slice/form/formSlice";
 import useFetch from "../../hooks/useFetch";
 import { DataTable } from "../../components/ui/data-table";
 import CrudIcon from "../../components/shared/CrudIcon";
@@ -19,16 +22,29 @@ import { MdOutlineModeEdit } from "react-icons/md";
 const Doctor = () => {
   const dispatch = useDispatch();
 
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [currentStep, setCurrentStep] = useState<any>(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const handleEditData = (data: any) => {
+    console.log("The edit data are", data);
+    dispatch(updateEditData(data));
+    setEditId(data?.id);
+    setEditData(data);
+    setIsEdit(true);
+    handleShowUserModal();
+  };
+
   const {
     data: doctorsData,
     error,
     fetchData,
     loading,
-  } = useFetch(`/auth/users/list`);
-  console.log("The doctors data are", doctorsData);
-  const [showUserModal, setShowUserModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<any>(0);
-  console.log("The current step are", currentStep);
+  } = useFetch(`/auth/users/list?page=${currentPage}`);
+  console.log("The doctors data latest are", doctorsData);
   const cardData = [
     {
       id: 1,
@@ -105,7 +121,7 @@ const Doctor = () => {
             >
               <div
                 className="flex  items-center mr-4"
-                // onClick={() => handleEditData(row?.cell?.row?.original)}
+                onClick={() => handleEditData(row?.cell?.row?.original)}
               >
                 <div className="">
                   <MdOutlineModeEdit size={22} color="#1D3075" />
@@ -249,14 +265,17 @@ const Doctor = () => {
             );
           })}
         </div>
-      </div>{" "}
-      <div className="flex  items-center justify-between  my-7">
-        <p className="text-2xl font-semibold">
-          Doctors List ({doctorsData?.count})
-        </p>
       </div>
       {doctorsData?.results ? (
-        <DataTable columns={DoctorsColumn} data={doctorsData?.results} />
+        <DataTable
+          loading={loading}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          title="Doctors List"
+          count={doctorsData?.count}
+          columns={DoctorsColumn}
+          data={doctorsData?.results}
+        />
       ) : null}
     </DashboardLayout>
   );

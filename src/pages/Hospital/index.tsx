@@ -43,6 +43,7 @@ const Hospital = () => {
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleEditData = (data: any) => {
     dispatch(updateEditData(data));
@@ -304,13 +305,13 @@ const Hospital = () => {
           </div>
         </div>
       </div>
-      <div className="flex  items-center justify-between  my-7">
-        <p className="text-2xl font-semibold">
-          Hospital List ({hospitalData?.data?.count})
-        </p>
-      </div>
       {hospitalData?.data?.results ? (
         <DataTable
+          loading={loading}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          title="Hospital List"
+          count={hospitalData?.data?.count}
           columns={HospitalColumn}
           data={hospitalData?.data?.results}
         />

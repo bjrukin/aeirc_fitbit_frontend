@@ -1,20 +1,4 @@
-import React from "react";
-import { Skeleton } from "../../ui/skeleton";
-interface SkeletonElementProps {
-  width?: any;
-  height?: Number;
-  marginTop?: Number;
-}
-
- export const SkeletonElement: React.FC<SkeletonElementProps> = ({
-  width,
-  height,
-  marginTop,
-}) => (
-  <Skeleton
-    className={`w-[${width}px] h-[${height}px] mt-${marginTop} rounded-xl`}
-  />
-);
+import { SkeletonElement } from "./skeletonutilis";
 
 export const AuthSkeleton = () => (
   <div className="flex-1 p-4 lg:p-8  lg:px-16  h-full text-black  flex justify-center flex-col">

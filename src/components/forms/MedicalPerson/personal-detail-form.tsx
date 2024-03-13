@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
   first_name: string;
-  maritalStatus: string;
+  marital_status: string;
   middle_name: string;
   last_name: string;
-  gender: string;
+  gender: any;
   date_of_birth: Date | null;
-  blood_group: string;
+  blood_group: any;
 }
 
 interface PersonalDetailFormProps {
@@ -20,6 +20,21 @@ interface PersonalDetailFormProps {
   setCurrentStep?: any;
   isEdit?: boolean;
 }
+const genderOptions = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+  { label: "Others", value: "others" },
+];
+const bloodGroupOptions = [
+  { value: "A+", label: "A+" },
+  { value: "A-", label: "A-" },
+  { value: "B+", label: "B+" },
+  { value: "B-", label: "B-" },
+  { value: "AB+", label: "AB+" },
+  { value: "AB-", label: "AB-" },
+  { value: "O+", label: "O+" },
+  { value: "O-", label: "O-" },
+];
 
 export const PersonalDetailFormField = [
   [
@@ -55,11 +70,7 @@ export const PersonalDetailFormField = [
       label: "Select a Gender",
       placeholder: "Select Gender",
       required: true,
-      options: [
-        { label: "Male", value: "male" },
-        { label: "Female", value: "female" },
-        { label: "Others", value: "others" },
-      ],
+      options: genderOptions,
     },
   ],
   [
@@ -75,22 +86,13 @@ export const PersonalDetailFormField = [
       name: "blood_group",
       type: "select",
       label: "Blood Group",
-      options: [
-        { value: "A+", label: "A+" },
-        { value: "A-", label: "A-" },
-        { value: "B+", label: "B+" },
-        { value: "B-", label: "B-" },
-        { value: "AB+", label: "AB+" },
-        { value: "AB-", label: "AB-" },
-        { value: "O+", label: "O+" },
-        { value: "O-", label: "O-" },
-      ],
+      options: bloodGroupOptions,
       required: true,
     },
   ],
   [
     {
-      name: "maritalStatus",
+      name: "marital_status",
       type: "toggle",
       label: "Marital Status",
       placeholder: "Select Marital Status",
@@ -99,13 +101,17 @@ export const PersonalDetailFormField = [
   ],
 ];
 
+const getLabelValuePair = (option: any, value: any) =>
+  option.find((option: any) => option.value === value);
+
 const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
   isEdit,
 }) => {
-  const formData = useSelector((state: any) => state.rootReducer?.form);
+  const formValues = useSelector((state: any) => state.rootReducer?.form);
+  console.log("edit form data is", formValues);
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     first_name: Yup.string()
@@ -120,13 +126,24 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
       .required("*Last Name is required"),
     gender: Yup.mixed().required("*Gender is required"),
     blood_group: Yup.mixed().required("*Blood Group is required"),
-    maritalStatus: Yup.string().required("Marital status is required"),
+    marital_status: Yup.string().required("Marital status is required"),
     date_of_birth: Yup.date()
       .max(new Date(), "*Date of birth cannot be in the future")
       .required("*Date of birth is required"),
   });
-  const initVal: initValProps = formData
-    ? formData
+  const initVal: initValProps = formValues
+    ? {
+        first_name: formValues?.user_info?.first_name,
+        last_name: formValues?.user_info?.last_name,
+        middle_name: formValues?.user_info?.middle_name,
+        gender: getLabelValuePair(genderOptions, formValues?.user_info?.gender),
+        blood_group: getLabelValuePair(
+          bloodGroupOptions,
+          formValues?.user_info?.blood_group
+        ),
+        date_of_birth: formValues?.user_info?.date_of_birth,
+        marital_status: formValues?.user_info?.marital_status,
+      }
     : {
         first_name: "",
         middle_name: "",
@@ -134,7 +151,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
         gender: "",
         blood_group: "",
         date_of_birth: null,
-        maritalStatus: "",
+        marital_status: "",
       };
 
   console.log("The inital values of personal info is", initVal);

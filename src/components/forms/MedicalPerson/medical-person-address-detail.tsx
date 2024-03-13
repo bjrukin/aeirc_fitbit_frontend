@@ -6,16 +6,16 @@ import useLocationData from "../../../hooks/useLocationData";
 import { useSelector } from "react-redux";
 import Service from "../../../setup/Service";
 interface initValProps {
-  tempProvince: string;
-  tempDistrict: string;
+  tempProvince: any;
+  tempDistrict: any;
   permanentAddress: string;
-  permanentProvince: string;
-  permanentDistrict: string;
+  permanentProvince: any;
+  permanentDistrict: any;
   tempAddress: string;
   tempWard: string;
   permanentWard: string;
-  permanentmnu_vdc: string;
-  tempmnu_vdc: string;
+  permanentmnu_vdc: any;
+  tempmnu_vdc: any;
 }
 
 interface MedicalPersonAddressDetailFormProps {
