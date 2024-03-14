@@ -155,13 +155,13 @@ const Doctor = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowUserModal}
-      // isEdit={isEdit}
+      isEdit={isEdit}
     />,
     <ContactDetailForm
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowUserModal}
-      //   isEdit={isEdit}
+      isEdit={isEdit}
     />,
     <MedicalPersonAddressDetailForm
       currentStep={currentStep}

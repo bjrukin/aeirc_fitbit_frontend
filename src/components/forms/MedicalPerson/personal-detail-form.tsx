@@ -117,10 +117,9 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
     first_name: Yup.string()
       .min(3, "*First Name must be at least 3 character")
       .required("*First Name is required"),
-    middle_name: Yup.string().min(
-      3,
-      "*Middle Name must be at least 3 character"
-    ),
+    middle_name: Yup.string()
+      .nullable()
+      .min(3, "*Middle Name must be at least 3 character"),
     last_name: Yup.string()
       .min(3, "*Last Name must be at least 3 character")
       .required("*Last Name is required"),
@@ -131,28 +130,34 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
       .max(new Date(), "*Date of birth cannot be in the future")
       .required("*Date of birth is required"),
   });
-  const initVal: initValProps = formValues
-    ? {
-        first_name: formValues?.user_info?.first_name,
-        last_name: formValues?.user_info?.last_name,
-        middle_name: formValues?.user_info?.middle_name,
-        gender: getLabelValuePair(genderOptions, formValues?.user_info?.gender),
-        blood_group: getLabelValuePair(
-          bloodGroupOptions,
-          formValues?.user_info?.blood_group
-        ),
-        date_of_birth: formValues?.user_info?.date_of_birth,
-        marital_status: formValues?.user_info?.marital_status,
-      }
-    : {
-        first_name: "",
-        middle_name: "",
-        last_name: "",
-        gender: "",
-        blood_group: "",
-        date_of_birth: null,
-        marital_status: "",
-      };
+  const initVal: initValProps =
+    formValues && formValues?.isEdit
+      ? {
+          first_name: formValues?.user_info?.first_name,
+          last_name: formValues?.user_info?.last_name,
+          middle_name: formValues?.user_info?.middle_name ?? "",
+          gender: getLabelValuePair(
+            genderOptions,
+            formValues?.user_info?.gender
+          ),
+          blood_group: getLabelValuePair(
+            bloodGroupOptions,
+            formValues?.user_info?.blood_group
+          ),
+          date_of_birth: formValues?.user_info?.date_of_birth,
+          marital_status: formValues?.user_info?.marital_status,
+        }
+      : formValues && !isEdit
+      ? formValues
+      : {
+          first_name: "",
+          middle_name: "",
+          last_name: "",
+          gender: "",
+          blood_group: "",
+          date_of_birth: null,
+          marital_status: "",
+        };
 
   console.log("The inital values of personal info is", initVal);
 

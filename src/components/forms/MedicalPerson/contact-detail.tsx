@@ -18,6 +18,7 @@ interface phoneDetailFormProps {
   onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
+  isEdit?: boolean;
 }
 
 export const phoneDetailFormField = [
@@ -101,10 +102,11 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
   onClick,
   currentStep,
   setCurrentStep,
+  isEdit,
 }) => {
   const dispatch = useDispatch();
-  const formData = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data in contact detail is", formData);
+  const formValues = useSelector((state: any) => state.rootReducer?.form);
+  console.log("form Data in contact detail is", formValues);
 
   const FORM_VALIDATION = Yup.object().shape({
     phone: Yup.number()
@@ -131,17 +133,30 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
       ),
     insurance_number: Yup.string().required("*Insurance number is required"),
   });
-  const initVal: initValProps = formData
-    ? formData
-    : {
-        phone: "",
-        email: "",
-        citizenship_number: "",
-        nid_number: "",
-        // nmc: "",
-        emergency_contact_number: "",
-        insurance_number: "",
-      };
+  const initVal: initValProps =
+    formValues && formValues?.isEdit
+      ? {
+          phone: formValues?.user_info?.phone,
+          email: formValues?.email,
+          citizenship_number: formValues?.user_info?.citizenship_number,
+          nid_number: formValues?.user_info?.nid_number,
+          emergency_contact_number:
+            formValues?.user_info?.emergency_contact_number,
+          insurance_number: formValues?.user_info?.insurance_number,
+          council_number: formValues?.medical_staff_info?.council_number,
+        }
+      : formValues && !isEdit
+      ? formValues
+      : {
+          phone: "",
+          email: "",
+          citizenship_number: "",
+          nid_number: "",
+          // nmc: "",
+          emergency_contact_number: "",
+          insurance_number: "",
+          council_number: "",
+        };
 
   const handleSubmit = async (values: initValProps) => {
     try {
