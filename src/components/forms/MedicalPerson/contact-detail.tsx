@@ -86,16 +86,7 @@ export const phoneDetailFormField = [
       inputType: "number",
     },
   ],
-  // [
-  //   {
-  //     name: "insurance_number",
-  //     type: "input",
-  //     label: "Enter Insurance Number",
-  //     placeholder: "Enter Insurance Number",
-  //     required: true,
-  //     inputType: "number",
-  //   },
-  // ],
+ 
 ];
 
 const phoneDetailForm: React.FC<phoneDetailFormProps> = ({

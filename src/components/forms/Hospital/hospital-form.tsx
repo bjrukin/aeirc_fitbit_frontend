@@ -93,7 +93,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     handleDistrictChange,
     selectedMnu,
     handleMunicipalityChange,
-  } = useLocationData();
+  } = useLocationData("");
 
   const HospitalFormField = [
     [
@@ -200,7 +200,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     }
   };
   return (
-    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[570px] 2xl:h-[700px] overflow-auto  ">
+    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
       <Formheader
         title={"Create A New Hospital"}
         currentStep={currentStep}

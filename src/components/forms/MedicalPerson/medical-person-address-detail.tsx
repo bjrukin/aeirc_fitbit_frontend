@@ -3,8 +3,10 @@ import Formheader from "../../shared/FormHeader";
 import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import useLocationData from "../../../hooks/useLocationData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Service from "../../../setup/Service";
+import { toastAlert } from "../../../lib/toastAlert";
+import { findLabelValuePair } from "../../../lib/utilis";
 interface initValProps {
   tempProvince: any;
   tempDistrict: any;
@@ -22,14 +24,16 @@ interface MedicalPersonAddressDetailFormProps {
   onClick?: any;
   currentStep?: any;
   setCurrentStep?: any;
+  fetchData?: any;
 }
 
 const MedicalPersonAddressDetailForm: React.FC<
   MedicalPersonAddressDetailFormProps
-> = ({ onClick, currentStep, setCurrentStep }) => {
-  const formData = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data in address detail is", formData);
+> = ({ onClick, currentStep, setCurrentStep, fetchData }) => {
+  const formValues = useSelector((state: any) => state.rootReducer?.form);
+  console.log("form Data in address detail is", formValues);
 
+  const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     tempProvince: Yup.mixed().required("Temporary province is required"),
     tempAddress: Yup.mixed().required("Temporary Address is required"),
@@ -43,27 +47,82 @@ const MedicalPersonAddressDetailForm: React.FC<
   const initVal: initValProps = {
     tempProvince: "",
     tempDistrict: "",
-    permanentProvince: "",
-    permanentDistrict: "",
     tempAddress: "",
     tempWard: "",
+    tempmnu_vdc: "",
+    permanentProvince: "",
+    permanentDistrict: "",
     permanentAddress: "",
     permanentWard: "",
     permanentmnu_vdc: "",
-    tempmnu_vdc: "",
   };
+  const initialValues =
+    formValues?.user_address &&
+    formValues?.user_address.reduce((acc: any, address: any) => {
+      if (address.address_type === "permanent") {
+        console.log("pppp data ", address);
+        acc.permanentProvince = address?.province_data?.label
+          ? address?.province_data
+          : findLabelValuePair(address?.province_data);
+        acc.permanentDistrict = address?.district_data?.label
+          ? address?.district_data
+          : findLabelValuePair(address?.district_data);
+        acc.permanentAddress = address.address;
+        acc.permanentWard = address.ward_no || "";
+        acc.permanentmnu_vdc = address.mnu_vdc_data
+          ? address.mnu_vdc_data.name
+          : "";
+      } else if (address.address_type === "temporary") {
+        acc.tempProvince = address?.province_data?.label
+          ? address?.province_data
+          : findLabelValuePair(address?.province_data);
+        acc.tempDistrict = address?.district_data?.label
+          ? address?.district_data
+          : findLabelValuePair(address?.district_data);
+        acc.tempAddress = address.address;
+        acc.tempWard = address.ward_no || "";
+        acc.tempmnu_vdc = address.mnu_vdc_data ? address.mnu_vdc_data.name : "";
+      }
+      return acc;
+    }, initVal);
+
+  console.log("inital val", initVal);
+
+  // const {
+  //   provinceOptions,
+  //   districtOptions,
+  //   selectedDistrict,
+  //   handleProvinceChange,
+  //   selectedProvince,
+  //   handleDistrictChange,
+  //   handleMunicipalityChange,
+  //   municiplaityOptions,
+  //   selectedMnu,
+  // } = useLocationData("");
 
   const {
-    provinceOptions,
-    districtOptions,
-    selectedDistrict,
-    handleProvinceChange,
-    selectedProvince,
-    handleDistrictChange,
-    handleMunicipalityChange,
-    municiplaityOptions,
-    selectedMnu,
-  } = useLocationData();
+    selectedProvince: tempProvince,
+    selectedDistrict: tempDistrict,
+    selectedMnu: tempMnu,
+    provinceOptions: tempProvinceOptions,
+    districtOptions: tempDistrictOptions,
+    municiplaityOptions: tempMuniciplaityOptions,
+    handleProvinceChange: handleTempProvinceChange,
+    handleDistrictChange: handleTempDistrictChange,
+    handleMunicipalityChange: handleTempMunicipalityChange,
+  } = useLocationData("");
+
+  const {
+    selectedProvince: permanentProvince,
+    selectedDistrict: permanentDistrict,
+    selectedMnu: permanentMnu,
+    provinceOptions: permanentProvinceOptions,
+    districtOptions: permanentDistrictOptions,
+    municiplaityOptions: permanentMuniciplaityOptions,
+    handleProvinceChange: handlePermanentProvinceChange,
+    handleDistrictChange: handlePermanentDistrictChange,
+    handleMunicipalityChange: handlePermanentMunicipalityChange,
+  } = useLocationData("");
 
   const MedicalPersonAddressDetailFormField = [
     [
@@ -73,8 +132,8 @@ const MedicalPersonAddressDetailForm: React.FC<
         label: "Temporary Province",
         placeholder: "Enter Temporary Province",
         required: true,
-        options: provinceOptions,
-        onChange: handleProvinceChange,
+        options: tempProvinceOptions,
+        onChange: handleTempProvinceChange,
       },
       {
         name: "tempDistrict",
@@ -82,10 +141,10 @@ const MedicalPersonAddressDetailForm: React.FC<
         label: "Temporary District",
         placeholder: "Enter Temporary District",
         required: true,
-        options: districtOptions,
-        onChange: handleDistrictChange,
-        value: selectedDistrict,
-        disabled: !selectedProvince,
+        options: tempDistrictOptions,
+        onChange: handleTempDistrictChange,
+        value: tempDistrict,
+        disabled: !tempProvince,
       },
     ],
     [
@@ -95,10 +154,10 @@ const MedicalPersonAddressDetailForm: React.FC<
         label: "Municipality/VDC",
         placeholder: "Enter Hospital Ward",
         required: true,
-        onChange: handleMunicipalityChange,
-        options: municiplaityOptions,
-        value: selectedMnu,
-        disabled: !selectedProvince || !selectedDistrict,
+        onChange: handleTempMunicipalityChange,
+        options: tempMuniciplaityOptions,
+        value: tempMnu,
+        disabled: !tempProvince || !tempDistrict,
       },
 
       {
@@ -118,40 +177,49 @@ const MedicalPersonAddressDetailForm: React.FC<
         required: true,
       },
     ],
+
     [
+      {
+        name: "checkbox",
+        type: "checkbox",
+        title: "Permanent Address",
+        label: "Permananent Same As Temporary Address",
+      },
       {
         name: "permanentProvince",
         type: "select",
         label: "Permanent Province",
         placeholder: "Enter Permanent Province",
         required: true,
-        options: provinceOptions,
-        onChange: handleProvinceChange,
+        options: permanentProvinceOptions,
+        onChange: handlePermanentProvinceChange,
       },
+    ],
+    [
       {
         name: "permanentDistrict",
         type: "select",
         label: "Permanent District",
         placeholder: "Enter Permanent District",
         required: true,
-        options: districtOptions,
-        onChange: handleDistrictChange,
-        value: selectedDistrict,
-        disabled: !selectedProvince,
+        options: permanentDistrictOptions,
+        onChange: handlePermanentDistrictChange,
+        value: permanentDistrict,
+        disabled: !permanentProvince,
       },
-    ],
-    [
       {
         name: "permanentmnu_vdc",
         type: "select",
         label: "Municipality/VDC",
         placeholder: "Enter Hospital Ward",
         required: true,
-        onChange: handleMunicipalityChange,
-        options: municiplaityOptions,
-        value: selectedMnu,
-        disabled: !selectedProvince || !selectedDistrict,
+        onChange: handlePermanentMunicipalityChange,
+        options: permanentMuniciplaityOptions,
+        value: permanentMnu,
+        disabled: !permanentProvince || !permanentDistrict,
       },
+    ],
+    [
       {
         name: "permanentAddress",
         type: "input",
@@ -159,8 +227,6 @@ const MedicalPersonAddressDetailForm: React.FC<
         placeholder: "Enter Permanent Address",
         required: true,
       },
-    ],
-    [
       {
         name: "permanentWard",
         type: "input",
@@ -170,7 +236,10 @@ const MedicalPersonAddressDetailForm: React.FC<
       },
     ],
   ];
-  const handleSubmit = async (values: initValProps) => {
+  const handleSubmit = async (
+    values: initValProps,
+    { resetForm }: { resetForm: () => void }
+  ) => {
     console.log("The submitted values   of medical person are", values);
     const user_address = [];
 
@@ -188,7 +257,7 @@ const MedicalPersonAddressDetailForm: React.FC<
     const permananentAddress = {
       province: values.permanentProvince?.value,
       district: values.permanentDistrict?.value,
-      permanentmnu_vdc: values.permanentmnu_vdc?.value,
+      mnu_vdc: values.permanentmnu_vdc?.value,
       address: values.permanentAddress,
       ward: values.permanentWard,
       address_type: "permanent",
@@ -199,41 +268,52 @@ const MedicalPersonAddressDetailForm: React.FC<
     console.log("user add", user_address);
     const payload = {
       user_address: user_address,
-      email: formData?.email,
+      email: formValues?.email,
       role: "doctor",
       user_info: {
-        first_name: formData?.first_name,
-        middle_name: formData?.middle_name && formData?.middle_name,
-        last_name: formData?.last_name,
-        gender: formData?.gender?.value,
-        blood_group: formData?.blood_group?.label,
-        date_of_birth: formData?.date_of_birth,
-        citizenship_number: formData?.citizenship_number,
-        nid_number: formData?.nid_number,
-        phone: formData?.phone,
-        emergency_contact_number: formData?.emergency_contact_number,
-        insurance_number: formData?.insurance_number,
-        marital_status: formData?.marital_status,
+        first_name: formValues?.first_name,
+        middle_name: formValues?.middle_name && formValues?.middle_name,
+        last_name: formValues?.last_name,
+        gender: formValues?.gender?.value,
+        blood_group: formValues?.blood_group?.label,
+        date_of_birth: formValues?.date_of_birth,
+        citizenship_number: formValues?.citizenship_number,
+        nid_number: formValues?.nid_number,
+        phone: formValues?.phone,
+        emergency_contact_number: formValues?.emergency_contact_number,
+        insurance_number: formValues?.insurance_number,
+        marital_status: formValues?.marital_status,
       },
       medical_staff_info: {
-        council_number: formData?.council_number,
-        // speciality: formData?.speciality,
-        // hospital: formData?.hospital,
+        council_number: formValues?.council_number,
+        // speciality: formValues?.speciality,
+        // hospital: formValues?.hospital,
         hospital: "sa",
         speciality: "a",
       },
     };
     console.log("The payload is", payload);
+    let res;
     try {
-      const res = await Service.post(`/auth/user/create`, payload);
-      console.log("hospital res", res);
+      if (formValues?.isEdit) {
+        // res = await Service.post(`/auth/user/create`, payload);
+      } else {
+        res = await Service.post(`/auth/user/create`, payload);
+      }
+      console.log("res ", res);
+      if (onClick) {
+        onClick();
+        resetForm();
+      }
+      fetchData();
+      toastAlert("success", res?.data?.message);
     } catch (err) {
       console.log("err while adding medical person detail", err);
     }
   };
 
   return (
-    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[570px] 2xl:h-[700px] overflow-auto  ">
+    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
       <Formheader
         title={"Add A New Medical Personal"}
         currentStep={currentStep}

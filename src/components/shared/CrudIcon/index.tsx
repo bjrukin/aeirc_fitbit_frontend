@@ -30,6 +30,7 @@ const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
   const handleDeleteModal = () => setShowDeleteModal(!showDeleteModal);
 
   const handleDelete = (value: any) => {
+    console.log("the delete value is", value);
     setDeleteContent(value);
     handleDeleteModal();
   };
@@ -37,7 +38,7 @@ const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
   const handleDeleteItems = async () => {
     try {
       await Service.delete(`${url}/${deleteContent?.id}`);
-      toastAlert("success", `${deleteContent?.name} is successfully deleted`);
+      toastAlert("success", `Successfully deleted`);
       fetchData();
       setInputValue("");
     } catch (err: any) {
@@ -72,7 +73,7 @@ const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
                     <h4 className="text-xl">
                       Please type{" "}
                       <span className="text-warning text-2xl font-semibold ">
-                        {deleteContent?.name}
+                        Delete
                       </span>{" "}
                       to continue delete.
                     </h4>
@@ -88,7 +89,7 @@ const CrudIcon: React.FC<IProps> = ({ data, url, fetchData, children }) => {
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
-                  disabled={inputValue != deleteContent?.name}
+                  disabled={inputValue != "Delete"}
                   onClick={handleDeleteItems}
                 >
                   Continue

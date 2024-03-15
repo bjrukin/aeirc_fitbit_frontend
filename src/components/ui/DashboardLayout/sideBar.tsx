@@ -36,7 +36,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                 {" "}
                 {item?.hasChild ? (
                   <div
-                    className=" text-black py-3  mb-2 2xl:py-4 3xl:py-6 px-3 2xl:px-6   w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer  flex items-center w-full justify-between"
+                    className=" py-7  text-black   px-3 2xl:px-6   w-full rounded hover:text-primary-500  duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer  flex items-center w-full justify-between"
                     onClick={() => setShowChild(!showChild)}
                   >
                     <div className="flex items-center space-x-3">
@@ -58,17 +58,17 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                     <NavLink
                       to={item?.path}
                       style={({ isActive }) => ({
-                        color: isActive ? "white" : "black",
-                        background: isActive ? "#3E6DF9" : "",
+                        color: isActive ? "#3E6DF9" : "black",
+                        // background: isActive ? "#3E6DF9" : "",
                         borderRadius: "8px",
                         transition: "border-right 1s ease-in-out",
-                        marginBottom: "12px",
+                        // marginBottom: "12px",
                       })}
                     >
                       <motion.div
                         onClick={() => setShowChild(false)}
                         className={
-                          " py-3  2xl:py-4  3xl:py-6 px-3 2xl:px-6 w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
+                          " py-7 px-3 2xl:px-6 w-full rounded hover:text-primary-500 duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
                         }
                       >
                         <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
@@ -98,14 +98,14 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                       <NavLink
                         to={el?.path}
                         style={({ isActive }) => ({
-                          color: isActive ? "white" : "black",
-                          background: isActive ? "#3E6DF9" : " ",
+                          color: isActive ? "#3E6DF9" : "black",
+                          // background: isActive ? "#3E6DF9" : " ",
                           borderRadius: "4px",
-                          marginBottom: "12px",
-                          marginLeft: "20px",
+                          // marginBottom: "12px",
+                          marginLeft: "36px",
                         })}
                       >
-                        <div className="flex  py-3  2xl:py-4 3xl:py-4 px-6 w-full rounded hover:bg-primary-500 hover:text-white duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
+                        <div className="py-4 flex  px-6 w-full rounded hover:text-primary-500  duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
                           {el?.title}
                         </div>
                       </NavLink>

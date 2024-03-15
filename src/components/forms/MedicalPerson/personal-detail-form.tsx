@@ -111,7 +111,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   isEdit,
 }) => {
   const formValues = useSelector((state: any) => state.rootReducer?.form);
-  console.log("edit form data is", formValues);
+  console.log("edit form data  in personal detail form is", formValues);
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     first_name: Yup.string()
@@ -173,7 +173,7 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-full">
+    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
       <Formheader
         title={"Add A New Medical Personal"}
         currentStep={currentStep}

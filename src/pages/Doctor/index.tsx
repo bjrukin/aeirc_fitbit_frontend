@@ -116,7 +116,7 @@ const Doctor = () => {
           <>
             <CrudIcon
               data={row?.cell?.row?.original}
-              url="/hospitals"
+              url="/auth/user/delete"
               fetchData={fetchData}
             >
               <div
@@ -167,7 +167,7 @@ const Doctor = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowUserModal}
-      // fetchData={fetchData}
+      fetchData={fetchData}
     />,
   ];
 
