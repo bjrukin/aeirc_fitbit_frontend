@@ -86,7 +86,6 @@ export const phoneDetailFormField = [
       inputType: "number",
     },
   ],
- 
 ];
 
 const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
@@ -127,14 +126,25 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
   const initVal: initValProps =
     formValues && formValues?.isEdit
       ? {
-          phone: formValues?.user_info?.phone,
-          email: formValues?.email,
-          citizenship_number: formValues?.user_info?.citizenship_number,
-          nid_number: formValues?.user_info?.nid_number,
-          emergency_contact_number:
-            formValues?.user_info?.emergency_contact_number,
-          insurance_number: formValues?.user_info?.insurance_number,
-          council_number: formValues?.medical_staff_info?.council_number,
+          phone: formValues?.phone
+            ? formValues?.phone
+            : formValues?.user_info?.phone,
+          email: formValues?.email ? formValues?.email : formValues?.email,
+          citizenship_number: formValues?.citizenship_number
+            ? formValues?.citizenship_number
+            : formValues?.user_info?.citizenship_number,
+          nid_number: formValues?.nid_number
+            ? formValues?.nid_number
+            : formValues?.user_info?.nid_number,
+          emergency_contact_number: formValues?.emergency_contact_number
+            ? formValues?.emergency_contact_number
+            : formValues?.user_info?.emergency_contact_number,
+          insurance_number: formValues?.insurance_number
+            ? formValues?.insurance_number
+            : formValues?.user_info?.insurance_number,
+          council_number: formValues?.council_number
+            ? formValues?.council_number
+            : formValues?.medical_staff_info?.council_number,
         }
       : formValues && !isEdit
       ? formValues
@@ -143,7 +153,6 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
           email: "",
           citizenship_number: "",
           nid_number: "",
-          // nmc: "",
           emergency_contact_number: "",
           insurance_number: "",
           council_number: "",

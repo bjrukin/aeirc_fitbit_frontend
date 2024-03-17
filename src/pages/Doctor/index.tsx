@@ -141,7 +141,7 @@ const Doctor = () => {
   ) => {
     return () => {
       setModalState(!modalState);
-      // setCurrentStep(0);
+      setCurrentStep(0);
     };
   };
 

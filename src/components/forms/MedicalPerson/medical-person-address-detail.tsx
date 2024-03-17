@@ -69,9 +69,9 @@ const MedicalPersonAddressDetailForm: React.FC<
           : findLabelValuePair(address?.district_data);
         acc.permanentAddress = address.address;
         acc.permanentWard = address.ward_no || "";
-        acc.permanentmnu_vdc = address.mnu_vdc_data
-          ? address.mnu_vdc_data.name
-          : "";
+        acc.permanentmnu_vdc = address?.mnu_vdc_data?.label
+          ? address?.mnu_vdc_data
+          : findLabelValuePair(address?.mnu_vdc_data);
       } else if (address.address_type === "temporary") {
         acc.tempProvince = address?.province_data?.label
           ? address?.province_data
@@ -81,7 +81,9 @@ const MedicalPersonAddressDetailForm: React.FC<
           : findLabelValuePair(address?.district_data);
         acc.tempAddress = address.address;
         acc.tempWard = address.ward_no || "";
-        acc.tempmnu_vdc = address.mnu_vdc_data ? address.mnu_vdc_data.name : "";
+        acc.tempmnu_vdc = address?.mnu_vdc_data?.label
+          ? address?.mnu_vdc_data
+          : findLabelValuePair(address?.mnu_vdc_data);
       }
       return acc;
     }, initVal);
@@ -130,7 +132,7 @@ const MedicalPersonAddressDetailForm: React.FC<
         name: "tempProvince",
         type: "select",
         label: "Temporary Province",
-        placeholder: "Enter Temporary Province",
+        placeholder: "Select Temporary Province",
         required: true,
         options: tempProvinceOptions,
         onChange: handleTempProvinceChange,
@@ -139,7 +141,7 @@ const MedicalPersonAddressDetailForm: React.FC<
         name: "tempDistrict",
         type: "select",
         label: "Temporary District",
-        placeholder: "Enter Temporary District",
+        placeholder: "Select Temporary District",
         required: true,
         options: tempDistrictOptions,
         onChange: handleTempDistrictChange,
@@ -189,7 +191,7 @@ const MedicalPersonAddressDetailForm: React.FC<
         name: "permanentProvince",
         type: "select",
         label: "Permanent Province",
-        placeholder: "Enter Permanent Province",
+        placeholder: "Select Permanent Province",
         required: true,
         options: permanentProvinceOptions,
         onChange: handlePermanentProvinceChange,
@@ -200,7 +202,7 @@ const MedicalPersonAddressDetailForm: React.FC<
         name: "permanentDistrict",
         type: "select",
         label: "Permanent District",
-        placeholder: "Enter Permanent District",
+        placeholder: "Select Permanent District",
         required: true,
         options: permanentDistrictOptions,
         onChange: handlePermanentDistrictChange,
@@ -211,7 +213,7 @@ const MedicalPersonAddressDetailForm: React.FC<
         name: "permanentmnu_vdc",
         type: "select",
         label: "Municipality/VDC",
-        placeholder: "Enter Hospital Ward",
+        placeholder: "Select Hospital Ward",
         required: true,
         onChange: handlePermanentMunicipalityChange,
         options: permanentMuniciplaityOptions,
@@ -249,7 +251,7 @@ const MedicalPersonAddressDetailForm: React.FC<
       district: values.tempDistrict?.value,
       mnu_vdc: values.tempmnu_vdc?.value,
       address: values.tempAddress,
-      ward: values.tempWard,
+      ward_no: values.tempWard,
       address_type: "temporary",
     };
 
@@ -259,7 +261,7 @@ const MedicalPersonAddressDetailForm: React.FC<
       district: values.permanentDistrict?.value,
       mnu_vdc: values.permanentmnu_vdc?.value,
       address: values.permanentAddress,
-      ward: values.permanentWard,
+      ward_no: values.permanentWard,
       address_type: "permanent",
     };
 

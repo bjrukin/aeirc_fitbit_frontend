@@ -4,6 +4,7 @@ import { MedicalPersonalFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../../../redux/slice/form/formSlice";
+import { findLabelValuePair } from "../../../lib/utilis";
 interface initValProps {
   first_name: string;
   marital_status: string;
@@ -111,7 +112,11 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
   isEdit,
 }) => {
   const formValues = useSelector((state: any) => state.rootReducer?.form);
-  console.log("edit form data  in personal detail form is", formValues);
+  console.log(
+    "edit form data  in personal detail form is",
+    formValues,
+    findLabelValuePair(formValues?.user_info?.gender)
+  );
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     first_name: Yup.string()
@@ -130,36 +135,74 @@ const PersonalDetailForm: React.FC<PersonalDetailFormProps> = ({
       .max(new Date(), "*Date of birth cannot be in the future")
       .required("*Date of birth is required"),
   });
-  const initVal: initValProps =
-    formValues && formValues?.isEdit
-      ? {
-          first_name: formValues?.user_info?.first_name,
-          last_name: formValues?.user_info?.last_name,
-          middle_name: formValues?.user_info?.middle_name ?? "",
-          gender: getLabelValuePair(
-            genderOptions,
-            formValues?.user_info?.gender
-          ),
-          blood_group: getLabelValuePair(
-            bloodGroupOptions,
-            formValues?.user_info?.blood_group
-          ),
-          date_of_birth: formValues?.user_info?.date_of_birth,
-          marital_status: formValues?.user_info?.marital_status,
-        }
-      : formValues && !isEdit
-      ? formValues
-      : {
-          first_name: "",
-          middle_name: "",
-          last_name: "",
-          gender: "",
-          blood_group: "",
-          date_of_birth: null,
-          marital_status: "",
-        };
+  // const initVal: initValProps =
+  //   formValues && formValues?.isEdit
+  //     ? {
+  //         first_name: formValues?.first_name
+  //           ? formValues?.first_name
+  //           : formValues?.user_info?.first_name,
+  //         last_name: formValues?.last_name
+  //           ? formValues?.last_name
+  //           : formValues?.user_info?.last_name,
+  //         middle_name: formValues?.middle_name
+  //           ? formValues?.middle_name
+  //           : formValues?.user_info?.middle_name,
+  //         gender: formValues?.gender
+  //           ? formValues?.gender
+  //           : formValues?.user_info?.gender?.label
+  //           ? formValues?.user_info?.gender
+  //           : getLabelValuePair(genderOptions, formValues?.user_info?.gender),
+  //         blood_group: formValues?.blood_group
+  //           ? formValues?.blood_group
+  //           : formValues?.user_info?.blood_group?.label
+  //           ? formValues?.user_info?.blood_group
+  //           : getLabelValuePair(
+  //               bloodGroupOptions,
+  //               formValues?.user_info?.blood_group
+  //             ),
+  //         date_of_birth: formValues?.date_of_birth
+  //           ? formValues?.date_of_birth
+  //           : formValues?.user_info?.date_of_birth,
+  //         marital_status: formValues?.marital_status
+  //           ? formValues?.marital_status
+  //           : formValues?.user_info?.marital_status,
+  //       }
+  //     : formValues && !isEdit
+  //     ? formValues
+  //     : {
+  //         first_name: "",
+  //         middle_name: "",
+  //         last_name: "",
+  //         gender: "",
+  //         blood_group: "",
+  //         date_of_birth: null,
+  //         marital_status: "",
+  //       };
 
-  console.log("The inital values of personal info is", initVal);
+  const initVal: initValProps = {
+    first_name:
+      formValues?.first_name || formValues?.user_info?.first_name || "",
+    middle_name:
+      formValues?.middle_name || formValues?.user_info?.middle_name || "",
+    last_name: formValues?.last_name || formValues?.user_info?.last_name || "",
+    gender:
+      formValues?.gender ||
+      formValues?.user_info?.gender?.label ||
+      getLabelValuePair(genderOptions, formValues?.user_info?.gender) ||
+      "",
+    blood_group:
+      formValues?.blood_group ||
+      formValues?.user_info?.blood_group?.label ||
+      getLabelValuePair(
+        bloodGroupOptions,
+        formValues?.user_info?.blood_group
+      ) ||
+      "",
+    date_of_birth:
+      formValues?.date_of_birth || formValues?.user_info?.date_of_birth || null,
+    marital_status:
+      formValues?.marital_status || formValues?.user_info?.marital_status || "",
+  };
 
   const handleSubmit = async (values: initValProps) => {
     try {

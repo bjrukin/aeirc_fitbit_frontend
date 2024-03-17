@@ -274,7 +274,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   text={
                     isSubmitting ? (
                       <>
-                        <Loader2 className="animate-spin mr-2" />
+                       
                         Creating...
                       </>
                     ) : (

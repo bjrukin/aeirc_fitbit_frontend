@@ -5,7 +5,6 @@ import { HospitalFormStep } from "../../../constants";
 import Service from "../../../setup/Service";
 import { toastAlert } from "../../../lib/toastAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { updateFormData } from "../../../redux/slice/form/formSlice";
 interface initValProps {
   website: string;
   admin_email: string;
@@ -97,6 +96,7 @@ const AdditionalDetailForm: React.FC<AdditionalDetailProps> = ({
 }) => {
   const dispatch = useDispatch();
   const formValues: any = useSelector((state: any) => state.rootReducer.form);
+  console.log("form values in add", formValues);
   const initVal: initValProps = formValues
     ? formValues
     : {

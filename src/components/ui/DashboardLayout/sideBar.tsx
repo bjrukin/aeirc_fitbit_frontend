@@ -6,12 +6,15 @@ import { NavLink } from "react-router-dom";
 import { IoChevronDown } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useDispatch } from "react-redux";
+import { resetFormData } from "../../../redux/slice/form/formSlice";
 
 interface SideBarProps {
   showSideNav?: boolean;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
+  const dispatch = useDispatch();
   const [showChild, setShowChild] = useLocalStorage({
     key: "showChild",
     defaultValue: false,
@@ -66,7 +69,10 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                       })}
                     >
                       <motion.div
-                        onClick={() => setShowChild(false)}
+                        onClick={() => {
+                          setShowChild(false);
+                          dispatch(resetFormData());
+                        }}
                         className={
                           " py-7 px-3 2xl:px-6 w-full rounded hover:text-primary-500 duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
                         }
@@ -105,7 +111,10 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                           marginLeft: "36px",
                         })}
                       >
-                        <div className="py-4 flex  px-6 w-full rounded hover:text-primary-500  duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
+                        <div
+                          onClick={() => dispatch(resetFormData())} 
+                          className="py-4 flex  px-6 w-full rounded hover:text-primary-500  duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block"
+                        >
                           {el?.title}
                         </div>
                       </NavLink>
