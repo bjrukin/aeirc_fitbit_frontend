@@ -169,25 +169,7 @@ const HospitalForm: React.FC<HospitalFormProps> = ({
     ],
   ];
 
-  // const handleSubmit = async (values: initValProps) => {
-  //   try {
-  //     if (isEdit) {
-  //       setHospitalDetails(() => ({
-  //         ...hospitalDetails,
-  //         ...values,
-  //       }));
-  //     } else {
-  //       setHospitalDetails((prevValues: any) => ({
-  //         ...prevValues,
-  //         ...values,
-  //       }));
-  //     }
-  //     if (currentStep != undefined) {
-  //       setCurrentStep(currentStep + 1);
-  //     }
-  //   } catch (err) {}
-  // };
-
+ 
   const handleSubmit = async (values: initValProps) => {
     console.log("The submitted are", values);
     try {

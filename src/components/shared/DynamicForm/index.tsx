@@ -271,16 +271,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 <Button
                   type={"click"}
                   className="w-fit "
-                  text={
-                    isSubmitting ? (
-                      <>
-                       
-                        Creating...
-                      </>
-                    ) : (
-                      submitButtonText
-                    )
-                  }
+                  text={isSubmitting ? <>Creating...</> : submitButtonText}
                   variant={"outline"}
                 ></Button>
               </div>

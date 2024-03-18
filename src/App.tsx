@@ -13,6 +13,7 @@ import ChangePassword from "./pages/Auth/change-password";
 import Dashboard from "./pages/Dashboard";
 import Hospital from "./pages/Hospital";
 import Doctor from "./pages/Doctor";
+import User from "./pages/User";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
@@ -57,6 +58,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/hospital" element={<Hospital />} />
               <Route path="/doctor" element={<Doctor />} />
+              <Route path="/users" element={<User />} />
             </Route>
             <Route path="*" element={<Error />} />
           </>
