@@ -1,31 +1,12 @@
-import { useEffect, useState } from "react";
 import { Hospital } from "../../assets/images";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import { IoMdArrowUp } from "react-icons/io";
 import { DashboardSkeleton } from "../../components/shared/skeleton/dashboardSkeleton";
 import { Button } from "../../components/shared/Button";
-import { GoPlus } from "react-icons/go";
-import Modal from "../../components/shared/Modal";
-import HospitalForm from "../../components/forms/Hospital/hospital-form";
-import AdditionalDetailForm from "../../components/forms/Hospital/additional-detail-form";
-import PersonalDetailForm from "../../components/forms/MedicalPerson/personal-detail-form";
-import ContactDetailForm from "../../components/forms/MedicalPerson/contact-detail";
-import MedicalPersonAddressDetailForm from "../../components/forms/MedicalPerson/medical-person-address-detail";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
 import useFetch from "../../hooks/useFetch";
 import { CardComponent } from "../../components/shared/CardComponent";
 import { Overview } from "../../components/shared/Chart/barChart";
-import LineChart from "../../components/shared/Chart/areaChart";
-import { DataTable } from "../../components/ui/data-table";
-import CrudIcon from "../../components/shared/CrudIcon";
-import { MdOutlineModeEdit } from "react-icons/md";
-import Service from "../../setup/Service";
-import Heading from "../../components/ui/heading";
+import SimpleAreaChart from "../../components/shared/Chart/areaChart";
 
 const Dashboard = () => {
   // const [showHospitalModal, setShowHospitalModal] = useState(false);
@@ -328,7 +309,7 @@ const Dashboard = () => {
                       value="2000"
                       increase="20"
                       isFullWidth
-                      chart={<LineChart />}
+                      chart={<SimpleAreaChart />}
                     />
                   </div>
                 </div>

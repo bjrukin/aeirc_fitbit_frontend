@@ -9,6 +9,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+interface SimpleAreaChartProps {
+  height?: string;
+  className?: string;
+}
 const data = [
   {
     name: "Page A",
@@ -32,9 +36,15 @@ const data = [
   },
 ];
 
-const SimpleAreaChart = () => {
+const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
+  className,
+  height,
+}) => {
   return (
-    <div style={{ width: "50%", height: "150px" }}>
+    <div
+      className={className}
+      style={{ width: "50%", height: height || "100px" }}
+    >
       <ResponsiveContainer>
         <AreaChart
           data={data}
@@ -55,8 +65,10 @@ const SimpleAreaChart = () => {
           <Area
             type="monotone"
             dataKey="total"
-            stroke="none"
-            fill="url(#colorUv)"
+            // stroke="none"
+            stroke="#01C98E"
+            fill="none"
+            // fill="url(#colorUv)"
           />
         </AreaChart>
       </ResponsiveContainer>

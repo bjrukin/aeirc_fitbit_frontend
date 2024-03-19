@@ -18,6 +18,7 @@ import {
 } from "../../redux/slice/form/formSlice";
 import UserPersonalDetail from "../../components/forms/User/user-personal-detail";
 import UserAddressDetailForm from "../../components/forms/User/user-address-details";
+import UserDisplayCard from "../../components/shared/CardComponent/user-display-card";
 
 const User = () => {
   // const [params] = useSearchParams();
@@ -29,21 +30,22 @@ const User = () => {
   // fetchData,
   // loading,
   // } = useFetch(`/hospitals?${searchString}`);
-  const {
-    data: hospitalData,
-    error,
-    fetchData,
-    loading,
-  } = useFetch(`/hospitals`);
+
   const dispatch = useDispatch();
   const [showUserModal, setShowUserModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<any>(1);
+  const [currentStep, setCurrentStep] = useState<any>(0);
   const [userDetails, setUserDetails] = useState<any>({});
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const {
+    data: userData,
+    error,
+    fetchData,
+    loading,
+  } = useFetch(`/auth/users/list?page=${currentPage}`);
+  console.log("The user data is", userData);
   const handleEditData = (data: any) => {
     dispatch(updateEditData(data));
     setEditId(data?.id);
@@ -103,7 +105,7 @@ const User = () => {
     setShowUserModal,
     setCurrentStep
   );
-  const HospitalColumn = [
+  const UsersColumn = [
     {
       accessorKey: "",
       header: "S.N.",
@@ -112,41 +114,23 @@ const User = () => {
       },
     },
     {
-      accessorKey: "name",
-      header: "Name",
-    },
-    {
-      accessorKey: "address",
-      header: "Address",
-    },
-    {
-      accessorKey: "phone",
-      header: "Phone Number",
+      accessorKey: "",
+      header: "Full Name",
+      cell: ({ row }: { row: any }) => {
+        return (
+          <p>
+            {row.original?.user_info?.first_name}{" "}
+            {row.original?.user_info?.middle_name}{" "}
+            {row.original?.user_info?.last_name}
+          </p>
+        );
+      },
     },
     {
       accessorKey: "email",
       header: "Email",
     },
-    {
-      accessorKey: "",
-      header: "Status",
-      cell: ({ row }: { row: any }) => {
-        return (
-          <div className="text-[black] flex justify-center items-center">
-            {" "}
-            {row?.original?.is_active ? (
-              <p className=" items-center bg-tertiary-850 text-tertiary-900  font-semibold rounded-lg px-2 py-2 w-fit ">
-                Active
-              </p>
-            ) : (
-              <p className="bg-[#EF4444]  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
-                Inactive
-              </p>
-            )}
-          </div>
-        );
-      },
-    },
+
     {
       header: "Action",
       cell: (row: any) => {
@@ -154,7 +138,7 @@ const User = () => {
           <>
             <CrudIcon
               data={row?.cell?.row?.original}
-              url="/hospitals"
+              url="/auth/user/delete"
               fetchData={fetchData}
             >
               <div
@@ -182,7 +166,6 @@ const User = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowUserModal}
-      // hospitalDetails={hospitalDetails}
       fetchData={fetchData}
     />,
   ];
@@ -227,7 +210,7 @@ const User = () => {
         {cardData?.map((item) => {
           return (
             <>
-              <DisplayCard
+              <UserDisplayCard
                 key={item?.id}
                 title={item.title}
                 number={item?.number}
@@ -262,7 +245,18 @@ const User = () => {
           as
         </div>
       </div>
-      {hospitalData?.data?.results ? (
+      {userData?.results ? (
+        <DataTable
+          loading={loading}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          title="Doctors List"
+          count={userData?.count}
+          columns={UsersColumn}
+          data={userData?.results}
+        />
+      ) : null}
+      {/* {hospitalData?.data?.results ? (
         <DataTable
           loading={loading}
           currentPage={currentPage}
@@ -272,7 +266,7 @@ const User = () => {
           columns={HospitalColumn}
           data={hospitalData?.data?.results}
         />
-      ) : null}
+      ) : null} */}
     </DashboardLayout>
   );
 };

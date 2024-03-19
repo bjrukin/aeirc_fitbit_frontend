@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   error: "",
   isEdit: false,
+  data: [],
 };
 
 const formSlice = createSlice({
@@ -11,13 +12,13 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     updateFormData: (state, action: PayloadAction<any>) => {
-      return { ...state, ...action.payload };
+      return { ...state.data, ...action.payload };
     },
     resetFormData: () => {
       return initialState;
     },
     updateEditData: (state, action: PayloadAction<any>) => {
-      return { ...state, ...action.payload, isEdit: true };
+      return { ...state.data, ...action.payload, isEdit: true };
     },
   },
 });

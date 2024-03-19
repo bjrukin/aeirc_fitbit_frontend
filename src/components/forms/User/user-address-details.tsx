@@ -27,11 +27,14 @@ interface MedicalPersonAddressDetailFormProps {
   fetchData?: any;
 }
 
-const UserAddressDetailForm: React.FC<
-  MedicalPersonAddressDetailFormProps
-> = ({ onClick, currentStep, setCurrentStep, fetchData }) => {
+const UserAddressDetailForm: React.FC<MedicalPersonAddressDetailFormProps> = ({
+  onClick,
+  currentStep,
+  setCurrentStep,
+  fetchData,
+}) => {
   const formValues = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data in address detail is", formValues);
+  console.log("form Data in user  address detail is", formValues);
 
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
@@ -60,7 +63,6 @@ const UserAddressDetailForm: React.FC<
     formValues?.user_address &&
     formValues?.user_address.reduce((acc: any, address: any) => {
       if (address.address_type === "permanent") {
-        console.log("pppp data ", address);
         acc.permanentProvince = address?.province_data?.label
           ? address?.province_data
           : findLabelValuePair(address?.province_data);
@@ -89,18 +91,6 @@ const UserAddressDetailForm: React.FC<
     }, initVal);
 
   console.log("inital val", initVal);
-
-  // const {
-  //   provinceOptions,
-  //   districtOptions,
-  //   selectedDistrict,
-  //   handleProvinceChange,
-  //   selectedProvince,
-  //   handleDistrictChange,
-  //   handleMunicipalityChange,
-  //   municiplaityOptions,
-  //   selectedMnu,
-  // } = useLocationData("");
 
   const {
     selectedProvince: tempProvince,
@@ -267,32 +257,12 @@ const UserAddressDetailForm: React.FC<
 
     user_address.push(tempAddress);
     user_address.push(permananentAddress);
-    console.log("user add", user_address);
+    const { email, ...userInfo } = formValues;
     const payload = {
       user_address: user_address,
       email: formValues?.email,
-      role: "doctor",
-      user_info: {
-        first_name: formValues?.first_name,
-        middle_name: formValues?.middle_name && formValues?.middle_name,
-        last_name: formValues?.last_name,
-        gender: formValues?.gender?.value,
-        blood_group: formValues?.blood_group?.label,
-        date_of_birth: formValues?.date_of_birth,
-        citizenship_number: formValues?.citizenship_number,
-        nid_number: formValues?.nid_number,
-        phone: formValues?.phone,
-        emergency_contact_number: formValues?.emergency_contact_number,
-        insurance_number: formValues?.insurance_number,
-        marital_status: formValues?.marital_status,
-      },
-      medical_staff_info: {
-        council_number: formValues?.council_number,
-        // speciality: formValues?.speciality,
-        // hospital: formValues?.hospital,
-        hospital: "sa",
-        speciality: "a",
-      },
+      user_info: { ...userInfo, gender: userInfo?.gender?.value },
+      role: "user",
     };
     console.log("The payload is", payload);
     let res;
@@ -319,7 +289,7 @@ const UserAddressDetailForm: React.FC<
       <Formheader
         title={"Add A New User"}
         currentStep={currentStep}
-        data={MedicalPersonalFormStep}
+        data={UserFormStep}
       />
       <DynamicForm
         title={"Address Details"}

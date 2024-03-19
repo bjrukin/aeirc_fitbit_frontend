@@ -1,18 +1,19 @@
 import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
-import { MedicalPersonalFormStep, UserFormStep } from "../../../constants";
+import { UserFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../../../redux/slice/form/formSlice";
 import { findLabelValuePair } from "../../../lib/utilis";
 interface initValProps {
   first_name: string;
-  marital_status: string;
   middle_name: string;
   last_name: string;
   gender: any;
   date_of_birth: Date | null;
-  blood_group: any;
+  phone: number;
+  email: string;
+  emergency_contact_number: any;
 }
 
 interface PersonalDetailFormProps {
@@ -25,16 +26,6 @@ const genderOptions = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
   { label: "Others", value: "others" },
-];
-const bloodGroupOptions = [
-  { value: "A+", label: "A+" },
-  { value: "A-", label: "A-" },
-  { value: "B+", label: "B+" },
-  { value: "B-", label: "B-" },
-  { value: "AB+", label: "AB+" },
-  { value: "AB-", label: "AB-" },
-  { value: "O+", label: "O+" },
-  { value: "O-", label: "O-" },
 ];
 
 export const PersonalDetailFormField = [
@@ -122,11 +113,7 @@ const UserPersonalDetail: React.FC<PersonalDetailFormProps> = ({
   isEdit,
 }) => {
   const formValues = useSelector((state: any) => state.rootReducer?.form);
-  console.log(
-    "edit form data  in personal detail form is",
-    formValues,
-    findLabelValuePair(formValues?.user_info?.gender)
-  );
+  console.log("edit form data  in personal detail form is", formValues);
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
     first_name: Yup.string()
@@ -161,29 +148,19 @@ const UserPersonalDetail: React.FC<PersonalDetailFormProps> = ({
       ),
   });
 
+  const getValueOrDefault = (key: any, defaultValue: any = "") => {
+    return formValues?.[key] || formValues?.user_info?.[key] || defaultValue;
+  };
+
   const initVal: initValProps = {
-    first_name:
-      formValues?.first_name || formValues?.user_info?.first_name || "",
-    middle_name:
-      formValues?.middle_name || formValues?.user_info?.middle_name || "",
-    last_name: formValues?.last_name || formValues?.user_info?.last_name || "",
-    gender:
-      formValues?.gender ||
-      formValues?.user_info?.gender?.label ||
-      getLabelValuePair(genderOptions, formValues?.user_info?.gender) ||
-      "",
-    blood_group:
-      formValues?.blood_group ||
-      formValues?.user_info?.blood_group?.label ||
-      getLabelValuePair(
-        bloodGroupOptions,
-        formValues?.user_info?.blood_group
-      ) ||
-      "",
-    date_of_birth:
-      formValues?.date_of_birth || formValues?.user_info?.date_of_birth || null,
-    marital_status:
-      formValues?.marital_status || formValues?.user_info?.marital_status || "",
+    first_name: getValueOrDefault("first_name"),
+    middle_name: getValueOrDefault("middle_name"),
+    phone: getValueOrDefault("phone"),
+    last_name: getValueOrDefault("last_name"),
+    email: getValueOrDefault("email"),
+    emergency_contact_number: getValueOrDefault("emergency_contact_number"),
+    gender: getValueOrDefault("gender", ""),
+    date_of_birth: getValueOrDefault("date_of_birth", null),
   };
 
   const handleSubmit = async (values: initValProps) => {
