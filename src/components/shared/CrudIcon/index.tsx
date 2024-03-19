@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   AlertDialog,
@@ -14,7 +14,6 @@ import {
 import Service from "../../../setup/Service";
 import { toastAlert } from "../../../lib/toastAlert";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
 
 interface IProps {
   data: any;
