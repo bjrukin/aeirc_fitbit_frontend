@@ -250,7 +250,7 @@ const User = () => {
           loading={loading}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          title="Doctors List"
+          title="List of Patients"
           count={userData?.count}
           columns={UsersColumn}
           data={userData?.results}
