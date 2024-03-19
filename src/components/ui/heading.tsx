@@ -29,8 +29,9 @@ const Heading: React.FC<HospitalProps> = ({
           <Button
             onClick={onClick}
             icon={<GoPlus size={26} />}
-            className="w-fit p-4 xl:p-6 bg-primary-500"
+            className="w-fit bg-primary-500"
             text={btnText}
+            variant={"default"}
           />
         </div>
       </div>
