@@ -309,7 +309,7 @@ const Dashboard = () => {
                       value="2000"
                       increase="20"
                       isFullWidth
-                      chart={<SimpleAreaChart />}
+                      chart={<SimpleAreaChart variant={"primary"} />}
                     />
                   </div>
                 </div>

@@ -53,11 +53,15 @@ const UserDisplayCard: React.FC<CardProps> = ({
                 View Full Details
               </p>
             </div>
-            <SimpleAreaChart className="absolute right-0 bottom-0" height={"100px"} />
+            <SimpleAreaChart
+              variant={"secondary"}
+              className="absolute right-0 bottom-0"
+              height={"100px"}
+            />
           </CardFooter>
         </div>
       </Card>
-    </> 
+    </>
   );
 };
 

@@ -12,6 +12,7 @@ import {
 interface SimpleAreaChartProps {
   height?: string;
   className?: string;
+  variant?: string;
 }
 const data = [
   {
@@ -39,7 +40,9 @@ const data = [
 const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
   className,
   height,
+  variant,
 }) => {
+  console.log("The  variant ", variant);
   return (
     <div
       className={className}
@@ -66,9 +69,9 @@ const SimpleAreaChart: React.FC<SimpleAreaChartProps> = ({
             type="monotone"
             dataKey="total"
             // stroke="none"
-            stroke="#01C98E"
-            fill="none"
-            // fill="url(#colorUv)"
+            stroke={variant === "primary" ? "none" : "#01C98E"}
+            // fill={variant === "primary" ? "url(#colorUv)" : "#01C98E"}
+            fill={variant === "primary" ? "url(#colorUv)" : "none"}
           />
         </AreaChart>
       </ResponsiveContainer>
