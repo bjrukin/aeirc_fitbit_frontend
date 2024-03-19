@@ -6,19 +6,25 @@ const initialState = {
   isEdit: false,
   data: [],
 };
+console.log("the init is", initialState);
 
 const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
     updateFormData: (state, action: PayloadAction<any>) => {
-      return { ...state.data, ...action.payload };
+      return { ...state, ...state.data, ...action.payload };
     },
     resetFormData: () => {
       return initialState;
     },
     updateEditData: (state, action: PayloadAction<any>) => {
-      return { ...state.data, ...action.payload, isEdit: true };
+      return {
+        ...state,
+        ...state.data,
+        ...action.payload,
+        isEdit: true,
+      };
     },
   },
 });

@@ -268,11 +268,11 @@ const UserAddressDetailForm: React.FC<MedicalPersonAddressDetailFormProps> = ({
     let res;
     try {
       if (formValues?.isEdit) {
-        // res = await Service.post(`/auth/user/create`, payload);
+        res = await Service.put(`/auth/user/update/${formValues?.id}`, payload);
       } else {
         res = await Service.post(`/auth/user/create`, payload);
       }
-      console.log("res ", res);
+      console.log("res of  submit ", res);
       if (onClick) {
         onClick();
         resetForm();

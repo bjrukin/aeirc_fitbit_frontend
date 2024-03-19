@@ -159,11 +159,16 @@ const UserPersonalDetail: React.FC<PersonalDetailFormProps> = ({
     last_name: getValueOrDefault("last_name"),
     email: getValueOrDefault("email"),
     emergency_contact_number: getValueOrDefault("emergency_contact_number"),
-    gender: getValueOrDefault("gender", ""),
+    gender:
+      formValues?.gender ||
+      formValues?.user_info?.gender?.label ||
+      getLabelValuePair(genderOptions, formValues?.user_info?.gender) ||
+      "",
     date_of_birth: getValueOrDefault("date_of_birth", null),
   };
 
   const handleSubmit = async (values: initValProps) => {
+    console.log("the submiited in user personal detail", values);
     try {
       dispatch(updateFormData(values));
       if (currentStep != undefined) {

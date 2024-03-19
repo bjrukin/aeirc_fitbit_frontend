@@ -256,17 +256,6 @@ const User = () => {
           data={userData?.results}
         />
       ) : null}
-      {/* {hospitalData?.data?.results ? (
-        <DataTable
-          loading={loading}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          title="List of Patients"
-          count={hospitalData?.data?.count}
-          columns={HospitalColumn}
-          data={hospitalData?.data?.results}
-        />
-      ) : null} */}
     </DashboardLayout>
   );
 };

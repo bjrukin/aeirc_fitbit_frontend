@@ -183,7 +183,6 @@ const Hospital = () => {
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       onClick={handleShowHospitalModal}
-      // hospitalDetails={hospitalDetails}
       fetchData={fetchData}
     />,
   ];
