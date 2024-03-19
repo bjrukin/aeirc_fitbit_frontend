@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Hospital from "./pages/Hospital";
 import Doctor from "./pages/Doctor";
 import User from "./pages/User";
+import ViewUser from "./pages/User/ViewUser";
 
 function App() {
   const unParsedToken: any = window.localStorage.getItem("accessToken");
@@ -59,6 +60,7 @@ function App() {
               <Route path="/hospital" element={<Hospital />} />
               <Route path="/doctor" element={<Doctor />} />
               <Route path="/users" element={<User />} />
+              <Route path="/users/:id" element={<ViewUser />} />
             </Route>
             <Route path="*" element={<Error />} />
           </>

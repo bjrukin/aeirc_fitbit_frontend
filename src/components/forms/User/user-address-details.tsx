@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import Formheader from "../../shared/FormHeader";
-import { MedicalPersonalFormStep, UserFormStep } from "../../../constants";
+import {  UserFormStep } from "../../../constants";
 import DynamicForm from "../../shared/DynamicForm";
 import useLocationData from "../../../hooks/useLocationData";
 import { useDispatch, useSelector } from "react-redux";

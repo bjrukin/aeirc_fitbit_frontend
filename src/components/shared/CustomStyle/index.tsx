@@ -14,8 +14,8 @@ export const customStyles = {
       "&:focus": {
         borderColor: mainColor,
       },
-      borderRadius: 4,
-      height: "44px",
+      borderRadius: 8,
+      height: "42px",
       fontSize: "16px",
       boxSizing: "content-box",
       backgroundColor: state.isDisabled ? "#D9D9D9" : "",

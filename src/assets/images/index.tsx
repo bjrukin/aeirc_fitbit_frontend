@@ -14,3 +14,5 @@ export { default as People } from "./people.svg";
 export { default as HospitalSign } from "./hospitalSign.svg";
 export { default as hospitalStaff } from "./hospitalStaff.svg";
 export { default as HospitalIcon } from "./hospital_icon.svg";
+export { default as Vitals } from "./vitals.svg";
+export { default as Drop } from "./drop.svg";

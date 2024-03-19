@@ -112,7 +112,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                         })}
                       >
                         <div
-                          onClick={() => dispatch(resetFormData())} 
+                          onClick={() => dispatch(resetFormData())}
                           className="py-4 flex  px-6 w-full rounded hover:text-primary-500  duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block"
                         >
                           {el?.title}

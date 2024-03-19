@@ -30,6 +30,7 @@ import { IoFilterOutline } from "react-icons/io5";
 import NoData from "./no-result";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { TableSkeleton } from "../shared/skeleton/tableSkeleton";
+import { useNavigate } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -59,6 +60,7 @@ export function DataTable<TData, TValue>({
   //   params.append("q", e.target.value);
   //   navigate(`${location.pathname}?${params.toString()}`);
   // };
+  const navigate = useNavigate();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -253,11 +255,15 @@ export function DataTable<TData, TValue>({
                 {table.getRowModel().rows?.length && data?.length > 0 ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
+                      onClick={() => navigate(row?.original?.id)}
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
+                        <TableCell
+                          key={cell.id}
+                          className="p-4 text-sm 2xl:text-base"
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()

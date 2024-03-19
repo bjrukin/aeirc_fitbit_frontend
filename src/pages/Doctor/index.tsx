@@ -93,22 +93,22 @@ const Doctor = () => {
       accessorKey: "medical_staff_info.council_number",
       header: "Council Number",
     },
-    {
-      accessorKey: "medical_staff_info.speciality",
-      header: "Speciality",
-    },
-    {
-      accessorKey: "user_info.citizenship_number",
-      header: "Citizenship Number",
-    },
+    // {
+    //   accessorKey: "medical_staff_info.speciality",
+    //   header: "Speciality",
+    // },
+    // {
+    //   accessorKey: "user_info.citizenship_number",
+    //   header: "Citizenship Number",
+    // },
     {
       accessorKey: "user_info.nid_number",
       header: "Nid Number",
     },
-    {
-      accessorKey: "user_info.insurance_number",
-      header: "Insurance Number",
-    },
+    // {
+    //   accessorKey: "user_info.insurance_number",
+    //   header: "Insurance Number",
+    // },
     {
       header: "Action",
       cell: (row: any) => {

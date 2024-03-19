@@ -1,16 +1,13 @@
 import { useState } from "react";
 import DashboardLayout from "../../components/ui/DashboardLayout";
 import Heading from "../../components/ui/heading";
-import AdditionalDetailForm from "../../components/forms/Hospital/additional-detail-form";
 import Modal from "../../components/shared/Modal";
-import DisplayCard from "../../components/shared/CardComponent/display-card";
 import { Overview } from "../../components/shared/Chart/barChart";
 import { Button } from "../../components/shared/Button";
 import useFetch from "../../hooks/useFetch";
 import CrudIcon from "../../components/shared/CrudIcon";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { DataTable } from "../../components/ui/data-table";
-import HospitalForm from "../../components/forms/Hospital/hospital-form";
 import { useDispatch } from "react-redux";
 import {
   resetFormData,
@@ -44,7 +41,7 @@ const User = () => {
     error,
     fetchData,
     loading,
-  } = useFetch(`/auth/users/list?page=${currentPage}`);
+  } = useFetch(`/auth/users/list?page=${currentPage}&role=user`);
   console.log("The user data is", userData);
   const handleEditData = (data: any) => {
     dispatch(updateEditData(data));

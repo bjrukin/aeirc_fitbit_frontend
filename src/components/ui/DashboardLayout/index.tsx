@@ -24,7 +24,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     <div className="w-full flex relative">
       <motion.div
         className={cn(
-          ` fixed text-white border-r-[1px]  overflow-auto  h-screen w-[100px] lg:w-[250px]  2xl:w-[340px]`
+          ` fixed text-white border-r-[1px]  overflow-auto  h-screen w-[100px] lg:w-[280px]  2xl:w-[340px]`
         )}
         // showSideNav ? " w-[388px]" : "w-[80px]"
         // )}
@@ -73,7 +73,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         // animate={{ marginLeft: showSideNav ? "388px" : "80px" }}
         // transition={{ duration: 0.5 }}
         // className={`w-full bg-[white]  rounded-[40px] h-screen ml-0 lg:ml-[-35px]`}
-        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[250px]  2xl:ml-[340px]  `}
+        className={`w-full bg-[#F3F3F3] ml-[100px] lg:ml-[280px]  2xl:ml-[340px]  `}
       >
         <div className="fixed z-10  w-full pr-[100px] lg:pr-[230px] xl:pr-[260px] 2xl:pr-[320px]  ">
           <Header />

@@ -271,7 +271,16 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 <Button
                   type={"click"}
                   className="w-fit "
-                  text={isSubmitting ? <>Creating...</> : submitButtonText}
+                  text={
+                    isSubmitting ? (
+                      <>
+                        <Loader2 className="animate-spin" />
+                        Creating
+                      </>
+                    ) : (
+                      submitButtonText
+                    )
+                  }
                   variant={"outline"}
                 ></Button>
               </div>
