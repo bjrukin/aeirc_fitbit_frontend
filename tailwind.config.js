@@ -75,6 +75,7 @@ export default {
         },
 
         black: "#000000",
+        "text-green": "#006713",
         white: "#FFFFFF",
         text: "#3B3B3B",
         // grey: {
