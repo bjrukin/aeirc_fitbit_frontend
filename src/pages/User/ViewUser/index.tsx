@@ -2,24 +2,97 @@ import DashboardLayout from "../../../components/ui/DashboardLayout";
 import BreadCrumub from "../../../components/shared/BreadCrum";
 import { Drop, Vitals } from "../../../assets/images";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { Button } from "../../../components/shared/Button";
+import { UserCard } from "../../../components/shared/UserCard";
+import { UserCholesterolCard } from "../../../components/shared/UserCard/userCholesterol";
+import UserStepCard from "../../../components/shared/UserCard/userStepCard";
 
 const ViewUser = () => {
-  const { id } = useParams();
-  const { data, fetchData, error, loading } = useFetch(`/device/data/${id}`);
-  console.log("The data is", data);
-  const [deviceData, setDeviceData] = useState(null);
+    const location = useLocation();
+    const navigate = useNavigate();
 
+  const { id } = useParams();
+  const { data, fetchData } = useFetch(`/device/data/${id}`);
+  const [deviceData, setDeviceData] = useState<any>(null);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
   useEffect(() => {
     if (data) {
-      setDeviceData(data);
+      setDeviceData(data?.data);
     }
   }, [data]);
+
+  const cardConfig: any = {
+    triglyceride_cholesterol_integer: {
+      displayName: "TriglyCeridel cholesterol",
+      component: UserCholesterolCard,
+    },
+    high_lipoprotein_cholesterol_integer: {
+      displayName: "HDL",
+      component: UserCholesterolCard,
+    },
+    low_lipoprotein_cholesterol_integer: {
+      displayName: "LDL",
+      component: UserCholesterolCard,
+    },
+    temperature_value: {
+      displayName: "Body Temperature",
+      component: UserCard,
+      imgSrc: Drop,
+    },
+    blood_glucose_value: {
+      displayName: "Blood Glucose",
+      component: UserCard,
+      imgSrc: Drop,
+    },
+    step_value: {
+      displayName: "Steps",
+      component: UserStepCard,
+      imgSrc: Drop,
+    },
+    blood_sugar_model: {
+      displayName: "Blood Sugar",
+      component: UserCard,
+      imgSrc: Drop,
+    },
+    blood_ketone_model: {
+      displayName: "Blood Ketone",
+      component: UserCard,
+      imgSrc: Drop,
+    },
+    uric_acid: {
+      displayName: "Uric Acid Value", 
+      component: UserCard,
+      imgSrc: Drop,
+    },
+  };
+
+  const handleCardClick = (paramType: string) => {
+    navigate(`/user/${id}/${paramType}`);
+  };
+  const renderUserCard = (paramType: string) => {
+    const userData =
+      deviceData &&
+      deviceData.find((item: any) => item.param_type === paramType);
+    if (userData && cardConfig[paramType]) {
+      const CardComponent = cardConfig[paramType].component;
+      return (
+        <div onClick={() => handleCardClick(paramType)}>
+          {" "}
+          <CardComponent
+            paramName={cardConfig[paramType].displayName}
+            paramValue={userData.param_value}
+            timestamp={userData.data_received_timestamp}
+            imgSrc={cardConfig[paramType].imgSrc}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
 
   console.log("The device data is", deviceData);
   return (
@@ -41,8 +114,9 @@ const ViewUser = () => {
           />
         </div>
       </div>
+
       <div className="mt-7 flex justify-between space-x-4 ">
-        <div className=" bg-[red]  border-[1px] border-tertiary-750  rounded-lg w-2/3 ">
+        <div className="   border-[1px] border-tertiary-750  rounded-lg w-2/3 ">
           sd
         </div>
         <div className="w-1/3 bg-[white] border-[1px] border-tertiary-750  rounded-lg px-4 py-6">
@@ -51,127 +125,24 @@ const ViewUser = () => {
             <p>Cholesterol Levels</p>
           </div>
           <div className="mt-[30px] flex flex-col space-y-2">
-            <div className="flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-4 ">
-              <p className="font-bold text-xl">1208 pts</p>
-              <p className="font-bold text-lg text-text-green">
-                Total Cholesterol
-              </p>
-              <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Minutes Ago
-              </p>
-            </div>
-            <div className="flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-4 ">
-              <p className="font-bold text-xl">1208 pts</p>
-              <p className="font-bold text-lg text-text-green">
-                Total Cholesterol
-              </p>
-              <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Minutes Ago
-              </p>
-            </div>
-            <div className="flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-4 ">
-              <p className="font-bold text-xl">1208 pts</p>
-              <p className="font-bold text-lg text-text-green">
-                Total Cholesterol
-              </p>
-              <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Minutes Ago
-              </p>
-            </div>
+            {renderUserCard("triglyceride_cholesterol_integer")}
+            {renderUserCard("low_lipoprotein_cholesterol_integer")}
+            {renderUserCard("high_lipoprotein_cholesterol_integer")}
           </div>
         </div>
       </div>
       <div className="mt-3 flex space-x-4">
         <div className="flex flex-col space-y-3">
           <div className="flex space-x-4">
-            <div className="w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-              <img src={Drop} alt="drop" className="w-8 h-8" />
-              <p className="font-semibold text-tertiary-950  text-base mt-4">
-                Body Temperature
-              </p>
-
-              <div className="pt-[50px]">
-                <p className="font-semibold text-xl text-black">100F</p>
-                <p className="font-semibold text-lg text-tertiary-950">
-                  Measured 5 Minutes Ago
-                </p>
-              </div>
-            </div>
-            <div className="w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-              <img src={Drop} alt="drop" className="w-8 h-8" />
-              <p className="font-semibold text-tertiary-950  text-base mt-4">
-                Body Temperature
-              </p>
-
-              <div className="pt-[50px]">
-                <p className="font-semibold text-xl text-black">100F</p>
-                <p className="font-semibold text-lg text-tertiary-950">
-                  Measured 5 Minutes Ago
-                </p>
-              </div>
-            </div>
+            {renderUserCard("temperature_value")}
+            {renderUserCard("blood_glucose_value")}
           </div>
-          <div className="w-full flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-            <div className="flex justify-between items-center">
-              <div className="flex space-x-2 items-center">
-                <img src={Drop} alt="drop" className="" />
-                <p className="font-semibold  text-tertiary-950  text-base">
-                  Steps,Distance,Calorie
-                </p>
-              </div>
-              <p>Today</p>
-            </div>
-
-            <div className="pt-[50px]">
-              <p className="font-semibold text-xl text-black">
-                5000 steps | 2 km | 1200kcal
-              </p>
-              <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Minutes Ago
-              </p>
-            </div>
-          </div>
+          {renderUserCard("step_value")}
           <div className="flex space-x-4">
-            <div className="w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-              <img src={Drop} alt="drop" className="w-8 h-8" />
-              <p className="font-semibold text-tertiary-950  text-base mt-4">
-                Body Temperature
-              </p>
-
-              <div className="pt-[50px]">
-                <p className="font-semibold text-xl text-black">100F</p>
-                <p className="font-semibold text-lg text-tertiary-950">
-                  Measured 5 Minutes Ago
-                </p>
-              </div>
-            </div>
-            <div className="w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-              <img src={Drop} alt="drop" className="w-8 h-8" />
-              <p className="font-semibold text-tertiary-950  text-base mt-4">
-                Body Temperature
-              </p>
-
-              <div className="pt-[50px]">
-                <p className="font-semibold text-xl text-black">100F</p>
-                <p className="font-semibold text-lg text-tertiary-950">
-                  Measured 5 Minutes Ago
-                </p>
-              </div>
-            </div>
+            {renderUserCard("blood_ketone_model")}
+            {renderUserCard("blood_sugar_model")}
           </div>
-          <div className="w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750  rounded-lg p-6 ">
-            <img src={Drop} alt="drop" className="w-8 h-8" />
-            <p className="font-semibold text-tertiary-950  text-base mt-4">
-              Body Temperature
-            </p>
-
-            <div className="pt-[50px]">
-              <p className="font-semibold text-xl text-black">100F</p>
-              <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Minutes Ago
-              </p>
-            </div>
-          </div>
+          {renderUserCard("uric_acid")}
         </div>
         <div className="bg-[red] flex-1">sd</div>
       </div>
