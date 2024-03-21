@@ -9,19 +9,36 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "../../../../components/ui/toggle-group";
+import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import useFetch from "../../../../hooks/useFetch";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserParam } from "../../../../redux/slice/userParamDetail/userParamAction";
 
 const SingleParamDetail = () => {
-  return (
+  const {id}=useParams();
+  const dispatch=useDispatch()
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const paramType = params.get("param_type");
+
+  const data=useSelector((state:any)=>state?.rootReducer?.userParam)
+  console.log("The data is",data)
+ useEffect(()=>{
+  dispatch(getUserParam(id,"spO2_value"))
+ },[])
+
+  return (  
     <DashboardLayout>
       <div className="flex items-center justify-between">
         <div>
           <BreadCrumub title={"User Details"} subTitle={"Data History"} />
           <div className="flex items-center space-x-3 mt-1">
-            {" "}
+            {" "} 
             <div className="text-xl font-semibold">User Vital Metrics</div>
             <img src={Vitals} className="w-[18px] h-[18px]" alt="vitals" />
           </div>
-        </div>
+        </div>  
         <div>
           <Button
             className="w-fit p-4"

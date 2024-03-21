@@ -99,12 +99,12 @@ const ViewUser = () => {
   };
 
   const handleCardClick = (paramType: string) => {
-    navigate(`/user/${id}/${paramType}`);
+    navigate(`/user/${id}?param_type=${paramType}`);
   };
   const renderUserCard = (paramType: string) => {
     const userData =
-      deviceData &&
-      deviceData.find((item: any) => item.param_type === paramType);
+      deviceData?.latest_data &&
+      deviceData?.latest_data?.find((item: any) => item.param_type === paramType);
     if (userData && cardConfig[paramType]) {
       const CardComponent = cardConfig[paramType].component;
       return (
@@ -129,7 +129,7 @@ const ViewUser = () => {
         <DashboardSkeleton />
       ) : (
         <>
-          {deviceData?.length > 0 ? (
+          {deviceData?.latest_data?.length > 0 ? (
             <div>
               <div>
                 <div className="flex items-center justify-between">
