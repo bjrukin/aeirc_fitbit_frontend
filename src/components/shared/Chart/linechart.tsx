@@ -62,7 +62,7 @@ const data = [
   },
 ];
 
-export const SimpleLineChart = () => {
+export const SimpleLineChart = ({ variant }: { variant: string }) => {
   const maxValue = Math.max(...data.map((item) => item.total));
   const interval = maxValue / 5;
   const ticks = Array.from({ length: 6 }, (_, i) => i * interval);
@@ -78,13 +78,14 @@ export const SimpleLineChart = () => {
             bottom: 0,
           }}
         >
+          {variant === "secondary" && <CartesianGrid stroke="#ccc" />}
           <XAxis
             dataKey="name"
             stroke="#888888"
             fontSize={16}
             tickLine={false}
             axisLine={true}
-            padding={{ left: 10, right: 10 }}
+            padding={{ left: 0, right: 0 }}
             tick={{ fill: "black" }}
           />
           <YAxis
@@ -92,7 +93,7 @@ export const SimpleLineChart = () => {
             fontSize={16}
             tickLine={false}
             axisLine={true}
-            padding={{ bottom: 10, top: 0 }}
+            padding={{ bottom: 0, top: 0 }}
             tickFormatter={(value) => `${value}`}
             tick={{ fill: "black" }}
             ticks={ticks}
@@ -109,10 +110,14 @@ export const SimpleLineChart = () => {
                     }}
                   >
                     <p>
-                      <strong className="text-lg">{payload[0].payload.name}</strong>
+                      <strong className="text-lg">
+                        {payload[0].payload.name}
+                      </strong>
                     </p>
                     <p>
-                      <strong className="text-primary-500">Total: {payload[0].value}</strong>
+                      <strong className="text-primary-500">
+                        Total: {payload[0].value}
+                      </strong>
                     </p>
                   </div>
                 );
@@ -138,8 +143,10 @@ export const SimpleLineChart = () => {
           <Area
             type="linear"
             dataKey="total"
-            stroke="#3E6DF9"
-            fill="url(#colorUv)"
+            dot={variant === "primary" ? false : true}
+            stroke={variant === "primary" ? "#3E6DF9" : "#471BFB"}
+            strokeWidth={variant === "primary" ? "1" : "1.8"}
+            fill={variant === "primary" ? "url(#colorUv)" : "none"}
           />
         </AreaChart>
       </ResponsiveContainer>
