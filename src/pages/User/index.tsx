@@ -242,7 +242,8 @@ const User = () => {
           as
         </div>
       </div>
-      {userData?.results ? (
+
+      {userData?.data ? (
         <DataTable
           loading={loading}
           currentPage={currentPage}
@@ -250,7 +251,7 @@ const User = () => {
           title="List of Patients"
           count={userData?.count}
           columns={UsersColumn}
-          data={userData?.results}
+          data={userData?.data}
         />
       ) : null}
     </DashboardLayout>

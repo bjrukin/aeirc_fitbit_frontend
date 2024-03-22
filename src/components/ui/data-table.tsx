@@ -51,6 +51,7 @@ export function DataTable<TData, TValue>({
   setCurrentPage,
   loading,
 }: DataTableProps<TData, TValue>) {
+  console.log("THe data is",data)
   // const location = useLocation();
   // const navigate = useNavigate();
 

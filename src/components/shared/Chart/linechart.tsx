@@ -62,15 +62,18 @@ const data = [
   },
 ];
 
-export const SimpleLineChart = ({ variant }: { variant: string }) => {
+export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataValue:any }) => {
+  console.log("the val is",dataValue)
+  
+ 
   const maxValue = Math.max(...data.map((item) => item.total));
-  const interval = maxValue / 5;
+  const interval = maxValue / 10;
   const ticks = Array.from({ length: 6 }, (_, i) => i * interval);
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={dataValue ? dataValue :data}
           margin={{
             top: 10,
             right: 30,

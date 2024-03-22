@@ -42,7 +42,6 @@ const ViewUser = () => {
     Promise.all(params.map((param) => dispatch(getUserParam(id, param)))).then(
       (results) => {
         const combinedData = Object.assign({}, ...results);
-        console.log("The comnined data", combinedData);
         setHistoryData(combinedData);
       }
     );
@@ -101,7 +100,7 @@ const ViewUser = () => {
   const handleCardClick = (paramType: string) => {
     navigate(`/user/${id}?param_type=${paramType}`);
   };
-  const renderUserCard = (paramType: string) => {
+  const renderUserCard = (paramType: string,val:any) => {
     const userData =
       deviceData?.latest_data &&
       deviceData?.latest_data?.find((item: any) => item.param_type === paramType);
@@ -115,6 +114,7 @@ const ViewUser = () => {
             paramValue={userData.param_value}
             timestamp={userData.data_received_timestamp}
             imgSrc={cardConfig[paramType].imgSrc}
+            dataValue={val}
           />
         </div>
       );
@@ -158,7 +158,7 @@ const ViewUser = () => {
 
                 <div className="mt-7 flex justify-between space-x-4 ">
                   <div className="w-2/3">
-                    {renderUserCard("respiratory_rate_value")}
+                    {renderUserCard("respiratory_rate_value",deviceData?.spO2_level)}
                   </div>
                   <div className="w-1/3 bg-[white] border-[1px] border-tertiary-750  rounded-lg px-4 py-6">
                     <div className=" flex space-x-3 items-center text-base text-tertiary-950 font-semibold">
@@ -205,7 +205,7 @@ const ViewUser = () => {
                         </p>
                       </div>
                       <div className="mt-3">
-                        <SimpleLineChart variant={"secondary"} />
+                        <SimpleLineChart dataValue={deviceData?.spO2_value} variant={"secondary"} />
                       </div>
                     </div>
                     <div className="mt-4 p-6  border-[1px] border-tertiary-750 bg-white  rounded-lg w-full">
@@ -227,7 +227,7 @@ const ViewUser = () => {
                         </p>
                       </div>
                       <div className="mt-3">
-                        <SimpleLineChart variant={"secondary"} />
+                        <SimpleLineChart dataValue={[]} variant={"secondary"} />
                       </div>
                     </div>
                   </div>

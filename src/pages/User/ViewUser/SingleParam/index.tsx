@@ -59,7 +59,7 @@ const SingleParamDetail = () => {
           //   }}
         >
           <ToggleGroupItem
-            className="border-[1px] border-black text-black px-5 py-1 text-base"
+            className="border-[1px] border-black text-black px-5 py-1 text-base`"
             value={"daily"}
           >
             Daily Report
@@ -133,7 +133,7 @@ const SingleParamDetail = () => {
             </div>
           </div>
           <div className="mt-3">
-            <SimpleLineChart variant={"primary"} />
+            <SimpleLineChart dataValue={[]} variant={"primary"} />
           </div>
         </div>
       </div>

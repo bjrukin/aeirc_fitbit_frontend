@@ -8,6 +8,7 @@ export interface UserCardProps {
   timestamp: string;
   className?: string;
   imgSrc?: string;
+  dataValue?:any
 }
 
 export const getTimeInHours = (data: any) => {
@@ -22,8 +23,11 @@ export const HeartBeatCard: React.FC<UserCardProps> = ({
   paramValue,
   timestamp,
   imgSrc,
-}) => (
-  <div>
+  dataValue
+}) => {
+  return(
+    <>
+    <div>
     <div className="cursor-pointer p-6   hover:border-[1px] hover:border-primary-500 border-[1px] border-tertiary-750  rounded-lg bg-white ">
       <div className="flex space-x-4 items-center">
         <img src={imgSrc} alt="drop" className="w-8 h-8 " />
@@ -38,8 +42,10 @@ export const HeartBeatCard: React.FC<UserCardProps> = ({
         </p>
       </div>
       <div className="mt-3">
-        <SimpleLineChart variant={"secondary"} />
+        <SimpleLineChart dataValue={dataValue} variant={"secondary"} />
       </div>
     </div>
   </div>
-);
+    </>
+  )
+};

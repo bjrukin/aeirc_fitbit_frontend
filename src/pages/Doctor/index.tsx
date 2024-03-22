@@ -266,7 +266,7 @@ const Doctor = () => {
           })}
         </div>
       </div>
-      {doctorsData?.results ? (
+      {doctorsData?.data ? (
         <DataTable
           loading={loading}
           currentPage={currentPage}
@@ -274,7 +274,7 @@ const Doctor = () => {
           title="Doctors List"
           count={doctorsData?.count}
           columns={DoctorsColumn}
-          data={doctorsData?.results}
+          data={doctorsData?.data}
         />
       ) : null}
     </DashboardLayout>
