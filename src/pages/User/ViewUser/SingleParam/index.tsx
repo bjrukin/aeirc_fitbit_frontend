@@ -16,29 +16,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserParam } from "../../../../redux/slice/userParamDetail/userParamAction";
 
 const SingleParamDetail = () => {
-  const {id}=useParams();
-  const dispatch=useDispatch()
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const paramType = params.get("param_type");
 
-  const data=useSelector((state:any)=>state?.rootReducer?.userParam)
-  console.log("The data is",data)
- useEffect(()=>{
-  dispatch(getUserParam(id,"spO2_value"))
- },[])
+  const data = useSelector((state: any) => state?.rootReducer?.userParam);
+  console.log("The single Data data is", data);
 
-  return (  
+  useEffect(() => {
+    dispatch(getUserParam({ id, paramType }));
+  }, []);
+  const lastThreeValues =
+    data?.data?.data?.slice(1, 4).map((el: any) => el?.param_value) || [];
+  const maxValue = Math.max(...lastThreeValues);
+  const minValue = Math.min(...lastThreeValues);
+  const averageValue =
+    lastThreeValues.reduce((a: number, b: number) => Number(a) + Number(b), 0) /
+    lastThreeValues?.length;
+
+  const firstTwoValues = data?.data?.data?.slice(0, 2) || [];
+  let timeDiff = null;
+  if (firstTwoValues.length === 2) {
+    const dateA = new Date(firstTwoValues[0]?.data_received_timestamp);
+    const dateB = new Date(firstTwoValues[1]?.data_received_timestamp);
+    timeDiff = Math.round(
+      Math.abs((dateB.getTime() - dateA.getTime()) / (1000 * 60))
+    );
+  }
+
+  return (
     <DashboardLayout>
       <div className="flex items-center justify-between">
         <div>
           <BreadCrumub title={"User Details"} subTitle={"Data History"} />
           <div className="flex items-center space-x-3 mt-1">
-            {" "} 
+            {" "}
             <div className="text-xl font-semibold">User Vital Metrics</div>
             <img src={Vitals} className="w-[18px] h-[18px]" alt="vitals" />
           </div>
-        </div>  
+        </div>
         <div>
           <Button
             className="w-fit p-4"
@@ -94,46 +112,46 @@ const SingleParamDetail = () => {
                   Your Heart Rate Is Normal{" "}
                 </p>
               </div>
-              <p className="text-secondary-150 font-semibold">74 BPM</p>
+              <p className="text-secondary-150 font-semibold">{averageValue}</p>
             </div>
           </div>
           <div className="pt-[54px] mb-[26px] flex items-center space-x-20">
             <div>
-              <p className="font-semibold text-xl text-black"> 12 BPM</p>
+              <p className="font-semibold text-xl text-black">
+                {" "}
+                {averageValue.toFixed(2)}
+              </p>
               <p className="font-semibold text-lg text-black">
                 {" "}
                 Average Heart Beat
               </p>
               <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Min ago
-                {/* Measured {getTimeInMinutes(timestamp)} Hours Ago */}
+                Measured {timeDiff} Min ago
               </p>
             </div>
             <div>
-              <p className="font-semibold text-xl text-black"> 12 BPM</p>
+              <p className="font-semibold text-xl text-black"> {minValue.toFixed(2)}</p>
               <p className="font-semibold text-lg text-black">
                 {" "}
                 Lowest Heart Beat
               </p>
               <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Min ago
-                {/* Measured {getTimeInMinutes(timestamp)} Hours Ago */}
+                Measured {timeDiff} Min ago
               </p>
             </div>
             <div>
-              <p className="font-semibold text-xl text-black"> 12 BPM</p>
+              <p className="font-semibold text-xl text-black"> {maxValue.toFixed(2)}</p>
               <p className="font-semibold text-lg text-black">
                 {" "}
                 Highest Heart Beat
               </p>
               <p className="font-semibold text-lg text-tertiary-950">
-                Measured 5 Min ago
-                {/* Measured {getTimeInMinutes(timestamp)} Hours Ago */}
+                Measured {timeDiff} Min ago
               </p>
             </div>
           </div>
           <div className="mt-3">
-            <SimpleLineChart dataValue={[]} variant={"primary"} />
+            <SimpleLineChart dataValue={data?.data?.data} variant={"primary"} />
           </div>
         </div>
       </div>

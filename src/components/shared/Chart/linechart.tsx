@@ -1,4 +1,3 @@
-import { validateHeaderValue } from "http";
 import {
   LineChart,
   Line,
@@ -12,19 +11,37 @@ import {
   Area,
 } from "recharts";
 
+export const SimpleLineChart = ({
+  variant,
+  dataValue,
+}: {
+  variant: string;
+  dataValue: any;
+}) => {
+  const data =
+    dataValue?.length > 0 &&
+    dataValue?.map((el: any) => {
+      const hours = new Date(el?.data_received_timestamp)
+        .getHours()
+        .toString()
+        .padStart(2, "0");
+      const minutes = new Date(el?.data_received_timestamp)
+        .getMinutes()
+        .toString()
+        .padStart(2, "0");
+      const time = `${hours}:${minutes}`;
+      return {
+        name: time,
+        total: el.param_value,
+      };
+    });
 
+  const maxValue =
+    data?.length > 0 && Math.max(...data.map((item: any) => item.total));
 
-export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataValue:any }) => {
-  const data=dataValue?.length>0 && dataValue?.map((el:any)=>{
-    const hours = new Date(el?.data_received_timestamp).getHours().toString().padStart(2, "0");
-    const minutes = new Date(el?.data_received_timestamp).getMinutes().toString().padStart(2, "0");
-    const time = `${hours}:${minutes}`;
-    return {
-      name:time,
-      total:el.param_value
-    }
-  
-  })
+  const stepSize: any = maxValue / 5;
+
+  const ticks = Array.from({ length: 6 }, (_, i) => i * Math.ceil(stepSize));
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <ResponsiveContainer>
@@ -55,7 +72,7 @@ export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataVal
             padding={{ bottom: 0, top: 0 }}
             tickFormatter={(value) => `${value}`}
             tick={{ fill: "black" }}
-            // ticks={ticks}
+            ticks={ticks}
           />
           <Tooltip
             content={({ payload }) => {
