@@ -5,11 +5,33 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   AreaChart,
   Area,
 } from "recharts";
+
+const dataVal =  [
+  {
+    name: "A",
+    total: 100,
+  },
+  {
+    name: "B",
+    total: 120,
+  },
+  {
+    name: "C",
+    total: 80,
+  },
+  {
+    name: "D",
+    total: 150,
+  },
+  {
+    name: "E",
+    total: 100,
+  },
+];
 
 export const SimpleLineChart = ({
   variant,
@@ -41,11 +63,12 @@ export const SimpleLineChart = ({
   const stepSize: number = Number(maxValue) / 5;
   const ticks = Array.from({ length: 6 }, (_, i) => i * Math.ceil(stepSize));
 
+
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={data ? data :dataVal}
           margin={{
             top: 10,
             right: 30,

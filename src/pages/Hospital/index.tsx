@@ -141,7 +141,7 @@ const Hospital = () => {
                 Active
               </p>
             ) : (
-              <p className="bg-[#EF4444]  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
+              <p className="bg-[#FF7A7A]  items-center text-white  font-semibold rounded-lg px-2 py-2 w-fit ">
                 Inactive
               </p>
             )}

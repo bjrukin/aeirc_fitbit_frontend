@@ -2,31 +2,24 @@ import DashboardLayout from "../../../components/ui/DashboardLayout";
 import BreadCrumub from "../../../components/shared/BreadCrum";
 import { Drop, Vitals } from "../../../assets/images";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import { Button } from "../../../components/shared/Button";
 import { UserCard } from "../../../components/shared/UserCard";
 import { UserCholesterolCard } from "../../../components/shared/UserCard/userCholesterol";
 import UserStepCard from "../../../components/shared/UserCard/userStepCard";
 import { SimpleLineChart } from "../../../components/shared/Chart/linechart";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserParam } from "../../../redux/slice/userParamDetail/userParamAction";
-import Service from "../../../setup/Service";
 import { HeartBeatCard } from "../../../components/shared/UserCard/heartBeatCard";
 import { DashboardSkeleton } from "../../../components/shared/skeleton/dashboardSkeleton";
 import NoData from "../../../components/ui/no-result";
 import moment from 'moment';
 
 const ViewUser = () => {
-  const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { id } = useParams();
   const { data, fetchData, loading } = useFetch(`/device/data/${id}`);
   const [deviceData, setDeviceData] = useState<any>(null);
-  console.log("The dev data is", deviceData)
-  const [historyData, setHistoryData] = useState<any>(null);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -89,9 +82,9 @@ const ViewUser = () => {
 
   const handleCardClick = (paramType: string) => {
     const params = new URLSearchParams();
-    params.append("param_type",paramType );
-    params.append("start_date", moment().subtract(1, 'days').format('YYYY-MM-DD'));
-    navigate(`/user/${id}?${params.toString()}`);
+    // params.append("param_type",paramType );
+    // params.append("start_date", moment().subtract(1, 'days').format('YYYY-MM-DD'));
+    navigate(`/users/${id}/${paramType}`);
   };
   const renderUserCard = (paramType: string,val:any) => {
     const userData =
@@ -127,7 +120,7 @@ const ViewUser = () => {
               <div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <BreadCrumub title={"User"} subTitle={"User Profile"} />
+                    <BreadCrumub path="" title={"User"} subTitle={"User Profile"} />
                     <div className="flex items-center space-x-3 mt-1">
                       {" "}
                       <div className="text-xl font-semibold">

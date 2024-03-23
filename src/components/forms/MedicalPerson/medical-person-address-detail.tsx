@@ -87,17 +87,6 @@ const MedicalPersonAddressDetailForm: React.FC<
     }, initVal);
 
 
-  // const {
-  //   provinceOptions,
-  //   districtOptions,
-  //   selectedDistrict,
-  //   handleProvinceChange,
-  //   selectedProvince,
-  //   handleDistrictChange,
-  //   handleMunicipalityChange,
-  //   municiplaityOptions,
-  //   selectedMnu,
-  // } = useLocationData("");
 
   const {
     selectedProvince: tempProvince,
@@ -292,10 +281,11 @@ const MedicalPersonAddressDetailForm: React.FC<
     let res;
     try {
       if (formValues?.isEdit) {
-        // res = await Service.post(`/auth/user/create`, payload);
+        res = await Service.put(`/auth/user/update/${formValues?.id}`, payload);
       } else {
         res = await Service.post(`/auth/user/create`, payload);
       }
+      console.log("res", res);
       if (onClick) {
         onClick();
         resetForm();

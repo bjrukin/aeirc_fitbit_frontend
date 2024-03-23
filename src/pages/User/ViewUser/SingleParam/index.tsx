@@ -14,28 +14,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserParam } from "../../../../redux/slice/userParamDetail/userParamAction";
 import { getParamTypeName } from "../../../../lib/utilis";
 import moment from "moment";
-import useFetch from "../../../../hooks/useFetch";
 import { ParamTable } from "../../../../components/ui/param-table";
 
 const SingleParamDetail = () => {
-  const { id } = useParams();
+  const { id,param } = useParams();
+  console.log("The params",param)
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const params = new URLSearchParams(location.search);
+  // const params = new URLSearchParams(location.search);
   const[pageSize,setPageSize]=useState(100)
-  console.log("apge size",pageSize)
-  const paramType = params.get("param_type");
-  const startDate = params.get("start_date");
+  
+  // const paramType = params.get("param_type");
+  // const startDate = params.get("start_date");
+  // const [date,setDate]=useState(moment().subtract(1, 'days').format('YYYY-MM-DD')) 
   const [selectedValue, setSelectedValue] = useState('daily');
   const data = useSelector((state: any) => state?.rootReducer?.userParam);
-  console.log("the param single data",data)
-
+  console.log("The data is", data?.data);
   useEffect(() => {
-    dispatch(getUserParam({ id, paramType,startDate,pageSize}));
-  }, []);
+    dispatch(getUserParam({ id, param ,pageSize}));
+  }, [pageSize,selectedValue]);
   
-  console.log("data in user param",data)
   const lastThreeValues =
     data?.data?.data?.slice(1, 4).map((el: any) => el?.param_value) || [];
   const maxValue = Math.max(...lastThreeValues);
@@ -84,9 +83,9 @@ const SingleParamDetail = () => {
       navigate(`${location.pathname}?${params.toString()}`);
     }
   }
-  useEffect(() => {
-    dispatch(getUserParam({ id, paramType, startDate,pageSize}));
-  }, [selectedValue]); 
+  // useEffect(() => {
+  //   dispatch(getUserParam({ id, paramType, startDate,pageSize}));
+  // }, [selectedValue]); 
 
 
   const HistoryColumns = [
@@ -115,7 +114,7 @@ const SingleParamDetail = () => {
     <DashboardLayout>
       <div className="flex items-center justify-between">
         <div>
-          <BreadCrumub title={"User Details"} subTitle={"Data History"} />
+          <BreadCrumub  path={`/users/${id}`} title={"User Details"} subTitle={"Data History"} />
           <div className="flex items-center space-x-3 mt-1">
             {" "}
             <div className="text-xl font-semibold">User Vital Metrics</div>
@@ -154,14 +153,14 @@ const SingleParamDetail = () => {
             <div className="flex space-x-4 items-center">
               <img src={Drop} alt="drop" className="w-8 h-8 " />
               <p className="font-semibold text-tertiary-950 text-base ">
-                User {getParamTypeName(paramType)}
+                User {getParamTypeName(param)}
               </p>
             </div>
             <div className=" flex items-center justify-between rounded-lg bg-primary-150 px-4 py-2 w-[383px]">
               <div className="flex items-center space-x-4">
                 <img src={Drop} alt="" />
                 <p className="text-base text-black semi-bold">
-                  Your {getParamTypeName(paramType)} Is Normal{" "}
+                  Your {getParamTypeName(param)} Is Normal{" "}
                 </p>
               </div>
               <p className="text-secondary-150 font-semibold">{averageValue.toFixed(2)}</p>
@@ -175,7 +174,7 @@ const SingleParamDetail = () => {
               </p>
               <p className="font-semibold text-lg text-black">
                 {" "}
-                Average {getParamTypeName(paramType)}
+                Average {getParamTypeName(param)}
               </p>
               <p className="font-semibold mt-1  text-base text-tertiary-950">
                 Measured {timeDiff} Min ago
@@ -185,7 +184,7 @@ const SingleParamDetail = () => {
               <p className="font-semibold text-xl text-black"> {minValue.toFixed(2)}</p>
               <p className="font-semibold text-lg text-black">
                 {" "}
-                Lowest {getParamTypeName(paramType)}
+                Lowest {getParamTypeName(param)}
               </p>
               <p className="font-semibold text-base mt-1  text-tertiary-950">
                 Measured {timeDiff} Min ago
@@ -195,7 +194,7 @@ const SingleParamDetail = () => {
               <p className="font-semibold text-xl text-black"> {maxValue.toFixed(2)}</p>
               <p className="font-semibold text-lg text-black">
                 {" "}
-                Highest{getParamTypeName(paramType)}
+                Highest{getParamTypeName(param)}
               </p>
               <p className="font-semibold text-base mt-1 text-tertiary-950">
                 Measured {timeDiff} Min ago
@@ -209,7 +208,7 @@ const SingleParamDetail = () => {
       </div>
 
       <div className="flex w-full  space-x-8 mt-4">
-        {/* <div className="p-4 bg-white w-1/2 border-[1px] border-tertiary-750  rounded-lg bg-white">
+        <div className="p-4 bg-white w-1/2 border-[1px] border-tertiary-750  rounded-lg bg-white">
           {
              data?.data?.data?.length > 0 ? (
               <ParamTable
@@ -223,7 +222,7 @@ const SingleParamDetail = () => {
               />
             ) : null
           }
-        </div> */}
+        </div>
         <div className="p-4 bg-white w-1/2 border-[1px] border-tertiary-750  rounded-lg bg-white">
           <div className="flex space-x-4 items-center mb-5">
             <img src={Drop} alt="" />

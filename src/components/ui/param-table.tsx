@@ -43,6 +43,9 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pageSize: number;
+  loading: boolean;
+  title: string;
+  count: number;
   setPageSize: (pageSize: number) => void;
 }
 
@@ -50,8 +53,12 @@ export function ParamTable<TData, TValue>({
   columns,
   data,
   pageSize,
+  loading,
+  title,
+  count,
   setPageSize
 }: DataTableProps<TData, TValue>) {
+  const params = new URLSearchParams();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -76,7 +83,10 @@ export function ParamTable<TData, TValue>({
   return (
     <>
       <div className=" border p-3">
-      <div className="flex items-center  justify-end space-x-2">
+      <div className="flex items-center  justify-between space-x-2">
+      <p className="text-2xl font-semibold">
+            {title} ({count}){" "}
+          </p>
               <p className="text-sm font-medium">Rows per page</p>
               <Select
                 value={`${table.getState().pagination.pageSize}`}

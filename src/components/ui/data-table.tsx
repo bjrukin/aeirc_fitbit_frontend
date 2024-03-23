@@ -256,7 +256,6 @@ export function DataTable<TData, TValue>({
                 {table.getRowModel().rows?.length && data?.length > 0 ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
-                      onClick={() => navigate(row?.original?.id)}
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
                     >

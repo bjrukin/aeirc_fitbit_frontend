@@ -62,7 +62,7 @@ function App() {
               <Route path="/doctor" element={<Doctor />} />
               <Route path="/users" element={<User />} />
               <Route path="/users/:id" element={<ViewUser />} />
-              <Route path="/user/:id" element={<SingleParamDetail />} />
+              <Route path="/users/:id/:param" element={<SingleParamDetail />} />
             </Route>
             <Route path="*" element={<Error />} />
           </>
