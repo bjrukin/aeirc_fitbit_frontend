@@ -63,7 +63,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               className="rounded-full bg-gray-200 text-white p-2"
             />
           </motion.div> */}
-          <div className=" w-full mt-11">
+          <div className=" w-full mt-11 ">
             <SideBar showSideNav={showSideNav} />
           </div>
         </div>

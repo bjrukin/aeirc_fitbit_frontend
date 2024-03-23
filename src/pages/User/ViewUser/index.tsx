@@ -142,25 +142,25 @@ const ViewUser = () => {
                   </div>
                 </div>
 
-                <div className="mt-7 flex justify-between space-x-4 ">
-                  <div className="w-2/3">
+                <div className=" mt-7 flex flex-col xl:flex-row justify-between gap-4 h-fit ">
+                  <div className=" w-full xl:w-2/3">
                     {renderUserCard("respiratory_rate_value",deviceData?.spO2_level)}
                   </div>
-                  <div className="w-1/3 bg-[white] border-[1px] border-tertiary-750  rounded-lg px-4 py-6">
+                  <div className="w-full xl:w-1/3 bg-[white] border-[1px] border-tertiary-750  rounded-lg px-4 py-6 ">
                     <div className=" flex space-x-3 items-center text-base text-tertiary-950 font-semibold">
                       <img src={Drop} alt="drop" />
                       <p>Cholesterol Levels</p>
                     </div>
-                    <div className="mt-[30px] flex flex-col space-y-2">
+                    <div className="mt-[30px] flex flex-row xl:flex-col  gap-4 xl:gap-0 xl:space-y-2">
                       {renderUserCard("triglyceride_cholesterol_integer","")}
                       {renderUserCard("low_lipoprotein_cholesterol_integer","")}
                       {renderUserCard("high_lipoprotein_cholesterol_integer","")}
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 flex space-x-4">
+                <div className="mt-3 flex  flex-col-reverse lg:flex-row gap-4">
                   <div className="flex flex-col space-y-3">
-                    <div className="flex space-x-4">
+                    <div className=" flex space-x-4">
                       {renderUserCard("temperature_value","")}
                       {renderUserCard("blood_glucose_value","")}
                     </div>

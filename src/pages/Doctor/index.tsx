@@ -246,7 +246,7 @@ const Doctor = () => {
             </div>
           </div>
           <div className="mt-8">
-            <SimpleLineChart />
+            <SimpleLineChart variant="" dataValue={[]} />
           </div>
         </div>
         <div className="flex flex-col">

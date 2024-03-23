@@ -19,7 +19,7 @@ const DisplayCard: React.FC<CardProps> = ({
   return (
     <>
       <Card
-        className={`w-full  mt-4 lg:mt-4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out bg-primary-550 bg-[${bgColor}]`}
+        className={`w-full  mr-4 last:mr-0 mt-4 lg:mt-4  hover:border-[1px] cursor-pointer hover:border-secondary-200 duration-800 ease-in-out bg-primary-550 bg-[${bgColor}]`}
       >
         <div className="relative">
           <CardHeader className="">

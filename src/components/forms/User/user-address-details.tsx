@@ -285,7 +285,7 @@ const UserAddressDetailForm: React.FC<MedicalPersonAddressDetailFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-0 xl:space-x-4 h-[800px] lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
+    <div className="flex space-x-0 xl:space-x-4 h-full lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
       <Formheader
         title={"Add A New User"}
         currentStep={currentStep}

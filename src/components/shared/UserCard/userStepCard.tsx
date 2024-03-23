@@ -22,7 +22,7 @@ const UserStepCard: React.FC<UserCardProps> = ({
           <p>Today</p>
         </div>
 
-        <div className="pt-[50px]">
+        <div className="pt-[85px] xl:pt-[50px]">
           <p className="font-semibold text-xl text-black">{paramValue} steps</p>
           <p className="font-semibold text-lg text-tertiary-950">
             Measured {getTimeInMinutes(timestamp)} Minutes Ago

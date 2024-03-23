@@ -22,7 +22,7 @@ export const UserCard: React.FC<UserCardProps> = ({
   imgSrc,
 }) => (
   <div
-    className={`bg-white cursor-pointer hover:border-[1px] hover:border-primary-500  w-fit flex flex-col space-y-3 border-[1px] border-tertiary-750 rounded-lg p-6 ${className}`}
+    className={`bg-white cursor-pointer hover:border-[1px] hover:border-primary-500 w-full flex flex-col space-y-3 border-[1px] border-tertiary-750 rounded-lg p-6  w-full ${className}`}
   >
     <img src={imgSrc} alt="drop" className="w-8 h-8 " />
     <p className="font-semibold text-tertiary-950 text-base mt-4">

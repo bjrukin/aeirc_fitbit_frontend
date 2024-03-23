@@ -27,7 +27,7 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
   // const percentage = (value / totalValue) * 100;
   return (
     <>
-      <div className="text-[white]  ">
+      <div className="  ">
         {/* <div className="pr-6">
           <Button text={"Create New Session"} className={buttonClassName} />
           <Separator className="mt-4" />
@@ -74,10 +74,10 @@ const SideBar: React.FC<SideBarProps> = ({ showSideNav }) => {
                           dispatch(resetFormData());
                         }}
                         className={
-                          " py-7 px-3 2xl:px-6 w-full rounded hover:text-primary-500 duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
+                          " py-7  px-3 2xl:px-6 w-full rounded hover:text-primary-500 duration-800 ease-in-out  flex items-center space-x-3 cursor-pointer "
                         }
                       >
-                        <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">
+                        <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20   ">
                           {item?.icon}
                         </p>
                         <p className="p-semibold-16 xl:p-semibold-18 2xl:p-semibold-20  hidden lg:block">

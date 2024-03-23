@@ -28,7 +28,7 @@ export const HeartBeatCard: React.FC<UserCardProps> = ({
   return(
     <>
     <div>
-    <div className="cursor-pointer p-6   hover:border-[1px] hover:border-primary-500 border-[1px] border-tertiary-750  rounded-lg bg-white ">
+    <div className="cursor-pointer p-6  pb-20 hover:border-[1px] hover:border-primary-500 border-[1px] border-tertiary-750  rounded-lg bg-white  ">
       <div className="flex space-x-4 items-center">
         <img src={imgSrc} alt="drop" className="w-8 h-8 " />
         <p className="font-semibold text-tertiary-950 text-base ">

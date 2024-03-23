@@ -170,8 +170,8 @@ const phoneDetailForm: React.FC<phoneDetailFormProps> = ({
   };
 
   return (
-    <div className="flex space-x-4 h-full">
-      <Formheader
+    <div className="flex space-x-0 xl:space-x-4 h-full lg:h-[580px] 2xl:h-[700px] overflow-auto  ">
+       <Formheader
         title={"Add A New Medical Personal"}
         currentStep={currentStep}
         data={MedicalPersonalFormStep}

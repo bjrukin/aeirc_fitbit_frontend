@@ -203,7 +203,7 @@ const User = () => {
           handleShowUserModal();
         }}
       />
-      <div className="flex flex-wrap xl:flex-nowrap space-x-4">
+   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 ">
         {cardData?.map((item) => {
           return (
             <>
