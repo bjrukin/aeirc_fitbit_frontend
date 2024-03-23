@@ -31,7 +31,6 @@ const MedicalPersonAddressDetailForm: React.FC<
   MedicalPersonAddressDetailFormProps
 > = ({ onClick, currentStep, setCurrentStep, fetchData }) => {
   const formValues = useSelector((state: any) => state.rootReducer?.form);
-  console.log("form Data in address detail is", formValues);
 
   const dispatch = useDispatch();
   const FORM_VALIDATION = Yup.object().shape({
@@ -60,7 +59,6 @@ const MedicalPersonAddressDetailForm: React.FC<
     formValues?.user_address &&
     formValues?.user_address.reduce((acc: any, address: any) => {
       if (address.address_type === "permanent") {
-        console.log("pppp data ", address);
         acc.permanentProvince = address?.province_data?.label
           ? address?.province_data
           : findLabelValuePair(address?.province_data);
@@ -88,7 +86,6 @@ const MedicalPersonAddressDetailForm: React.FC<
       return acc;
     }, initVal);
 
-  console.log("inital val", initVal);
 
   // const {
   //   provinceOptions,
@@ -242,7 +239,6 @@ const MedicalPersonAddressDetailForm: React.FC<
     values: initValProps,
     { resetForm }: { resetForm: () => void }
   ) => {
-    console.log("The submitted values   of medical person are", values);
     const user_address = [];
 
     // Temporary address object
@@ -267,7 +263,6 @@ const MedicalPersonAddressDetailForm: React.FC<
 
     user_address.push(tempAddress);
     user_address.push(permananentAddress);
-    console.log("user add", user_address);
     const payload = {
       user_address: user_address,
       email: formValues?.email,
@@ -294,7 +289,6 @@ const MedicalPersonAddressDetailForm: React.FC<
         speciality: "a",
       },
     };
-    console.log("The payload is", payload);
     let res;
     try {
       if (formValues?.isEdit) {
@@ -302,7 +296,6 @@ const MedicalPersonAddressDetailForm: React.FC<
       } else {
         res = await Service.post(`/auth/user/create`, payload);
       }
-      console.log("res ", res);
       if (onClick) {
         onClick();
         resetForm();

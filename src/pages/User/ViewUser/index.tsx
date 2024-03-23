@@ -15,6 +15,7 @@ import Service from "../../../setup/Service";
 import { HeartBeatCard } from "../../../components/shared/UserCard/heartBeatCard";
 import { DashboardSkeleton } from "../../../components/shared/skeleton/dashboardSkeleton";
 import NoData from "../../../components/ui/no-result";
+import moment from 'moment';
 
 const ViewUser = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const ViewUser = () => {
   const { id } = useParams();
   const { data, fetchData, loading } = useFetch(`/device/data/${id}`);
   const [deviceData, setDeviceData] = useState<any>(null);
+  console.log("The dev data is", deviceData)
   const [historyData, setHistoryData] = useState<any>(null);
   useEffect(() => {
     fetchData();
@@ -34,18 +36,6 @@ const ViewUser = () => {
     }
   }, [data]);
 
-  const dataValue = useSelector((state: any) => state);
-
-  const params = ["spO2_value"];
-
-  useEffect(() => {
-    Promise.all(params.map((param) => dispatch(getUserParam(id, param)))).then(
-      (results) => {
-        const combinedData = Object.assign({}, ...results);
-        setHistoryData(combinedData);
-      }
-    );
-  }, [dispatch, id]);
 
   const cardConfig: any = {
     respiratory_rate_value: {
@@ -98,7 +88,10 @@ const ViewUser = () => {
   };
 
   const handleCardClick = (paramType: string) => {
-    navigate(`/user/${id}?param_type=${paramType}`);
+    const params = new URLSearchParams();
+    params.append("param_type",paramType );
+    params.append("start_date", moment().subtract(1, 'days').format('YYYY-MM-DD'));
+    navigate(`/user/${id}?${params.toString()}`);
   };
   const renderUserCard = (paramType: string,val:any) => {
     const userData =
@@ -166,24 +159,24 @@ const ViewUser = () => {
                       <p>Cholesterol Levels</p>
                     </div>
                     <div className="mt-[30px] flex flex-col space-y-2">
-                      {renderUserCard("triglyceride_cholesterol_integer")}
-                      {renderUserCard("low_lipoprotein_cholesterol_integer")}
-                      {renderUserCard("high_lipoprotein_cholesterol_integer")}
+                      {renderUserCard("triglyceride_cholesterol_integer","")}
+                      {renderUserCard("low_lipoprotein_cholesterol_integer","")}
+                      {renderUserCard("high_lipoprotein_cholesterol_integer","")}
                     </div>
                   </div>
                 </div>
                 <div className="mt-3 flex space-x-4">
                   <div className="flex flex-col space-y-3">
                     <div className="flex space-x-4">
-                      {renderUserCard("temperature_value")}
-                      {renderUserCard("blood_glucose_value")}
+                      {renderUserCard("temperature_value","")}
+                      {renderUserCard("blood_glucose_value","")}
                     </div>
-                    {renderUserCard("step_value")}
+                    {renderUserCard("step_value","")}
                     <div className="flex space-x-4">
-                      {renderUserCard("blood_ketone_model")}
-                      {renderUserCard("blood_sugar_model")}
+                      {renderUserCard("blood_ketone_model","")}
+                      {renderUserCard("blood_sugar_model","")}
                     </div>
-                    {renderUserCard("uric_acid")}
+                    {renderUserCard("uric_acid","")}
                   </div>
                   <div className="flex-1">
                     <div className=" p-6  border-[1px] border-tertiary-750 bg-white  rounded-lg w-full">

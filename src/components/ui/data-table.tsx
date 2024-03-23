@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({
   setCurrentPage,
   loading,
 }: DataTableProps<TData, TValue>) {
-  console.log("THe data is",data)
+  console.log("THe data in table  is",data)
   // const location = useLocation();
   // const navigate = useNavigate();
 
@@ -239,7 +239,7 @@ export function DataTable<TData, TValue>({
                 ))
               ) : (
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns.length}  
                   className="h-24 text-center"
                 >
                   <NoData />

@@ -36,6 +36,7 @@ const Hospital = () => {
     fetchData,
     loading,
   } = useFetch(`/hospitals`);
+  console.log("hospital data", hospitalData);
   const dispatch = useDispatch();
   const [showHospitalModal, setShowHospitalModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<any>(0);
@@ -304,7 +305,7 @@ const Hospital = () => {
           </div>
         </div>
       </div>
-      {hospitalData?.data?.results ? (
+      {hospitalData?.data?.data ? (
         <DataTable
           loading={loading}
           currentPage={currentPage}
@@ -312,7 +313,7 @@ const Hospital = () => {
           title="Hospital List"
           count={hospitalData?.data?.count}
           columns={HospitalColumn}
-          data={hospitalData?.data?.results}
+          data={hospitalData?.data?.data}
         />
       ) : null}
     </DashboardLayout>

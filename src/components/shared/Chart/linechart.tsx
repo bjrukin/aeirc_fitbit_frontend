@@ -38,10 +38,9 @@ export const SimpleLineChart = ({
 
   const maxValue =
     data?.length > 0 && Math.max(...data.map((item: any) => item.total));
-
-  const stepSize: any = maxValue / 5;
-
+  const stepSize: number = Number(maxValue) / 5;
   const ticks = Array.from({ length: 6 }, (_, i) => i * Math.ceil(stepSize));
+
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <ResponsiveContainer>
