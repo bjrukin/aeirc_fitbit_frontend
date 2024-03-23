@@ -1,3 +1,4 @@
+import { validateHeaderValue } from "http";
 import {
   LineChart,
   Line,
@@ -11,69 +12,24 @@ import {
   Area,
 } from "recharts";
 
-const data = [
-  {
-    name: "Jan",
-    total: 60,
-  },
-  {
-    name: "Feb",
-    total: 10,
-  },
-  {
-    name: "Mar",
-    total: 90,
-  },
-  {
-    name: "April",
-    total: 40,
-  },
-  {
-    name: "May",
-    total: 100,
-  },
-  {
-    name: "June",
-    total: 30,
-  },
-  {
-    name: "July",
-    total: 90,
-  },
-  {
-    name: "Aug",
-    total: 110,
-  },
-  {
-    name: "Sept",
-    total: 10,
-  },
-  {
-    name: "Oct",
-    total: 90,
-  },
-  {
-    name: "Nov",
-    total: 80,
-  },
-  {
-    name: "Dec",
-    total: 20,
-  },
-];
+
 
 export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataValue:any }) => {
-  console.log("the val is",dataValue)
+  const data=dataValue?.length>0 && dataValue?.map((el:any)=>{
+    const hours = new Date(el?.data_received_timestamp).getHours().toString().padStart(2, "0");
+    const minutes = new Date(el?.data_received_timestamp).getMinutes().toString().padStart(2, "0");
+    const time = `${hours}:${minutes}`;
+    return {
+      name:time,
+      total:el.param_value
+    }
   
- 
-  const maxValue = Math.max(...data.map((item) => item.total));
-  const interval = maxValue / 10;
-  const ticks = Array.from({ length: 6 }, (_, i) => i * interval);
+  })
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <ResponsiveContainer>
         <AreaChart
-          data={dataValue ? dataValue :data}
+          data={data}
           margin={{
             top: 10,
             right: 30,
@@ -99,7 +55,7 @@ export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataVal
             padding={{ bottom: 0, top: 0 }}
             tickFormatter={(value) => `${value}`}
             tick={{ fill: "black" }}
-            ticks={ticks}
+            // ticks={ticks}
           />
           <Tooltip
             content={({ payload }) => {
@@ -146,7 +102,7 @@ export const SimpleLineChart = ({ variant,dataValue }: { variant: string,dataVal
           <Area
             type="linear"
             dataKey="total"
-            dot={variant === "primary" ? false : true}
+            // dot={variant === "primary" ? false : true}
             stroke={variant === "primary" ? "#3E6DF9" : "#471BFB"}
             strokeWidth={variant === "primary" ? "1" : "1.8"}
             fill={variant === "primary" ? "url(#colorUv)" : "none"}

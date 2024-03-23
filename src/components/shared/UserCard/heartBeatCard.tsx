@@ -42,7 +42,7 @@ export const HeartBeatCard: React.FC<UserCardProps> = ({
         </p>
       </div>
       <div className="mt-3">
-        <SimpleLineChart dataValue={dataValue} variant={"secondary"} />
+        <SimpleLineChart dataValue={dataValue.reverse()} variant={"secondary"} />
       </div>
     </div>
   </div>
